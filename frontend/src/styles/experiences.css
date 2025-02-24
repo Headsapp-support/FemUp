@@ -1,0 +1,160 @@
+/* Contexte principal de la section */
+.experiences {
+  background-image: url('/public/images/experiences.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 0 20px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  transition: background 0.5s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Contenu centré avec fond transparent */
+.experiences-content {
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9); /* léger fond blanc */
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Titre avec une police élégante */
+h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  font-size: 2.6em;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Carrousel : centre et espace entre éléments */
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  gap: 30px;
+}
+
+/* Carte des avis */
+.experience-card {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.4s ease;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Texte des avis avec coupe et alignement */
+.experience-card p {
+  font-size: 1.2em;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+/* Style pour la division du texte long */
+.experience-card .text-divided {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Nom de l'auteur avec style discret */
+.author {
+  font-style: italic;
+  font-size: 1.1em;
+  color: #777;
+  margin-top: 25px;
+  font-weight: 500;
+}
+
+/* Navigation des avis avec boutons discrets */
+.nav-button {
+  background-color: transparent;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  font-size: 2.2em;
+  color: #e4aea8;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-button:hover {
+  transform: translateY(-50%) scale(1.2);
+  color: #c39c6f; /* doré élégant au survol */
+}
+
+/* Position des flèches de navigation */
+.nav-button.left {
+  left: -30px;
+}
+
+.nav-button.right {
+  right: -30px;
+}
+
+/* Animation d'apparition fluide pour la carte */
+.experience-card {
+  opacity: 0;
+  animation: fadeIn 0.6s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Effet de survol des flèches */
+.nav-button:hover .arrow {
+  color: #c39c6f;
+}
+
+/* Media Queries pour réactivité mobile */
+@media (max-width: 768px) {
+  .carousel {
+    flex-direction: column;
+  }
+
+  .experience-card {
+    width: 90%;
+  }
+
+  .nav-button {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 2.2em;
+  }
+
+  .nav-button.left, .nav-button.right {
+    top: 80%;
+  }
+}

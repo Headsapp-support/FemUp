@@ -1,0 +1,241 @@
+/* JobListStyles.css */
+
+/* Corps de la page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+/* Wrapper principal du contenu */
+.job-list-section {
+    width: 95%;  /* Augmenter la largeur pour occuper plus d'espace */
+    max-width: 1400px; /* Largeur maximale pour une meilleure visibilité sur les écrans larges */
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+/* Titre */
+h1 {
+    font-size: 2rem;  /* Agrandir légèrement la taille du titre */
+    color: #293a4d;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Conteneur des filtres de recherche */
+.job-filter-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Permet aux éléments de se réorganiser si l'espace est insuffisant */
+}
+
+.job-card-item .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;  /* Limite à 1 ligne */
+    text-overflow: ellipsis;  /* Ajoute "..." si le texte dépasse */
+    white-space: normal;  /* Permet au texte de se comporter comme du texte normal */
+  }
+
+/* Champs de recherche et filtres */
+.job-filter-container input,
+.job-filter-container select,
+.job-filter-container button {
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    flex: 1 1 200px; /* Permet à chaque élément de prendre un minimum d'espace tout en étant flexible */
+}
+
+/* Champs de recherche et filtres en focus */
+.job-filter-container input:focus,
+.job-filter-container select:focus,
+.job-filter-container button:focus {
+    outline: none;
+    border-color: #4C9BFC;
+}
+
+/* Style du bouton de recherche */
+.job-filter-container button {
+    background-color: #e4aea8;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.job-filter-container button:hover {
+    background-color: #dd9e97;
+}
+
+/* Wrapper des offres d'emploi */
+.job-list-wrapper {
+    margin-top: 20px;
+}
+
+/* Container des cartes d'emploi */
+.job-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items par ligne sur les grands écrans */
+    gap: 30px;
+    justify-items: center;
+    grid-auto-rows: 1fr;
+}
+
+/* Card d'offre d'emploi */
+.job-card-item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 360px; /* Agrandir légèrement la largeur pour les écrans larges */
+    height: 270px; /* Agrandir la hauteur pour plus de visibilité */
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.job-card-item h3 {
+    font-size: 1.3rem;  /* Augmenter la taille du titre dans les cartes */
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.job-card-item p {
+    font-size: 1rem;  /* Augmenter légèrement la taille du texte */
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.job-card-item .job-category,
+.job-card-item .job-location {
+    font-size: 0.9rem;  /* Augmenter la taille du texte pour les catégories et emplacements */
+    color: #777;
+    margin-bottom: 8px;
+}
+
+.job-card-item a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #e4aea8;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;  /* Agrandir la taille du texte du bouton */
+}
+
+.job-card-item a:hover {
+    background-color: #dab887;
+}
+
+.job-card-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.job-card-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(45deg, #9b886c, #e4aea8);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Version tablettes et mobiles */
+@media (max-width: 768px) {
+    /* Container des offres d'emploi */
+    .job-cards-container {
+        grid-template-columns: 1fr; /* Une colonne pour les petits écrans */
+    }
+
+    /* Carte des offres d'emploi */
+    .job-card-item {
+        width: 100%;
+        max-width: 500px; /* Limiter la largeur sur les petits écrans */
+        margin: 10px 0;
+    }
+
+    /* Taille du titre */
+    h1 {
+        font-size: 2rem;
+    }
+
+    /* Taille des éléments de filtre */
+    .job-filter-container input,
+    .job-filter-container select,
+    .job-filter-container button {
+        font-size: 14px; /* Réduire la taille du texte des filtres */
+        flex: 1 1 150px;  /* Réduire la taille minimale pour donner plus de place */
+    }
+}
+
+/* Version smartphone */
+@media (max-width: 600px) {
+    .job-cards-container {
+        grid-template-columns: 1fr; /* Une colonne */
+    }
+
+    .job-card-item {
+        width: 100%;
+        max-width: 400px; /* Réduire encore la largeur sur les très petits écrans */
+        margin: 10px 0;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .job-filter-container input,
+    .job-filter-container select,
+    .job-filter-container button {
+        font-size: 14px; /* Réduire la taille du texte des filtres */
+        flex: 1 1 120px;  /* Réduire encore la taille minimale des éléments de filtre */
+    }
+}
+
+.load-more-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .load-more-button button {
+    background-color: #293a4d;  /* Couleur de fond */
+    color: white;  /* Couleur du texte */
+    border: none;
+    padding: 12px 30px;  /* Padding du bouton */
+    font-size: 16px;  /* Taille du texte */
+    border-radius: 30px;  /* Bord arrondi */
+    cursor: pointer;  /* Changer le curseur au survol */
+    transition: all 0.3s ease;  /* Transition pour les effets */
+  }
+  
+  .load-more-button button:hover {
+    background-color: #374b63;  /* Couleur de fond au survol */
+    transform: translateY(-3px);  /* Légère élévation au survol */
+  }
+  
+  .load-more-button button:active {
+    transform: translateY(1px);  /* Lors du clic, retour à l'état normal */
+  }
+  
+  .load-more-button button:focus {
+    outline: none;  /* Enlever l'effet de focus par défaut */
+    box-shadow: 0 0 5px 2px rgba(72, 168, 219, 0.7);  /* Ajouter une ombre verte au focus */
+  }

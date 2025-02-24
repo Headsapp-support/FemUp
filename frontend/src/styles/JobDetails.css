@@ -1,0 +1,136 @@
+/* Réinitialisation de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Conteneur principal */
+.job-details-container {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.job-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.job-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.job-meta {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+.company-name, .job-location, .job-duration {
+  font-weight: 500;
+}
+
+/* Sections principales */
+.job-description, .job-requirements, .job-budget, .job-communication, .job-availability, .contact-details {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-left: 6px solid #e4aea8;
+  background-color: #fff;
+  border-radius: 6px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #7a7a7a;
+  margin-bottom: 20px;
+}
+
+.job-requirements ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.job-requirements li {
+  font-size: 16px;
+  color: #555;
+  padding-left: 1.5em;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.job-requirements li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  font-size: 18px;
+  color: #e4aea8;
+}
+
+.budget-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #e4aea8;
+  margin-bottom: 10px;
+}
+
+/* Bouton postuler */
+.apply-section {
+  text-align: center;
+}
+
+.apply-btn {
+  background-color: #e4aea8;
+  color: white;
+  padding: 16px 40px;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.apply-btn:hover {
+  background-color: #f0c0bb;
+  transform: translateY(-3px);
+}
+
+.apply-btn:active {
+  transform: translateY(3px);
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+  .job-details-container {
+    padding: 20px;
+  }
+
+  .job-meta {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .apply-btn {
+    width: 100%;
+    padding: 15px;
+  }
+}

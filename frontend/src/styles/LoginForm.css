@@ -1,0 +1,173 @@
+/* Container du formulaire de login */
+.loginForm {
+  background-size: cover;
+  background-position: center;
+  background-color: #f4f4f4;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #293a4d;
+  flex-direction: column; /* Pour s'assurer que le contenu est bien centré */
+}
+
+/* Image visible uniquement sur la version Web (écrans larges) */
+.side-image {
+  display: none; /* Cacher l'image par défaut */
+}
+
+/* Pour la version Web (écrans larges) */
+@media (min-width: 1025px) {
+  /* Afficher l'image sur les grands écrans */
+  .side-image {
+    display: block;
+  }
+
+  .form {
+    width: 140%;
+    max-width: 1000px; /* Augmenter la largeur maximale du formulaire */
+    background-color: #fff;
+    padding: 60px; /* Augmenter l'espace intérieur du formulaire */
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Vous pouvez aussi augmenter la taille de l'ombre */
+    margin: 0 auto; /* Centrer le formulaire horizontalement */
+  }
+}
+
+/* Styles pour les écrans de taille moyenne et petite (tablettes et smartphones) */
+@media (max-width: 1024px) {
+  .side-image {
+    display: none; /* Masquer l'image sur les petits écrans */
+  }
+
+  /* Rendre le formulaire plus petit et réactif */
+  .form {
+    width: 110%;
+    max-width: 1000px; /* Largeur maximale du formulaire */
+    background-color: #fff;
+    padding: 40px; /* Réduire l'espace intérieur du formulaire pour s'adapter à des résolutions plus petites */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre plus légère */
+    margin: 0 auto; /* Centrer le formulaire horizontalement */
+  }
+  
+  .form-group {
+    display: block;
+    margin-bottom: 15px; /* Espacement réduit entre les champs */
+  }
+
+  .form-group label {
+    width: 100%; /* Largeur de l'étiquette sur les petits écrans */
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; /* Champs de formulaire occupent toute la largeur */
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .form-container h2 {
+    font-size: 1.5em; /* Réduire la taille du titre pour les petits écrans */
+  }
+
+  /* Bouton de soumission plus petit sur les petites résolutions */
+  .button {
+    padding: 15px;
+    font-size: 1.1em;
+  }
+}
+
+/* Pour les écrans très petits (téléphones portables en portrait) */
+@media (max-width: 480px) {
+  .form {
+    padding: 20px; /* Moins de padding sur les très petits écrans */
+  }
+
+  .button {
+    padding: 10px;
+    font-size: 1em;
+  }
+}
+
+.form-container h2 {
+  color: #293a4d;
+  text-align: center;
+}
+
+
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  width: 200px;
+  font-weight: bold;
+  margin-right: 20px;
+  text-align: left;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Bouton de soumission */
+.button {
+  width: 100%;
+  padding: 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Style pour les liens dans le formulaire */
+.form a {
+  color: #007bff; /* Lien couleur bleue */
+  text-decoration: none; /* Supprimer le soulignement par défaut */
+}
+
+/* Empêcher le soulignement au survol dans le formulaire */
+.form a:hover {
+  text-decoration: none; /* Pas de soulignement lors du survol */
+}
+
+/* Pour les liens dans les boutons */
+.button a {
+  color: inherit; /* Hérite de la couleur du bouton */
+  text-decoration: none; /* Supprimer le soulignement */
+}
+
+/* Empêcher le soulignement au survol dans le bouton */
+.button a:hover {
+  text-decoration: none; /* Pas de soulignement lors du survol */
+}

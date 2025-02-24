@@ -1,0 +1,105 @@
+.footer {
+  background-color: #e5d3ce;
+  color: #725b58;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 70px; /* Cela permet de pousser le footer en bas */
+  height: auto; /* La hauteur du footer s'ajuste en fonction du contenu */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Permet aux éléments de se réarranger en fonction de la taille de l'écran */
+  gap: 20px; /* Ajoute un espace entre les sections */
+}
+
+.footer-section {
+  margin: 20px;
+  flex: 1; /* Permet aux sections de prendre une largeur égale */
+  min-width: 200px; /* Assure qu'elles ne deviennent pas trop petites sur des écrans très petits */
+}
+
+.footer-section a {
+  text-decoration: none; /* Enlever le soulignement */
+  color: inherit; /* Hérite de la couleur du bouton (noir) */
+}
+
+.footer-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 10px 0;
+}
+
+.footer-section ul li a {
+  color: #725b58;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.join-button1 {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  background-color: #e4aea8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.join-button1:hover {
+  background-color: #e4aea8;
+}
+
+/* Media Queries pour rendre le footer responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    justify-content: center; /* Centrer les sections sur petits écrans */
+    text-align: center; /* Assure que le texte est centré sur les petits écrans */
+  }
+
+  .footer-section {
+    min-width: auto; /* Enlever la largeur minimale */
+    margin: 10px 0; /* Ajouter de l'espace entre les sections */
+  }
+
+  .footer-section h3 {
+    font-size: 1.1em; /* Ajuster la taille du titre pour les petits écrans */
+  }
+
+  .join-button1 {
+    font-size: 1em; /* Réduire la taille du bouton pour les petits écrans */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section h3 {
+    font-size: 1em; /* Réduire encore la taille des titres sur les très petits écrans */
+  }
+
+  .footer-bottom p {
+    font-size: 0.8em; /* Réduire la taille du texte dans le bas du footer */
+  }
+}
