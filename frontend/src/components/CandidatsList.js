@@ -99,6 +99,7 @@ const CandidatsList = () => {
             { headers: { Authorization: `Bearer ${token}` } }
         );
 
+        // Vérifier si la réponse est un succès
         if (response.data.success) {
             setCandidats((prevCandidats) =>
                 prevCandidats.map((candidat) =>
@@ -106,20 +107,28 @@ const CandidatsList = () => {
                 )
             );
             alert(`Candidat ${status} avec succès`);
+        } else {
+            alert('Erreur lors de la mise à jour du statut.');
         }
     } catch (error) {
-        console.error('Erreur lors de la mise à jour du statut:', error.response || error);
-        alert('Erreur lors de la mise à jour du statut.');
+        // Vérification si l'erreur est dans la réponse du serveur
+        if (error.response) {
+            console.error('Erreur lors de la mise à jour du statut:', error.response.data);
+            alert(error.response.data.message || 'Erreur lors de la mise à jour du statut.');
+        } else {
+            console.error('Erreur lors de la mise à jour du statut:', error.message);
+            alert('Erreur lors de la mise à jour du statut.');
+        }
     }
 };
 
-  if (isLoading) {
+if (isLoading) {
     return (
-      <div className="loadingSpinner">
-        <Spinner animation="border" variant="primary" />
-      </div>
+        <div className="loadingSpinner">
+            <Spinner animation="border" variant="primary" />
+        </div>
     );
-  }
+}
 
   return (
     <div key={offerId} className="containerCandidatsList">

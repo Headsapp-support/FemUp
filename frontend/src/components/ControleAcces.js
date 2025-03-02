@@ -133,7 +133,7 @@ const ControleAcces = () => {
         <table className="candidate-table" >
           <thead>
             <tr>
-              <th>Titre Offre </th>
+              <th>Titre de l'offre </th>
               <th>Recruteur</th>
               <th>Date de publication</th>
               <th>Action</th>

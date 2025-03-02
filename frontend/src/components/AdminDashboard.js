@@ -33,12 +33,20 @@ const AdminDashboard = () => {
     totalCompanies: 0,
     acceptedApplications: 0,
     rejectedApplications: 0,
+    preselectedApplications: 0,
+    pendingApplications: 0,
+  });
+
+  const [offerStats, setOfferStats] = useState({
+    acceptedApplications: 0,
+    rejectedApplications: 0,
+    preselectedApplications: 0,
+    pendingApplications: 0,
   });
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const fetchGlobalStats = async () => {
       try {
-        // Récupérer le token depuis le localStorage ou un autre moyen
         const token = localStorage.getItem('token'); // Adapte selon ton stockage
 
         const response = await axios.get('http://localhost:5000/api/admin/stats', {
@@ -47,27 +55,107 @@ const AdminDashboard = () => {
           },
         });
 
-        setStats(response.data); // Mise à jour des statistiques dans l'état local
+        setStats(response.data); // Mise à jour des statistiques globales dans l'état local
       } catch (error) {
-        console.error('Erreur lors de la récupération des statistiques', error);
+        console.error('Erreur lors de la récupération des statistiques globales', error);
       }
     };
 
-    fetchStats(); // Appel initial pour récupérer les statistiques
+    fetchGlobalStats(); // Appel initial pour récupérer les statistiques globales
   }, []); // Se déclenche une seule fois lors du montage du composant
 
-  // Configuration du graphique à barres
+  useEffect(() => {
+    const fetchOfferStats = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Adapte selon ton stockage
+  
+        const response = await axios.get(`http://localhost:5000/api/admin/statistiques-globales`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+          },
+        });
+  
+        setOfferStats(response.data); // Mise à jour des statistiques des offres dans l'état local
+      } catch (error) {
+        console.error('Erreur lors de la récupération des statistiques des offres', error);
+      }
+    };
+  
+    fetchOfferStats(); // Appel initial pour récupérer les statistiques des offres
+  }, []); // Se déclenche une seule fois lors du montage du composant
+  
+  // Configuration du graphique à barres pour les statistiques globales
+  // Configuration du graphique à barres pour les statistiques globales
   const chartData = {
     labels: ['Candidats', 'Recruteurs', 'Offres', 'Entreprises'],
     datasets: [
       {
-        label: 'Statistiques',
+        label: 'Statistiques Globales',
         data: [stats.totalCandidates, stats.totalRecruiters, stats.totalOffers, stats.totalCompanies],
         backgroundColor: ['#4caf50', '#2196f3', '#ff9800', '#9c27b0'], // Couleurs personnalisées pour chaque barre
         borderColor: ['#388e3c', '#1976d2', '#f57c00', '#7b1fa2'],
         borderWidth: 1,
       },
     ],
+  };
+
+  // Configuration du graphique à barres pour les candidatures
+  const data = {
+    labels: ['Accepté', 'Refusé', 'Préselectionné', 'En attente'],
+    datasets: [
+      {
+        label: 'Statistiques des Candidatures',
+        data: [
+          offerStats.acceptedApplications,
+          offerStats.rejectedApplications,
+          offerStats.preselectedApplications,
+          offerStats.pendingApplications
+        ],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Options du graphique avec améliorations sur l'échelle (axes)
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,  // Assure que l'échelle commence à zéro
+        ticks: {
+          stepSize: 500, // Définit un intervalle de graduation pour plus de lisibilité
+          callback: function(value) {
+            if (value >= 1000) {
+              return value / 1000 + 'k'; // Si la valeur est supérieure à 1000, l'afficher en "k"
+            }
+            return value;
+          }
+        },
+      }
+    },
+  };
+
+  // Options du graphique des candidatures
+  const dataOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,  // Assure que l'échelle commence à zéro
+        ticks: {
+          stepSize: 500, // Définit un intervalle de graduation pour plus de lisibilité
+          callback: function(value) {
+            if (value >= 1000) {
+              return value / 1000 + 'k'; // Si la valeur est supérieure à 1000, l'afficher en "k"
+            }
+            return value;
+          }
+        }
+      }
+    }
   };
 
   return (
@@ -112,9 +200,9 @@ const AdminDashboard = () => {
         </section>
 
         <section className="chart">
-          <h2>Graphiques des Statistiques</h2>
+          <h2>Graphiques des Statistiques Globales</h2>
           <div className="chart-container">
-            <Bar data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+            <Bar data={chartData} options={chartOptions} />
           </div>
         </section>
 
@@ -135,23 +223,31 @@ const AdminDashboard = () => {
             </div>
           </div>
         </section>
+
         <section className="tracking">
   <h2>Suivi des actions</h2>
   <div className="tracking-cards">
     <div className="tracking-card">
-      <h3>Nombre de Candidatures Acceptées</h3>
+      <h3>Nombre d'offres Acceptées</h3>
       <p>{stats.totalOffers}</p> {/* Affiche les candidatures approuvées */}
     </div>
     <div className="tracking-card">
-      <h3>Nombre de Candidatures En attente</h3>
+      <h3>Nombre d'offres En attente</h3>
       <p>{stats.pendingOffers}</p> {/* Affiche les candidatures en attente */}
     </div>
     <div className="tracking-card">
-      <h3>Nombre de Candidatures Refusées</h3>
+      <h3>Nombre d'offres Refusées</h3>
       <p>{stats.rejectedOffers}</p> {/* Affiche les candidatures rejetées */}
     </div>
   </div>
 </section>
+        {/* Ajout du graphique pour les candidatures juste en dessous de "Suivi des Candidatures" */}
+        <section className="chart">
+          <h2>Graphiques des Candidatures</h2>
+          <div className="chart-container">
+          <Bar data={data} options={dataOptions} />
+          </div>
+        </section>
       </div>
     </div>
   );

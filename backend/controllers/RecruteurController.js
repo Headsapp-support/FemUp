@@ -523,51 +523,61 @@ const getRecruteurById = async (req, res) => {
   }
 };
 
-
 const updateCandidatStatus = async (req, res) => {
   try {
-      const { offerId } = req.params;  // L'ID de l'offre vient des paramètres de l'URL
-      const { candidatId, status } = req.body;  // Le candidatId et le statut viennent du corps de la requête
+    const { offerId } = req.params;
+    const { candidatId, status } = req.body;
 
-      // Vérification de l'existence du recruteur
-      const recruteur = await Recruteur.findById(req.recruteurId);
-      if (!recruteur) {
-          return res.status(404).json({ error: 'Recruteur non trouvé' });
-      }
+    console.log('offerId:', offerId);
+    console.log('candidatId:', candidatId);
+    console.log('status:', status);
 
-      // Chercher l'offre correspondant à l'ID de l'offre dans les offres du recruteur
-      const offer = recruteur.postedOffers.id(offerId);
-      if (!offer) {
-          return res.status(404).json({ error: 'Offre non trouvée' });
-      }
+    // Vérification de l'existence du recruteur
+    const recruteur = await Recruteur.findById(req.recruteurId);
+    if (!recruteur) {
+      console.error('Recruteur non trouvé');
+      return res.status(404).json({ error: 'Recruteur non trouvé' });
+    }
 
-      // Trouver le candidat qui a postulé à cette offre
-      const candidat = await Condidat.findOne({ 
-          _id: candidatId, 
-          'applications.jobId': offerId 
-      });
+    // Chercher l'offre correspondant à l'ID de l'offre dans les offres du recruteur
+    const offer = recruteur.postedOffers.id(offerId);
+    if (!offer) {
+      console.error('Offre non trouvée');
+      return res.status(404).json({ error: 'Offre non trouvée' });
+    }
 
-      if (!candidat) {
-          return res.status(404).json({ error: 'Candidat non trouvé dans cette offre' });
-      }
+    // Trouver le candidat qui a postulé à cette offre
+    const candidat = await Condidat.findOne({
+      _id: candidatId,
+      'applications.jobId': offerId
+    });
 
-      // Trouver l'application spécifique dans le tableau applications du candidat
-      const application = candidat.applications.find(app => app.jobId.toString() === offerId);
-      
-      if (!application) {
-          return res.status(404).json({ error: 'Application du candidat non trouvée pour cette offre' });
-      }
+    if (!candidat) {
+      console.error('Candidat non trouvé dans cette offre');
+      return res.status(404).json({ error: 'Candidat non trouvé dans cette offre' });
+    }
 
-      // Mettre à jour le statut de l'application
-      application.status = status;
+    // Trouver l'application spécifique dans le tableau applications du candidat
+    console.log('Applications du candidat:', candidat.applications); // Log des applications du candidat
+    const application = candidat.applications.find(app => app.jobId && app.jobId.toString() === offerId);
 
-      // Sauvegarder le candidat avec le statut mis à jour
-      await candidat.save();
 
-      res.status(200).json({ success: true, message: 'Statut mis à jour avec succès' });
+    if (!application) {
+      console.error('Application du candidat non trouvée pour cette offre');
+      return res.status(404).json({ error: 'Application du candidat non trouvée pour cette offre' });
+    }
+
+    // Mettre à jour le statut de l'application
+    application.status = status;
+
+    // Sauvegarder le candidat avec le statut mis à jour
+    await candidat.save();
+
+    console.log('Statut mis à jour avec succès');
+    return res.status(200).json({ success: true, message: 'Statut mis à jour avec succès' });
   } catch (error) {
-      console.error('Erreur lors de la mise à jour du statut:', error);
-      res.status(500).json({ error: 'Erreur serveur' });
+    console.error('Erreur lors de la mise à jour du statut:', error);
+    return res.status(500).json({ error: 'Erreur serveur' });
   }
 };
 

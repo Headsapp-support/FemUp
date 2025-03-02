@@ -17,7 +17,7 @@ const condidatSchema = new mongoose.Schema({
     offerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Recruteur.postedOffers' }, // Correction ici pour faire référence à l'offre
     date: { type: Date, default: Date.now },
     status: { type: String, enum: ['En attente', 'Accepté', 'Refusé', 'Préselectionné'], default: 'En attente' },
-    cvUploaded: { type: String, required: true },
+    cvUploaded: { type: String },
   }],
  
   resetPasswordToken: String,   // Token pour la réinitialisation du mot de passe
