@@ -20,7 +20,7 @@ const RecruteursAdmin = () => {
   useEffect(() => {
     const fetchRecruiters = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/recruteur/recruiters');
+        const response = await axios.get('https://femup-1.onrender.com/api/recruteur/recruiters');
         console.log('Recruteurs récupérés:', response.data); // Ajout du log pour vérifier les données
         setRecruiters(response.data);
         setFilteredRecruiters(response.data);
@@ -60,7 +60,7 @@ const RecruteursAdmin = () => {
     }
     
     try {
-        const response = await axios.get(`http://localhost:5000/api/recruteur/recruteurs/${recruteur._id}`);
+        const response = await axios.get(`https://femup-1.onrender.com/api/recruteur/recruteurs/${recruteur._id}`);
       console.log("Réponse du backend avec les détails du recruteur :", response.data); // Log la réponse
       setModalRecruiter(response.data);
     } catch (error) {
@@ -169,7 +169,7 @@ const RecruteursAdmin = () => {
               <p><strong>Description:</strong> {modalRecruiter.description}</p>
               <p><strong>Secteur:</strong> {modalRecruiter.sector}</p>
               {modalRecruiter.logo && (
-                <p><strong>Logo:</strong> <img src={`http://localhost:5000/uploads/${modalRecruiter.logo}`} alt="Logo" width="100" /></p>
+                <p><strong>Logo:</strong> <img src={`https://femup-1.onrender.com/uploads/${modalRecruiter.logo}`} alt="Logo" width="100" /></p>
               )}
               <div className="modal-footer">
                 <button onClick={closeModal}>Fermer</button>

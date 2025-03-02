@@ -49,7 +49,7 @@ const AdminDashboard = () => {
       try {
         const token = localStorage.getItem('token'); // Adapte selon ton stockage
 
-        const response = await axios.get('http://localhost:5000/api/admin/stats', {
+        const response = await axios.get('https://femup-1.onrender.com/api/admin/stats', {
           headers: {
             Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
           },
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
       try {
         const token = localStorage.getItem('token'); // Adapte selon ton stockage
   
-        const response = await axios.get(`http://localhost:5000/api/admin/statistiques-globales`, {
+        const response = await axios.get(`https://femup-1.onrender.com/api/admin/statistiques-globales`, {
           headers: {
             Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
           },

@@ -32,7 +32,7 @@ const ContactForm = () => {
 
     try {
       // Envoi des données au backend
-      const response = await fetch('http://localhost:5000/api/messages', { // URL du backend à mettre à jour
+      const response = await fetch('https://femup-1.onrender.com/api/messages', { // URL du backend à mettre à jour
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

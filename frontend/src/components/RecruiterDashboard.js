@@ -48,13 +48,13 @@ const RecruiterDashboard = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:5000/api/recruteur/profile', {
+      const response = await axios.get('https://femup-1.onrender.com/api/recruteur/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const offerCounts = {};
       for (const offer of response.data.postedOffers) {
-        const countResponse = await axios.get(`http://localhost:5000/api/recruteur/offres/${offer._id}/candidatures/count`, {
+        const countResponse = await axios.get(`https://femup-1.onrender.com/api/recruteur/offres/${offer._id}/candidatures/count`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         offerCounts[offer._id] = countResponse.data.candidatureCount;
@@ -132,7 +132,7 @@ const RecruiterDashboard = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/recruteur/offres', formValues, {
+      await axios.post('https://femup-1.onrender.com/api/recruteur/offres', formValues, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -158,7 +158,7 @@ const RecruiterDashboard = () => {
         return;
       }
 
-      const response = await axios.put(`http://localhost:5000/api/recruteur/offres/${offerId}`, formValues, {
+      const response = await axios.put(`https://femup-1.onrender.com/api/recruteur/offres/${offerId}`, formValues, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -181,7 +181,7 @@ const RecruiterDashboard = () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/recruteur/offres/${offerId}`, {
+        await axios.delete(`https://femup-1.onrender.com/api/recruteur/offres/${offerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRecruiterData((prevData) => ({

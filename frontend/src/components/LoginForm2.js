@@ -68,7 +68,7 @@ const LoginForm2 = () => {
       }
   
       // Envoi des données au backend
-    await axios.post('http://localhost:5000/api/recruteur/register', data, {
+    await axios.post('https://femup-1.onrender.com/api/recruteur/register', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

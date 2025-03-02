@@ -20,7 +20,7 @@ const Condidatadmin = () => {
   useEffect(() => {
     const fetchCondidats = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/condidats');
+        const response = await axios.get('https://femup-1.onrender.com/api/condidats');
         console.log('Données des candidats:', response.data);  // Vérifier la structure exacte ici
   
         // Vérifie si la clé 'condidats' existe et si elle est bien un tableau
@@ -68,7 +68,7 @@ const Condidatadmin = () => {
     }
     
     try {
-      const response = await axios.get(`http://localhost:5000/api/condidats/${Condidat._id}`);
+      const response = await axios.get(`https://femup-1.onrender.com/api/condidats/${Condidat._id}`);
       console.log("Réponse du backend avec les détails du Condidat :", response.data); // Log la réponse
       setModalCondidat(response.data);
     } catch (error) {

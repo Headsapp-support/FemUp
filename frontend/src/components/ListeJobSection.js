@@ -17,7 +17,7 @@ function ListeJobSection() {
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/recruteur/all-offers');
+        const response = await axios.get('https://femup-1.onrender.com/api/recruteur/all-offers');
         // Filtrer les offres pour ne garder que celles avec le statut "Postulé"
         const postulatedOffers = response.data.offers.filter(offer => offer.status === 'approved');
         setOffers(postulatedOffers); // Met à jour l'état avec les offres filtrées

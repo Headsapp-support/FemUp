@@ -24,7 +24,7 @@ const Settings = () => {
     const fetchProfile = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/recruteur/profile', {
+            const response = await axios.get('https://femup-1.onrender.com/api/recruteur/profile', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -106,7 +106,7 @@ const Settings = () => {
       console.log('Données envoyées au backend :', formDataToSend);
 
       const response = await axios.put(
-        'http://localhost:5000/api/recruteur/profile',
+        'https://femup-1.onrender.com/api/recruteur/profile',
         formDataToSend,
         {
           headers: {

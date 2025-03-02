@@ -11,7 +11,7 @@ const FreelanceJobsSection = () => {
   // Fonction pour récupérer toutes les offres triées
   const fetchLatestOffers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/recruteur/all-offers');
+      const response = await axios.get('https://femup-1.onrender.com/api/recruteur/all-offers');
       console.log(response.data.offers); // Vérifie la réponse de l'API
 
       // Trier les offres par date, du plus récent au plus ancien

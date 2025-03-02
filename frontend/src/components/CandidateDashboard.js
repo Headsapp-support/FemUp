@@ -38,7 +38,7 @@ const CandidateDashboard = () => {
           return;
         }
   
-        const response = await axios.get('http://localhost:5000/api/condidat/profile', {
+        const response = await axios.get('https://femup-1.onrender.com/api/condidat/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -67,7 +67,7 @@ const CandidateDashboard = () => {
       formData.append('cv', file);
 
       try {
-        const response = await axios.post('http://localhost:5000/api/condidat/uploads', formData, {
+        const response = await axios.post('https://femup-1.onrender.com/api/condidat/uploads', formData, {
           headers: {
             Authorization: `Bearer ${tokenRef.current}`,
             'Content-Type': 'multipart/form-data',
@@ -103,7 +103,7 @@ const CandidateDashboard = () => {
   
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/condidat/submit-feedback', { feedback }, {
+      const response = await axios.post('https://femup-1.onrender.com/api/condidat/submit-feedback', { feedback }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -149,7 +149,7 @@ const CandidateDashboard = () => {
           <div className="cv-preview">
             <p>CV téléchargé : 
               <a 
-                href={`http://localhost:5000/uploads/${profileData.cv}`} 
+                href={`https://femup-1.onrender.com/uploads/${profileData.cv}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 download

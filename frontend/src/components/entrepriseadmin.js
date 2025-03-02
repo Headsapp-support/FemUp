@@ -65,7 +65,7 @@ const EntrepriseAdmin = () => {
       // Si selectedEntreprise existe, cela signifie que c'est une modification
       if (selectedEntreprise) {
         // Mettre à jour l'entreprise
-        await axios.put(`http://localhost:5000/api/entreprises/${selectedEntreprise._id}`, formData, {
+        await axios.put(`https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -73,7 +73,7 @@ const EntrepriseAdmin = () => {
         alert('Entreprise mise à jour avec succès');
       } else {
         // Sinon, ajouter une nouvelle entreprise
-        await axios.post('http://localhost:5000/api/add-entreprise', formData, {
+        await axios.post('https://femup-1.onrender.com/api/add-entreprise', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -93,7 +93,7 @@ const EntrepriseAdmin = () => {
   // Fonction pour charger les entreprises existantes
   const fetchEntreprises = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/entreprises');
+      const response = await axios.get('https://femup-1.onrender.com/api/entreprises');
       console.log(response.data); // Vérifiez les données renvoyées par l'API
       setEntreprises(response.data);
     } catch (error) {
@@ -104,7 +104,7 @@ const EntrepriseAdmin = () => {
   // Fonction pour supprimer une entreprise
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/entreprises/${id}`);
+      await axios.delete(`https://femup-1.onrender.com/api/entreprises/${id}`);
       alert('Entreprise supprimée avec succès');
       fetchEntreprises(); // Recharger les entreprises après la suppression
     } catch (error) {

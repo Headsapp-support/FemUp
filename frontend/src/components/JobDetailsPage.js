@@ -31,7 +31,7 @@ const JobDetailsPage = () => {
   
     try {
       // Appel à une API qui retourne les candidatures de l'utilisateur
-      const response = await axios.get('http://localhost:5000/api/condidat/candidatures', {
+      const response = await axios.get('https://femup-1.onrender.com/api/condidat/candidatures', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +58,7 @@ const JobDetailsPage = () => {
   // Fonction pour récupérer les détails de l'offre
   const fetchJobDetails = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/recruteur/offer/${offerId}`);
+      const response = await axios.get(`https://femup-1.onrender.com/api/recruteur/offer/${offerId}`);
       setJobDetails(response.data.offer);
       checkIfAlreadyApplied(response.data.offer); // Vérification après récupération des détails
     } catch (err) {
@@ -104,7 +104,7 @@ const JobDetailsPage = () => {
   
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:5000/api/condidat/postuler', formData, {
+      const response = await axios.post('https://femup-1.onrender.com/api/condidat/postuler', formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data' // Important pour envoyer le fichier correctement

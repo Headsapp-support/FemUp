@@ -16,7 +16,7 @@ const EntrepriseList = () => {
     useEffect(() => {
       const fetchEntreprises = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/entreprises'); // Remplacez par l'URL de votre API
+          const response = await axios.get('https://femup-1.onrender.com/api/entreprises'); // Remplacez par l'URL de votre API
           setEntreprises(response.data);
           setFilteredEntreprises(response.data);
         } catch (error) {

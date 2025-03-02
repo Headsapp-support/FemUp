@@ -22,7 +22,7 @@ const ControleAcces = () => {
         return;
       }
   
-      const response = await axios.get('http://localhost:5000/api/admin/en-attente', {
+      const response = await axios.get('https://femup-1.onrender.com/api/admin/en-attente', {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -58,7 +58,7 @@ const ControleAcces = () => {
         return;
       }
 
-      await axios.put(`http://localhost:5000/api/admin/${offerId}/accepter`, {}, {
+      await axios.put(`https://femup-1.onrender.com/api/admin/${offerId}/accepter`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -80,7 +80,7 @@ const ControleAcces = () => {
         return;
       }
 
-      await axios.put(`http://localhost:5000/api/admin/${offerId}/rejeter`, {}, {
+      await axios.put(`https://femup-1.onrender.com/api/admin/${offerId}/rejeter`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

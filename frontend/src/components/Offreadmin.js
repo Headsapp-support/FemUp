@@ -21,7 +21,7 @@ const OffersAdmin = () => {
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/recruteur/all-offers');
+        const response = await axios.get('https://femup-1.onrender.com/api/recruteur/all-offers');
         setOffers(response.data.offers);
         setFilteredOffers(response.data.offers);
       } catch (error) {
@@ -55,7 +55,7 @@ const OffersAdmin = () => {
 
   const openModal = async (offer) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/recruteur/offres/${offer._id}`);
+      const response = await axios.get(`https://femup-1.onrender.com/api/recruteur/offres/${offer._id}`);
       setModalOffer(response.data);
     } catch (error) {
       setError('Erreur lors de la récupération des détails de l\'offre');

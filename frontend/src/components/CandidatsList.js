@@ -27,7 +27,7 @@ const CandidatsList = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:5000/api/recruteur/offres/${offerId}/candidats`, {
+        const response = await axios.get(`https://femup-1.onrender.com/api/recruteur/offres/${offerId}/candidats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -67,7 +67,7 @@ const CandidatsList = () => {
     }
   
     // Si le lien est relatif, on le transforme en lien absolu
-    const baseUrl = "http://localhost:5000"; // Remplace par l'URL de ton backend
+    const baseUrl = "https://femup-1.onrender.com"; // Remplace par l'URL de ton backend
     const fullUrl = cvLink.startsWith('http') ? cvLink : `${baseUrl}${cvLink}`;
   
     if (fullUrl.includes('undefined')) {
@@ -94,7 +94,7 @@ const CandidatsList = () => {
         }
 
         const response = await axios.patch(
-            `http://localhost:5000/api/recruteur/offres/${offerId}/candidats/status`,
+            `https://femup-1.onrender.com/api/recruteur/offres/${offerId}/candidats/status`,
             { candidatId, status },
             { headers: { Authorization: `Bearer ${token}` } }
         );

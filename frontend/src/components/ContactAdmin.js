@@ -11,7 +11,7 @@ const ContactAdmin = () => {
   // Fonction pour récupérer les messages du backend
   const fetchMessages = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/messages');
+      const response = await fetch('https://femup-1.onrender.com/api/messages');
       if (!response.ok) {
         throw new Error('Impossible de récupérer les messages');
       }
@@ -28,7 +28,7 @@ const ContactAdmin = () => {
 
   const handleDeleteMessage = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/messages/${id}`, {
+      const response = await fetch(`https://femup-1.onrender.com/api/messages/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
