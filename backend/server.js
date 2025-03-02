@@ -19,11 +19,23 @@ const PORT = process.env.PORT || 5000;
 
 
 // Utiliser CORS pour permettre les requêtes venant de n'importe quelle origine
-app.use(cors({
-  origin: "https://fem-up-casm.vercel.app/", // Remplacez par l'URL de votre frontend
-  methods: ["get", "post", "put", "delete", "patch"],
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (process.env.NODE_ENV === 'production') {
+      // Permettre uniquement l'URL de production
+      callback(null, "https://fem-up-casm.vercel.app");
+    } else {
+      // En environnement de développement, autoriser toutes les origines
+      callback(null, true);
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 
 // Middleware pour analyser les données JSON
