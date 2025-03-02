@@ -22,16 +22,19 @@ const PORT = process.env.PORT || 5000;
 const corsOptions = {
   origin: (origin, callback) => {
     if (process.env.NODE_ENV === 'production') {
-      // Permettre uniquement l'URL de production
+      // En production, autoriser l'URL de Vercel
       callback(null, "https://fem-up-casm.vercel.app");
     } else {
-      // En environnement de développement, autoriser toutes les origines
-      callback(null, true);
+      // En développement, autoriser localhost
+      callback(null, true);  // true permet à localhost:3000 d'accéder
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true,
 };
+
+app.use(cors(corsOptions));
+
 
 app.use(cors(corsOptions));
 
