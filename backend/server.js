@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 // Utiliser CORS pour permettre les requêtes venant de n'importe quelle origine
 app.use(cors({
   origin: "https://fem-up-casm.vercel.app/", // Remplacez par l'URL de votre frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["get", "post", "put", "delete", "patch"],
   credentials: true,
 }));
 app.use(express.json());
