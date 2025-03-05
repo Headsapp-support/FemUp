@@ -18,17 +18,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-// Définir les origines autorisées
-const allowedOrigins = [
-  'https://fem-up-casm.vercel.app',  // URL de production
-  'http://localhost:3000'           // URL de développement
-];
-
-// Gestion des requêtes OPTIONS
 app.use(cors({
   origin: ['https://fem-up-casm.vercel.app', 'http://localhost:3000'],  // Liste des origines autorisées
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Les en-têtes autorisés
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],  // Méthodes autorisées
+  allowedHeaders: ['Content-Type', 'Authorization', 'credentials'],  // Ajoutez 'credentials'
   credentials: true,  // Permet d'envoyer des cookies ou autres informations d'identification
 }));
 
