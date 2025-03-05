@@ -18,17 +18,25 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-const allowedOrigins = ['https://fem-up-casm.vercel.app'];
+// Définir les origines autorisées
+const allowedOrigins = [
+  'https://fem-up-casm.vercel.app',  // URL de production
+  'http://localhost:3000'           // URL de développement
+];
 
-// Utiliser CORS pour permettre les requêtes venant de n'importe quelle origine
+// Utiliser CORS pour permettre les requêtes provenant des origines spécifiées
 app.use(cors({
-  origin: [
-    allowedOrigins, // URL de production
-    "http://localhost:3000"          // URL de développement
-  ],
-  methods: ["get", "post", "put", "delete", "patch"],
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Ajouter si nécessaire
-  credentials: true,
+  origin: function(origin, callback) {
+    // Si l'origine est dans la liste des origines autorisées ou si c'est une requête sans origine (par exemple, depuis Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS non autorisé'), false);
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],  // Assurez-vous que ces méthodes sont toutes nécessaires
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,  // Si vous avez besoin d'envoyer des cookies ou des informations d'identification
 }));
 
 
