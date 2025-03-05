@@ -137,7 +137,7 @@ const forgotPassword = async (req, res) => {
       },
     });
 
-    const resetUrl = `http://localhost:3000/changer-mot-de-passe/${resetToken}`;
+    const resetUrl = `https://femup-1.onrender.com/changer-mot-de-passe/${resetToken}`;
 
     const message = {
       from: 'nadaznegui@gmail.com',

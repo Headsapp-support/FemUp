@@ -27,7 +27,8 @@ app.use(cors({
   methods: ["get", "post", "put", "delete", "patch"],
   credentials: true,
 }));
-app.use(cors(corsOptions));
+
+
 app.use(express.json());
 
 // Middleware pour analyser les données JSON
