@@ -25,6 +25,7 @@ app.use(cors({
   credentials: true,  // Permet d'envoyer des cookies ou autres informations d'identification
 }));
 
+app.options('*', cors());
 
 app.use(express.json());
 
