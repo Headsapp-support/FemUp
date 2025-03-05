@@ -24,29 +24,14 @@ const allowedOrigins = [
   'http://localhost:3000'           // URL de développement
 ];
 
-// Utiliser CORS pour permettre les requêtes provenant des origines spécifiées
+// Gestion des requêtes OPTIONS
 app.use(cors({
-  origin: function (origin, callback) {
-    // Accepter les origines spécifiées ou laisser passer les requêtes sans origine (par exemple, Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS non autorisé'), false);
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],  // Assurez-vous que PUT est bien autorisé
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // Si vous avez besoin d'envoyer des cookies ou des informations d'identification
+  origin: ['https://fem-up-casm.vercel.app', 'http://localhost:3000'],  // Liste des origines autorisées
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Les en-têtes autorisés
+  credentials: true,  // Permet d'envoyer des cookies ou autres informations d'identification
 }));
 
-
-// Gestion des requêtes OPTIONS
-app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Origin', 'https://fem-up-casm.vercel.app');
-  res.status(204).end();  // Réponse vide
-});
 
 app.use(express.json());
 
