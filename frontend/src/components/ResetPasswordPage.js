@@ -32,6 +32,7 @@ const ResetPasswordPage = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          credentials: 'include',
         },
         body: JSON.stringify({ newPassword }),
       });
