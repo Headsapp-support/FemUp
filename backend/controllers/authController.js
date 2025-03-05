@@ -137,7 +137,7 @@ const forgotPassword = async (req, res) => {
       },
     });
 
-    const resetUrl = `http://localhost:3000/changer-mot-de-passe/${resetToken}`;
+    const resetUrl = `https://fem-up-casm.vercel.app/changer-mot-de-passe/${resetToken}`;
 
     const message = {
       from: 'nadaznegui@gmail.com',
