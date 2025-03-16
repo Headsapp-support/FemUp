@@ -94,7 +94,7 @@ body {
 .cl-candidat-card-actions button {
     flex: 1;
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     border: 1px solid #ccc;
     border-radius: 0;
@@ -137,7 +137,7 @@ body {
 
 .cl-profile-info {
     flex: 1;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
@@ -167,7 +167,7 @@ body {
 }
 
 .cl-modal-body {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -244,7 +244,7 @@ button {
   }
 
   .candidatCard h5 {
-    font-size: 16px; /* Taille du titre réduite */
+    font-size: 18px; /* Taille du titre réduite */
     margin-bottom: 10px;
   }
   
@@ -270,7 +270,7 @@ button {
     background-color:rgb(254, 254, 254); /* Bleu */
     color: #e4aea8; /* Texte en blanc */
     border: 2px solid #e4aea8; /* Bordure de couleur rose clair */
-    font-size: 12px; /* Réduit la taille du texte dans les boutons */
+    font-size: 14px; /* Réduit la taille du texte dans les boutons */
     padding: 10px 15px; /* Ajuste la hauteur du bouton (réduit légèrement) */
     border-radius: 5px; /* Coins arrondis */
   }
@@ -280,7 +280,7 @@ button {
     background-color: #e4aea8; /* Fond transparent */
     color:rgb(249, 246, 245); /* Texte de couleur rose clair */
     border: 2px solid #e4aea8; /* Bordure rose clair */
-    font-size: 12px; /* Réduit la taille du texte dans les boutons */
+    font-size: 14px; /* Réduit la taille du texte dans les boutons */
     padding: 5px 10px; /* Ajuste la hauteur du bouton (réduit légèrement) */
     border-radius: 5px; /* Coins arrondis */
   }
@@ -293,7 +293,7 @@ button {
 }
 
 .candidatCardMiniActions .btn {
-  font-size: 12px; /* Taille de texte réduite pour les mini-boutons */
+  font-size: 14px; /* Taille de texte réduite pour les mini-boutons */
   padding: 5px 10px; /* Taille ajustée pour les mini-boutons */
   border-radius: 5px; /* Coins arrondis */
 }

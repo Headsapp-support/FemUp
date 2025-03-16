@@ -191,7 +191,7 @@ if (isLoading) {
             <div className="profileDetails">
               <img src={selectedCandidat.profileImage || '/default-profile.png'} alt="Profile" className="profileImg" />
               <div className="profileInfo">
-                <p><strong>Email::</strong> {selectedCandidat.email}</p>
+                <p><strong>Email:</strong> {selectedCandidat.email}</p>
                 <p><strong>Civilité:</strong> {selectedCandidat.civilite}</p>
                 <p><strong>Date de Naissance:</strong> {new Date(selectedCandidat.dateNaissance).toLocaleDateString()}</p>
                 <p><strong>Spécialité:</strong> {selectedCandidat.specialite}</p>

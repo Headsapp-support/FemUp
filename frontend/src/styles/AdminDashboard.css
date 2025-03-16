@@ -52,7 +52,7 @@
   margin-bottom: 20px;
 }
 
-.card {
+.admin-card {
   background-color: #f4f4f4;
   padding: 20px;
   border-radius: 8px;
@@ -61,11 +61,11 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.card h3 {
+.admin-card h3 {
   font-size: 1.2em;
 }
 
-.card p {
+.admin-card p {
   font-size: 1.5em;
   font-weight: bold;
   margin-top: 10px;
@@ -334,7 +334,7 @@
     height: 200px; /* Ajustement de la taille du graphique */
   }
 
-  .card, .action-card, .tracking-card {
+  .admin-card, .action-card, .tracking-card {
     padding: 15px; /* Réduction des marges */
   }
 

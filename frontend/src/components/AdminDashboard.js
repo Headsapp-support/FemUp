@@ -181,19 +181,19 @@ const AdminDashboard = () => {
         </header>
 
         <section className="stats">
-          <div className="card">
+          <div className="admin-card">
             <h3>Total Candidats</h3>
             <p>{stats.totalCandidates}</p>
           </div>
-          <div className="card">
+          <div className="admin-card">
             <h3>Total Recruteurs</h3>
             <p>{stats.totalRecruiters}</p>
           </div>
-          <div className="card">
+          <div className="admin-card">
             <h3>Total Offres</h3>
             <p>{stats.totalOffers}</p>
           </div>
-          <div className="card">
+          <div className="admin-card">
             <h3>Total Entreprises</h3>
             <p>{stats.totalCompanies}</p>
           </div>

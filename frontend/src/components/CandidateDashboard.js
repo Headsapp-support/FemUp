@@ -133,9 +133,7 @@ const CandidateDashboard = () => {
           <button className="btn-edit-profile" onClick={handleEditProfile}>
             Modifier mon profil
           </button>
-          <label htmlFor="cv-upload" className="btn-upload-cv">
-            Télécharger CV
-          </label>
+          
           <input
             type="file"
             id="cv-upload"
@@ -169,7 +167,7 @@ const CandidateDashboard = () => {
           <Link to="/discussion">Discussion</Link>
         </button>
         <button className="btn-follow-responses">
-          <Link to="/responses">Suivi des réponses</Link>
+          <Link to="">Suivi des réponses</Link>
         </button>
       </div>
 
