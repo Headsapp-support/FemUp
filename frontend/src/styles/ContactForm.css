@@ -1,0 +1,112 @@
+/* ContactForm CSS */
+
+/* Body */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url('/public/images/experiences.png'); /* Remplacez par l'URL de votre image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Conteneur du formulaire avec une superposition sombre pour améliorer la lisibilité */
+.contact-form-container {
+  width: 90%;
+  max-width: 600px;  /* Augmenter la largeur maximale pour la version web */
+  margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative; /* Pour s'assurer que l'overlay se place correctement */
+  z-index: 1;
+}
+
+/* Titre du formulaire */
+.contact-form-container h4 {
+  font-size: 2rem;  /* Agrandir la taille du titre pour les écrans larges */
+  color: #293a4d;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Formulaire */
+.contact-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;  /* Remplir tout l'espace disponible */
+}
+
+/* Champs de saisie */
+.contact-form-container .MuiTextField-root {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%; /* Les champs prennent toute la largeur */
+}
+
+/* Bouton de soumission */
+.contact-form-container .MuiButton-contained {
+  background-color: #e4aea8;
+  width: 100%; /* Faire en sorte que le bouton de soumission prenne toute la largeur */
+}
+
+/* Bouton de soumission au survol */
+.contact-form-container .MuiButton-contained:hover {
+  background-color: #dd9e97;
+}
+
+/* Message de confirmation (après soumission) */
+.contact-form-container .confirmation-message {
+  font-size: 1.1rem;
+  color: green;
+  margin-top: 20px;
+}
+
+/* MEDIA QUERIES */
+
+/* Tablette et écran moyen */
+@media (max-width: 768px) {
+  .contact-form-container {
+      max-width: 90%;  /* Réduire la largeur du formulaire sur les tablettes */
+      padding: 20px;
+  }
+
+  .contact-form-container h4 {
+      font-size: 1.5rem;  /* Réduire la taille du titre */
+  }
+
+  .contact-form-container .MuiTextField-root {
+      margin-bottom: 15px;
+  }
+
+  .contact-form-container .MuiButton-contained {
+      font-size: 1rem;  /* Ajuster la taille du bouton */
+  }
+}
+
+/* Smartphone et petits écrans */
+@media (max-width: 480px) {
+  .contact-form-container {
+      max-width: 95%;  /* Largeur encore plus petite pour les petits écrans */
+      padding: 15px;
+  }
+
+  .contact-form-container h4 {
+      font-size: 1.3rem;  /* Réduire encore la taille du titre */
+  }
+
+  .contact-form-container .MuiTextField-root {
+      margin-bottom: 10px;  /* Réduire les marges pour compacter */
+  }
+
+  .contact-form-container .MuiButton-contained {
+      font-size: 0.95rem;  /* Ajuster la taille du bouton */
+  }
+}

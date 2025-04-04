@@ -1,0 +1,541 @@
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #e4aea8;
+  color: white;
+  padding-top: 20px;
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar nav ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sidebar nav ul li {
+  padding: 15px;
+  text-align: left;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar nav ul li a:hover {
+  background-color: #e5d3ce;
+  padding-left: 20px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.header h1 {
+  font-size: 2em;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.admin-card {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  width: 22%;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-card h3 {
+  font-size: 1.2em;
+}
+
+.admin-card p {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 30px;
+}
+
+.action-cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-card {
+  background-color: #efe6e6;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 48%;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-card a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-action {
+  display: inline-block;
+  background-color: #e4aea8;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.button-spacing {
+  margin-right: 10px; /* Espacement entre les boutons */
+}
+
+@media (max-width: 768px) {
+  .button-spacing {
+    margin-bottom: 5px; /* Réduire l'espacement pour les petits écrans */
+  }
+}
+
+@media (max-width: 480px) {
+  .button-spacing {
+    margin-bottom: 2px; /* Réduire encore l'espacement */
+  }
+}
+.tracking {
+  margin-top: 30px;
+}
+
+.tracking-cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tracking-card {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  width: 30%;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tracking-card h3 {
+  font-size: 1.2em;
+}
+
+.tracking-card p {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Tableau des candidats */
+.candidate-section {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-section h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-bar input {
+  padding: 10px 15px;
+  width: 250px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #e4aea8; /* Couleur verte lors de la mise au focus */
+}
+
+.candidate-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.candidate-table thead {
+  background-color: #efe6e6; /* Couleur de fond du tableau */
+  color: #293a4d;
+}
+
+.candidate-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.candidate-table tbody {
+  background-color: #fff;
+}
+
+.candidate-table tr {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.candidate-table td {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.candidate-table tr:hover {
+  background-color: #f1f1f1; /* Survol de la ligne */
+}
+
+.candidate-table button {
+  background-color: #efe6e6;
+  color: #293a4d;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.candidate-table button:hover {
+  background-color: #d8d1d1; /* Couleur au survol */
+}
+
+
+.recruiter-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.recruiter-table thead {
+  background-color: #efe6e6; /* Couleur de fond du tableau */
+  color: #293a4d;
+}
+
+.recruiter-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.recruiter-table tbody {
+  background-color: #fff;
+}
+
+.recruiter-table tr {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.recruiter-table td {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.recruiter-table tr:hover {
+  background-color: #f1f1f1; /* Survol de la ligne */
+}
+
+.recruiter-table button {
+  background-color: #efe6e6;
+  color: #293a4d;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recruiter-table button:hover {
+  background-color: #d8d1d1; /* Couleur au survol */
+}
+
+
+
+@media (max-width: 1024px) {
+  .admin-dashboard {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 10px;
+  }
+
+  .content {
+    padding: 10px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;  /* 2 colonnes au lieu de 4 */
+  }
+
+  .action-card, .tracking-card {
+    width: 100%;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats {
+    grid-template-columns: 1fr; /* 1 colonne pour les petites résolutions */
+  }
+
+  .chart-container {
+    height: 200px; /* Ajustement de la taille du graphique */
+  }
+
+  .admin-card, .action-card, .tracking-card {
+    padding: 15px; /* Réduction des marges */
+  }
+
+  .btn-action {
+    font-size: 14px; /* Réduction de la taille des boutons */
+  }
+}
+
+/* Style de la modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Fond semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation d'apparition douce */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 600px;
+  width: 80%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(0.95);
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.modal-content p {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #555;
+}
+
+.modal-content p strong {
+  font-weight: bold;
+  color: #333;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-footer {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.modal-footer button {
+  padding: 12px 25px;
+  background-color: #e4aea8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+  background-color: #f0c0ba; /* Changement de couleur au survol */
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .candidate-table th, .candidate-table td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: #ecbbb6;
+  color: white;
+}
+
+.pagination .active {
+  background-color: #e4aea8;
+  color: white;
+}
+
+/* Style global pour le formulaire */
+form {
+background-color: #f9f9f9; /* Fond léger pour le formulaire */
+padding: 2rem;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+max-width: 800px; /* Largeur maximale */
+margin: 3rem auto; /* Centrage horizontal et un peu d'espacement en haut */
+}
+
+/* Titre du formulaire */
+form h2 {
+text-align: center;
+color: #293a4d;
+font-size: 28px;
+margin-bottom: 1rem;
+font-weight: 600;
+}
+
+/* Espacement entre les champs du formulaire */
+form .MuiGrid-item {
+margin-bottom: 1rem;
+}
+
+/* Styles pour les champs de texte */
+.MuiTextField-root {
+margin-bottom: 1.5rem; /* Espace entre les champs */
+}
+
+/* Style du bouton de soumission */
+.MuiButton-root {
+width: 100%; /* Largeur à 100% pour être aussi large que le formulaire */
+padding: 1rem;
+background-color: #e4aea8;
+color: white;
+font-weight: bold;
+transition: background-color 0.3s;
+}
+
+.MuiButton-root:hover {
+background-color: #f1bfba; /* Couleur sombre au survol */
+}
+
+/* Personnalisation des Grid items */
+@media (max-width: 600px) {
+.MuiGrid-item {
+  flex-basis: 100%; /* Les éléments prennent toute la largeur sur petit écran */
+}
+}
+
+.chart-container {
+width: 100%;
+height: 300px; /* Ajuste la hauteur du graphique */
+margin-top: 20px;
+}
+
+.chart {
+margin-top: 40px;
+}
+
+

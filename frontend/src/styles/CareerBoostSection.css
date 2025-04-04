@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.career-boost-section {
+  background-image: url('/public/images/CareerBoostSection.png'); /* Image de fond par défaut pour le bureau */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  background-color: #f5f5f5;
+}
+
+.career-boost-content {
+  text-align: center;
+  color: #dab887;
+}
+
+.career-boost-content p {
+  text-align: center;
+  color: #293a4d;
+  font-size: 1.3em;
+}
+
+.features {
+  display: flex;
+  justify-content: space-between; /* Espace uniformément réparti entre les éléments */
+  gap: 20px; /* Ajoute de l'espacement entre chaque élément */
+}
+
+.feature {
+  width: 30%; /* Chaque élément prendra 30% de la largeur du conteneur */
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.feature img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Arrondi les coins des images */
+  margin-bottom: 15px;
+}
+
+.feature h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #293a4d;
+}
+
+.feature p {
+  font-size: 1em;
+  color: #666;
+}
+
+/* Styles pour les tablettes (max-width: 768px) */
+@media (max-width: 768px) {
+  .career-boost-section {
+    background-image: url('/public/images/CareerBoostSection.png'); /* Image de fond pour les tablettes */
+    background-attachment: scroll; /* Désactiver l'effet de fond fixe sur tablette */
+    background-size: cover; /* Garder l'image adaptée à la taille de l'écran */
+    background-position: center center; /* Garder l'image centrée */
+    height: auto; /* Laisser la hauteur s'ajuster à la taille de l'écran */
+  }
+
+  .features {
+    flex-direction: column; /* Afficher les éléments en colonne sur les tablettes */
+    gap: 10px; /* Réduire l'écart entre les éléments */
+  }
+
+  .feature {
+    width: 100%; /* Les éléments prennent toute la largeur sur les tablettes */
+    padding: 15px;
+  }
+
+  .career-boost-content p {
+    font-size: 1.1em; /* Réduire la taille du texte pour les tablettes */
+  }
+}
+
+/* Styles pour les smartphones (max-width: 600px) */
+@media (max-width: 600px) {
+  .career-boost-section {
+    background-image: url('/public/images/CareerBoostSection.png'); /* Image de fond pour les smartphones */
+    background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile */
+    background-size: cover; /* Garder l'image qui s'adapte à la largeur et hauteur */
+    background-position: center center; /* Garder l'image centrée */
+    height: auto; /* Laisser la hauteur s'ajuster à la taille de l'écran */
+    padding: 20px;
+  }
+
+  .features {
+    flex-direction: column; /* Afficher les éléments en colonne sur les smartphones */
+    gap: 10px; /* Réduire l'écart entre les éléments */
+  }
+
+  .feature {
+    width: 100%; /* Les éléments prennent toute la largeur sur les smartphones */
+    padding: 15px;
+  }
+
+  .career-boost-content p {
+    font-size: 1em; /* Réduire la taille du texte pour les smartphones */
+  }
+}

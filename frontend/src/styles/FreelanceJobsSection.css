@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .freelance-jobs-section {
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .freelance-jobs-content {
+    display: flex;
+    flex-direction: column; /* Alignement vertical */
+    gap: 20px; /* Espacement entre les éléments */
+  }
+  
+  .job-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card h2 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    color: #293a4d;
+    text-align: left
+  }
+  
+  .job-card p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: left
+  }
+  
+  .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .job-footer .date {
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  .job-footer .see-more {
+    padding: 10px 20px;
+    background-color: #dab887;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .job-footer .see-more:hover {
+    background-color: #e4aea8;
+  }
+
+  .explore-more {
+    padding: 15px 20px;
+    font-size: 1em;
+    border: none;
+    background-color: #dab887; /* Couleur de fond du bouton */
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    display: block;                  /* S'assurer que le bouton est un bloc */
+    margin: 0 auto; 
+  }
+  
+  .explore-more:hover {
+    background-color: #e4aea8; /* Couleur de fond au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille du bouton au survol */
+  }
+  
+  .explore-more a {
+    text-decoration: none; /* Enlever le soulignement */
+    color: inherit; /* Hérite de la couleur du bouton (noir) */
+  }

@@ -1,0 +1,168 @@
+/* Style de base */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.Header-section2 {
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Navbar principale */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Garder les boutons d'authentification à droite */
+  align-items: center;
+  padding: 20px 40px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Aligner les liens de navigation à droite */
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  margin-left: auto; /* Cela pousse les éléments vers la droite */
+}
+
+.nav-links li {
+  margin-right: 30px;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: #0c0c0c; /* Texte noir */
+  font-weight: bold;
+}
+
+.nav-links li a {
+  text-decoration: none;  /* Enlever le souligné */
+  color: inherit; /* Utiliser la couleur par défaut (ici noir) */
+}
+
+.nav-links li a:hover {
+  color: #e4aea8; /* Couleur au survol */
+}
+
+/* Pour les petits écrans */
+.nav-links.active {
+  display: block; /* Affiche le menu quand il est ouvert sur mobile */
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1000;
+}
+
+.auth-buttons button {
+  margin-left: 15px;
+  padding: 10px 20px;
+  border: none;
+  background-color:#ffffff ;
+  color: #e4aea8;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
+  font-weight: bold;
+  border: 0.5mm ridge #e4aea8;
+}
+
+.auth-buttons button:hover {
+  background-color:  #e4aea8; /* Couleur de fond au survol */
+  color: #ffffff;
+}
+
+.auth-buttons button a {
+  text-decoration: none; /* Enlever le soulignement */
+  color: inherit; /* Hérite de la couleur du bouton (noir) */
+}
+/* ----------- Responsivité -------------- */
+
+/* Menu hamburger (mobile/tablette) */
+.hamburger {
+  display: none; /* Masqué sur les grands écrans */
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger .bar {
+  width: 30px;
+  height: 4px;
+  margin: 5px;
+  background-color: #0c0c0c;
+  transition: 0.3s ease;
+}
+.logo img {
+  width: 50%; /* Ajustez la taille du logo selon vos besoins */
+ 
+}
+/* Pour les tablettes et mobiles */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;  /* Aligner les éléments horizontalement */
+    justify-content: space-between;  /* Garder les items à droite */
+  }
+
+  .nav-links {
+    display: none; /* Masqué par défaut */
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    z-index: 500;
+    padding: 20px;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+    font-size: 1.2em;
+  }
+
+  .hamburger {
+    display: flex; /* Affiché sur les petits écrans */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    display: block; /* Affiche le menu déroulant */
+  }
+}
+
+/* Mobile (jusqu'à 480px) */
+@media (max-width: 480px) {
+  .nav-links li {
+    font-size: 1em;
+  }
+
+  .auth-buttons button {
+    font-size: 0.9em;
+    padding: 8px 18px;
+  }
+}
+
+/* Modification de la disposition des boutons d'authentification sur mobile */
+@media (max-width: 600px) {
+  .auth-buttons {
+    display: flex;
+    flex-direction: row; /* Aligner les boutons horizontalement sur petits écrans */
+    position: static; /* Rendre la position des boutons non fixe sur petits écrans */
+    margin-top: 20px;
+    align-items: center;
+  }
+
+  .auth-buttons button {
+    width: auto; /* Les boutons gardent leur taille d'origine */
+    margin: 10px 0; /* Espacement entre les boutons */
+  }
+}

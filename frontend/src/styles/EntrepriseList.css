@@ -1,0 +1,104 @@
+/* EntrepriseList.css */
+
+/* Conteneur principal */
+.entreprise-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Titre de la recherche */
+.entreprise-search-title {
+  text-align: left;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Champ de recherche pour le nom de l'entreprise */
+.entreprise-search-input {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Champ de localisation avec l'icône */
+.entreprise-search-input-with-icon {
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding-left: 40px; /* espace pour l'icône */
+}
+
+/* Sélecteurs (localisation et secteur) */
+.entreprise-select-field {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Conteneur du bouton de recherche */
+.entreprise-job-container {
+  height: 100%;
+  font-weight: bold;
+  background-color: #e4aea8;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.entreprise-job-container:hover {
+  background-color: #dd9e97;
+}
+
+/* Conteneur des cartes */
+.entreprise-card-container {
+  margin-top: 40px;
+}
+
+/* Message si aucune entreprise n'est trouvée */
+.entreprise-no-results {
+  text-align: center;
+  color: #777;
+}
+
+/* Style des cartes d'entreprise */
+.entreprise-card {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.entreprise-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.entreprise-card-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.entreprise-card-title {
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.entreprise-card-description {
+  margin-top: 10px;
+  color: #555;
+}
+
+/* Icône de localisation */
+.entreprise-location-icon {
+  color: #dd9e97;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .entreprise-search-input, .entreprise-select-field {
+      margin-bottom: 10px;
+  }
+}

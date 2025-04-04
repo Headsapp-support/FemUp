@@ -1,0 +1,144 @@
+/* Body */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden; /* Enlever le scroll horizontal */
+}
+
+/* Header Section */
+.Header-section {
+  background-image: url('/public/images/hero-bg.png'); /* Image pour la version bureau */
+  background-size: cover; /* L'image couvre toute la section sans déformation */
+  background-position: center center; /* Centrer l'image */
+  height: 100vh; /* Hauteur de la section sur la version bureau */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrer verticalement le contenu */
+  position: relative;
+}
+
+.Free {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  padding-left: 20px;
+  position: relative;
+  z-index: 1; /* Assurez-vous que le contenu est au-dessus de l'image */
+}
+
+.Free-content {
+  text-align: center;
+  padding: 10px 40px;
+  max-width: 32%;
+  color: black;
+}
+
+.Free-content h1 {
+  font-size: 1.5em;
+  margin-bottom: 25px;
+  color: #e4aea8;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.Free-content p {
+  font-size: 1.2em;
+  margin-bottom: 25px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.connect-button {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  background-color: #dab887;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  display: block;
+  margin: 0 auto;
+}
+
+.connect-button:hover {
+  background-color: #e4aea8;
+  transform: scale(1.05);
+}
+
+.connect-button a {
+  text-decoration: none; /* Enlever le soulignement */
+  color: inherit; /* Hérite de la couleur du bouton (noir) */
+}
+
+/* Styles pour les tablettes et smartphones (max-width: 768px) */
+@media (max-width: 768px) {
+  .Header-section {
+    height: auto; /* Ajuster la hauteur de la section sur mobile et tablette */
+    background-image: url('/public/images/header.png'); /* Image pour la version mobile et tablette */
+    background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile/tablette */
+    background-size: cover; /* Garder l'image adaptée à la taille de l'écran */
+    background-position: center center; /* Centrer l'image */
+  }
+
+  .Free {
+    padding-left: 10px; /* Réduire le padding pour les petits écrans */
+    justify-content: center; /* Centrer le contenu */
+    height: auto; /* Ajuster la hauteur du conteneur */
+  }
+
+  .Free-content {
+    max-width: 90%; /* Augmenter la largeur du contenu pour les tablettes et smartphones */
+    padding: 10px 20px;
+  }
+
+  .Free-content h1 {
+    font-size: 1.5em; /* Réduire la taille de la police pour les tablettes et smartphones */
+  }
+
+  .Free-content p {
+    font-size: 1.1em; /* Ajuster la taille de la police pour une meilleure lisibilité */
+  }
+
+  .connect-button {
+    padding: 12px 18px; /* Réduire la taille du bouton pour les tablettes et smartphones */
+    font-size: 0.9em;
+  }
+}
+
+/* Pour les petits écrans, jusqu'à 600px */
+@media (max-width: 600px) {
+  .Header-section {
+    height: auto;
+    background-image: url('/public/images/header.png');
+    background-attachment: scroll;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .Free {
+    padding-left: 10px;
+    justify-content: center;
+    height: auto;
+  }
+
+  .Free-content {
+    max-width: 90%;
+    padding: 10px 20px;
+  }
+
+  .Free-content h1 {
+    font-size: 1.5em; /* Maintenir la même taille pour les petits écrans */
+  }
+
+  .Free-content p {
+    font-size: 1.1em; /* Même taille pour les petits écrans */
+  }
+
+  .connect-button {
+    padding: 12px 18px;
+    font-size: 0.9em;
+  }
+}

@@ -1,0 +1,118 @@
+/* Styles généraux (bureau) */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.women-freelance-section {
+  background-image: url('/public/images/WomenFreelanceSection.png'); /* Image de fond par défaut */
+  background-size: cover; /* L'image couvre toute la section */
+  background-position: center; /* Centrer l'image */
+  background-repeat: no-repeat; /* Empêcher la répétition de l'image */
+  display: flex;
+  justify-content: flex-end; /* Aligner le texte à droite sur la version bureau */
+  align-items: center; /* Centrer verticalement */
+  min-height: 100vh; /* Assurer que la section occupe toute la hauteur de l'écran */
+  padding: 20px;
+}
+
+.women-freelance-content {
+  max-width: 50%; /* Limiter la largeur du contenu à 50% pour la version bureau */
+  padding: 20px;
+  text-align: left; /* Aligner le texte à gauche */
+  margin-top: -190px;
+}
+
+.women-freelance-content h2 {
+  font-size: 2.5em; /* Taille de police plus grande pour la version bureau */
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+}
+
+.women-freelance-content p {
+  font-size: 1.2em;
+  color: #666;
+  line-height: 1.6;
+}
+
+.more-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 45px;
+  background-color: #e4aea8; /* Couleur personnalisée pour le bouton */
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.more-link:hover {
+  background-color: #dab887; /* Couleur plus claire au survol */
+}
+
+/* Styles pour les tablettes (max-width: 768px) */
+@media (max-width: 768px) {
+  .women-freelance-section {
+    background-image: url('/public/images/WomenFreelance.png'); /* Image pour les smartphones */
+    background-color: white;
+    background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile */
+    background-size: contain; /* Ajuster l'image pour qu'elle s'adapte à la largeur */
+    background-position: center center; /* Garder l'image centrée */
+    height: auto; /* Ajuster la hauteur de la section */
+    padding: 20px;
+  }
+
+  .women-freelance-content {
+    max-width: 90%; /* Augmenter la largeur du contenu sur mobile */
+    padding: 10px 0px;
+    text-align: center; /* Centrer le texte sur mobile */
+    margin-top: 0; /* Supprimer la marge top pour améliorer l'apparence */
+  }
+
+  .women-freelance-content h2 {
+    font-size: 1.6em; /* Réduire la taille de la police pour les smartphones */
+  }
+
+  .women-freelance-content p {
+    font-size: 1em; /* Ajuster la taille de la police */
+  }
+
+  .more-link {
+    font-size: 14px; /* Adapter la taille du bouton */
+  }
+}
+
+
+/* Styles pour les smartphones (max-width: 600px) */
+@media (max-width: 600px) {
+  .women-freelance-section {
+    background-image: url('/public/images/WomenFreelance.png'); /* Image pour les smartphones */
+    background-color: white;
+    background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile */
+    background-size: contain; /* Ajuster l'image pour qu'elle s'adapte à la largeur */
+    background-position: center center; /* Garder l'image centrée */
+    height: auto; /* Ajuster la hauteur de la section */
+    padding: 20px;
+  }
+
+  .women-freelance-content {
+    max-width: 90%; /* Augmenter la largeur du contenu sur mobile */
+    padding: 10px 0px;
+    text-align: center; /* Centrer le texte sur mobile */
+    margin-top: 0; /* Supprimer la marge top pour améliorer l'apparence */
+  }
+
+  .women-freelance-content h2 {
+    font-size: 1.6em; /* Réduire la taille de la police pour les smartphones */
+  }
+
+  .women-freelance-content p {
+    font-size: 1em; /* Ajuster la taille de la police */
+  }
+
+  .more-link {
+    font-size: 14px; /* Adapter la taille du bouton */
+  }
+}

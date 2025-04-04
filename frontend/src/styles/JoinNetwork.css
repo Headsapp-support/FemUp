@@ -1,0 +1,94 @@
+.join-network {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.text-content {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.text-content p {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.join-button {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  background-color: #e5d3ce;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.join-button:hover {
+  background-color: #e4aea8;
+}
+
+.image-content img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%; /* Image arrondie */
+  object-fit: cover;
+}
+
+/* Styles pour les tablettes (max-width: 768px) */
+@media (max-width: 768px) {
+  .join-network {
+    flex-direction: column; /* Afficher les éléments en colonne sur tablette */
+    padding: 20px; /* Réduire la marge sur tablette */
+  }
+
+  .text-content {
+    padding-right: 0; /* Retirer le padding à droite sur tablette */
+    margin-bottom: 20px; /* Espacement entre le texte et l'image */
+  }
+
+  .text-content p {
+    font-size: 1.2em; /* Réduire la taille de la police sur tablette */
+  }
+
+  .join-button {
+    font-size: 1em; /* Réduire la taille du bouton sur tablette */
+    padding: 8px 16px;
+  }
+
+  .image-content img {
+    width: 250px; /* Réduire la taille de l'image sur tablette */
+    height: 250px;
+  }
+}
+
+/* Styles pour les smartphones (max-width: 600px) */
+@media (max-width: 600px) {
+  .join-network {
+    flex-direction: column; /* Afficher les éléments en colonne sur mobile */
+    padding: 15px; /* Réduire la marge sur mobile */
+  }
+
+  .text-content p {
+    font-size: 1em; /* Réduire encore la taille de la police sur mobile */
+  }
+
+  .join-button {
+    font-size: 0.9em; /* Réduire la taille du bouton sur mobile */
+    padding: 8px 15px;
+  }
+
+  .image-content img {
+    width: 200px; /* Réduire la taille de l'image sur mobile */
+    height: 200px;
+  }
+
+  .buttons .join-button a {
+    text-decoration: none; /* Enlever le soulignement */
+    color: inherit; /* Hérite de la couleur du bouton, ce qui évite le bleu par défaut */
+}
+}
