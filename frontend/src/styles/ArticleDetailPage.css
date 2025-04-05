@@ -1,0 +1,144 @@
+/* Container principal pour toute la page */
+.article-detail-container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Section Article Header (titre + date) */
+  .article-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #701092 100%);
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .article-title {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: white;
+  }
+  
+  .article-date {
+    font-size: 1.1rem;
+    color: white;
+  }
+  
+  /* Section Image */
+  .image-section {
+    margin-bottom: 40px;
+  }
+  
+  .article-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* Contenu de l'article */
+  .article-content {
+    margin-bottom: 40px;
+  }
+  
+  .article-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+  }
+  
+  /* Section Partage de l'article */
+  .share-section {
+    margin-bottom: 40px;
+  }
+  
+  .share-button {
+    margin-right: 20px;
+  }
+  
+  /* Articles Similaires */
+  .related-articles {
+    margin-top: 40px;
+  }
+  
+  .related-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .related-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .related-image {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .read-more-button {
+    text-transform: none;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .article-title {
+      font-size: 1.5rem;
+    }
+  
+    .article-date {
+      font-size: 1rem;
+    }
+  
+    .article-text {
+      font-size: 1rem;
+    }
+  
+    .related-title {
+      font-size: 1rem;
+    }
+  
+    .related-card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .article-image {
+      height: 300px; /* Ajuster la taille de l'image en fonction de l'écran */
+    }
+  
+    .read-more-button {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .article-title {
+      font-size: 1.2rem;
+    }
+  
+    .article-date {
+      font-size: 0.9rem;
+    }
+  
+    .article-text {
+      font-size: 0.95rem;
+    }
+  
+    .related-title {
+      font-size: 0.9rem;
+    }
+  
+    .related-card {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .read-more-button {
+      font-size: 0.85rem;
+    }
+  }
+  

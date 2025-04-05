@@ -86,11 +86,30 @@ const EntrepriseList = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <div className="entreprise-job-container">
-              <Button onClick={handleSearch}>
-                Rechercher
-              </Button>
-            </div>
+          <Button
+  onClick={handleSearch}
+  sx={{
+    background: 'linear-gradient(135deg, #6a11cb 0%, #701092 100%)', // Utiliser des guillemets autour de la valeur du gradient
+    color: 'white',
+    fontWeight: 'bold',
+    padding: '12px 18px',
+    fontSize: '14px',
+    borderRadius: '8px',
+    border: '1px solid #c4c4d0',
+    textAlign: 'center',
+    '&:hover': {
+      background: 'linear-gradient(135deg, rgb(119, 26, 218) 0%, rgb(130, 26, 168) 100%)', // Même correction ici
+      border: '1px solid #b4b4bd',
+      color: 'white',
+    },
+    '&:focus': {
+      outline: 'none',
+    },
+  }}
+>
+  Rechercher
+</Button>
+
           </Grid>
         </Grid>
   
@@ -101,8 +120,8 @@ const EntrepriseList = () => {
             </Typography>
           ) : (
             <Grid container spacing={3}>
-              {filteredEntreprises.map((entreprise) => (
-                <Grid item xs={12} sm={6} md={4} key={entreprise.id}>
+              {filteredEntreprises.map((entreprise, index) => (
+                <Grid item xs={12} sm={6} md={4} key={entreprise.id || index}>
                   <Card className="entreprise-card">
                     <CardContent>
                       <Box className="entreprise-card-header">

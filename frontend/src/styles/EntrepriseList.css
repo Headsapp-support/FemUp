@@ -34,25 +34,6 @@
   margin-bottom: 20px;
 }
 
-/* Conteneur du bouton de recherche */
-.entreprise-job-container {
-  background-color: #911092;
-  color: white;
-  cursor: pointer;
-  border: none;
-  font-weight: bold;
-  padding: 12px 18px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  flex: 1 1 200px; /* Permet à chaque élément de prendre un minimum d'espace tout en étant flexible */
-  outline: none;
-}
-
-.entreprise-job-container:hover {
-  background-color: #bf3ebf;
-}
-
 /* Conteneur des cartes */
 .entreprise-card-container {
   margin-top: 40px;

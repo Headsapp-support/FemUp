@@ -5,7 +5,7 @@
 
 .sidebar {
   width: 250px;
-  background-color: #e4aea8;
+  background: linear-gradient(135deg, #6a11cb 0%, #701092 100%);
   color: white;
   padding-top: 20px;
 }
@@ -98,7 +98,7 @@
 
 .btn-action {
   display: inline-block;
-  background-color: #e4aea8;
+  background: linear-gradient(135deg, #6a11cb 0%, #701092 100%);
   padding: 10px 20px;
   color: white;
   border-radius: 5px;
@@ -462,19 +462,19 @@
   padding: 8px 16px;
   margin: 0 5px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  background:#d8d1d1; /* Utilisation de background au lieu de background-color */
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s;
+  transition: background 0.3s; /* Changement de background-color à background */
 }
 
 .pagination button:hover {
-  background-color: #ecbbb6;
+  background: #efe6e6;/* Utilisation de background */
   color: white;
 }
 
 .pagination .active {
-  background-color: #e4aea8;
+  background-color: #d8d1d1;
   color: white;
 }
 
@@ -539,3 +539,71 @@ margin-top: 40px;
 }
 
 
+/* Section des icônes */
+.icon-section {
+  display: flex;
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center; /* Centrer verticalement */
+  gap: 40px; /* Espacement entre les icônes */
+  margin-top: 20px; /* Espacement du haut pour toutes les tailles d'écran */
+  flex-wrap: wrap; /* Permet aux icônes de se replier sur plusieurs lignes si nécessaire */
+  margin-left: 0; /* Aucun espacement à gauche par défaut */
+}
+
+/* Conteneur pour chaque icône et texte */
+.icon-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.icon-container p {
+  font-size: 16px;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Pour les écrans de bureau (PC) */
+@media (min-width: 1024px) {
+  .icon-section {
+    flex-direction: row; /* Les icônes sont en ligne sur les grands écrans */
+    margin-left: 350px; /* Applique la marge gauche sur les grands écrans uniquement */
+    margin-top: 40px; /* Réduit l'espacement entre les icônes et le haut de la page sur PC */
+  }
+
+  .icon-container svg {
+    font-size: 100px; /* Taille des icônes plus grande sur PC */
+  }
+}
+
+/* Pour les tablettes et petits écrans (résolution entre 768px et 1024px) */
+@media (max-width: 1024px) {
+  .icon-section {
+    flex-direction: row; /* Les icônes sont toujours en ligne sur les tablettes */
+    justify-content: center; /* Centrer horizontalement les icônes */
+  }
+}
+
+/* Pour les petits écrans (smartphones) */
+@media (max-width: 768px) {
+  .icon-section {
+    flex-direction: column; /* Les icônes sont empilées verticalement sur les petits écrans */
+    gap: 20px; /* Réduit l'espacement entre les icônes */
+    margin-top: 20px; /* Espacement entre les icônes et le haut de la page */
+  }
+
+  .icon-container p {
+    font-size: 14px; /* Réduit la taille du texte sous les icônes pour les petits écrans */
+  }
+}
+
+/* Pour les très petits écrans (très petits smartphones) */
+@media (max-width: 480px) {
+  .icon-section {
+    flex-direction: column; /* Empile les icônes verticalement */
+    gap: 15px; /* Moins d'espacement entre les icônes */
+  }
+
+  .icon-container p {
+    font-size: 12px; /* Texte encore plus petit pour les très petits écrans */
+  }
+}

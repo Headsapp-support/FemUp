@@ -53,6 +53,7 @@ const Navbar = () => {
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <li style={{ color: '#911092' }}><Link to="/">Accueil</Link></li>
           <li><Link to="/Offres-d'emploi">Offres d'emploi</Link></li>
+          <li><Link to="/Article">Article</Link></li>
           <li><Link to="/Entreprise-List">Entreprises</Link></li>
           <li><Link to="/Contact">Contact</Link></li>
         </ul>

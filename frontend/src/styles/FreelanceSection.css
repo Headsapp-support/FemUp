@@ -7,7 +7,7 @@ body {
 .outlined-text {
   font-size: 2.5em; /* Taille par défaut pour la version web */
   font-weight: bold;
-  color: #c4c4d0; /* Couleur personnalisée pour le texte */
+  color: #c4c1c1; /* Couleur personnalisée pour le texte */
   background-color: #fff;
   padding: 10px 20px; /* Espace à l'intérieur du cadre */
   border: 2px solid #911092; /* Bordure avec la même couleur que le texte */

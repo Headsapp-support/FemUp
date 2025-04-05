@@ -33,6 +33,9 @@ import ControleAcces from './components/ControleAcces';
 import ResetPassword from './components/ResetPassword';
 import ContactAdmin from './components/ContactAdmin';
 import ResetPasswordPage from './components/ResetPasswordPage';
+import ArticlesPage from './components/ArticlesPage';
+import ArticleDetailPage from './components/ArticleDetailPage';
+import ArticleAdmin from './components/ArticleAdmin';
 
 const App = () => {
   return (
@@ -77,6 +80,10 @@ const AppContent = () => {
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/admin/Contact" element={<ContactAdmin />} />
           <Route path="/changer-mot-de-passe/:resetToken" element={<ResetPasswordPage />} />
+          <Route path="/Article" element={<ArticlesPage />} />
+          <Route path="/article/:id" element={<ArticleDetailPage />} />
+          <Route path="/admin/articles" element={<ArticleAdmin />} />
+          
         </Routes>
       </div>
       
