@@ -51,7 +51,7 @@ const Navbar = () => {
     <div className="Header-section2">
       <nav className="navbar">
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-          <li><Link to="/">Accueil</Link></li>
+          <li style={{ color: '#911092' }}><Link to="/">Accueil</Link></li>
           <li><Link to="/Offres-d'emploi">Offres d'emploi</Link></li>
           <li><Link to="/Entreprise-List">Entreprises</Link></li>
           <li><Link to="/Contact">Contact</Link></li>
@@ -71,7 +71,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button><Link to="/connexion">Se connecter</Link></button>
+              <button style={{ color: 'white',backgroundColor: '#911092' }}><Link to="/connexion">Se connecter</Link></button>
               <button><Link to="/inscription">S'inscrire</Link></button>
             </>
           )}

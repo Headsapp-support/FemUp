@@ -45,7 +45,7 @@ body {
 }
 
 .nav-links li a:hover {
-  color: #e4aea8; /* Couleur au survol */
+  color: #701092; /* Couleur au survol */
 }
 
 /* Pour les petits écrans */
@@ -65,16 +65,20 @@ body {
   padding: 10px 20px;
   border: none;
   background-color:#ffffff ;
-  color: #e4aea8;
+  color: #701092;
   cursor: pointer;
   font-size: 1em;
   border-radius: 5px;
   font-weight: bold;
-  border: 0.5mm ridge #e4aea8;
+  border: 0.5mm ridge #701092;
+}
+
+.butt-connex {
+  color: #ffffff;
 }
 
 .auth-buttons button:hover {
-  background-color:  #e4aea8; /* Couleur de fond au survol */
+  background-color:  #701092; /* Couleur de fond au survol */
   color: #ffffff;
 }
 

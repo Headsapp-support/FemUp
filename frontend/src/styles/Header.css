@@ -1,13 +1,6 @@
-/* Body */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  overflow-x: hidden; /* Enlever le scroll horizontal */
-}
-
 /* Header Section */
 .Header-section {
-  background-image: url('/public/images/hero-bg.png'); /* Image pour la version bureau */
+  background-image: url('/public/images/Coverture1.png'); /* Image pour la version bureau */
   background-size: cover; /* L'image couvre toute la section sans déformation */
   background-position: center center; /* Centrer l'image */
   height: 100vh; /* Hauteur de la section sur la version bureau */
@@ -20,8 +13,8 @@ body {
 
 .Free {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: flex-start; /* Par défaut, aligné à gauche sur mobile */
+  align-items: flex-start; /* Aligne les éléments en haut */
   height: 100vh;
   padding-left: 20px;
   position: relative;
@@ -29,18 +22,23 @@ body {
 }
 
 .Free-content {
-  text-align: center;
+  text-align: left; /* Par défaut, le texte est à gauche */
   padding: 10px 40px;
-  max-width: 32%;
+  max-width: 50%; /* Largeur ajustée pour le contenu */
   color: black;
 }
 
 .Free-content h1 {
   font-size: 1.5em;
-  margin-bottom: 25px;
-  color: #e4aea8;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 35px;
+  color: #701092;
   font-weight: bold;
   line-height: 1.4;
+  display: block; /* Assurez-vous que l'élément h1 soit traité comme un bloc pour être centré */
+  margin-left: auto;
+  margin-right: auto; /* Centrer horizontalement l'élément h1 dans son conteneur */
 }
 
 .Free-content p {
@@ -48,29 +46,61 @@ body {
   margin-bottom: 25px;
   color: #000000;
   line-height: 1.4;
+  text-align: center;
+  display: block; /* Assurez-vous que l'élément p soit traité comme un bloc pour être centré */
+  margin-left: auto;
+  margin-right: auto; /* Centrer horizontalement l'élément p dans son conteneur */
 }
 
 .connect-button {
   padding: 10px 15px;
   font-size: 1em;
   border: none;
-  background-color: #dab887;
+  background-color: #701092;
   color: white;
   cursor: pointer;
   border-radius: 5px;
   font-weight: bold;
-  display: block;
-  margin: 0 auto;
+  display: block; /* Définit le bouton comme un élément de type bloc */
+  margin: 20px auto; /* Centre le bouton horizontalement avec une marge au-dessus et en-dessous */
+  text-align: center;
 }
 
 .connect-button:hover {
-  background-color: #e4aea8;
+  background-color: #8b2aae;
   transform: scale(1.05);
 }
 
 .connect-button a {
   text-decoration: none; /* Enlever le soulignement */
-  color: inherit; /* Hérite de la couleur du bouton (noir) */
+  color: inherit; /* Hérite de la couleur du bouton (blanc) */
+}
+
+/* Pour les écrans PC et tablettes avec une largeur supérieure à 768px */
+@media (min-width: 768px) {
+  .Free {
+    justify-content: flex-end; /* Aligner à droite sur les écrans larges */
+    padding-right: 20px; /* Ajouter un peu de padding à droite */
+    text-align: right; /* Aligner le texte à droite */
+  }
+
+  .Free-content {
+    text-align: right; /* Aligner le texte à droite */
+    max-width: 40%; /* Réduire la largeur du contenu */
+  }
+
+  .Free-content h1 {
+    font-size: 2em; /* Augmenter la taille du titre pour les grands écrans */
+  }
+
+  .Free-content p {
+    font-size: 1.3em; /* Augmenter la taille du texte pour les grands écrans */
+  }
+
+  .connect-button {
+    padding: 12px 18px; /* Augmenter la taille du bouton pour les grands écrans */
+    font-size: 1em;
+  }
 }
 
 /* Styles pour les tablettes et smartphones (max-width: 768px) */
@@ -85,7 +115,7 @@ body {
 
   .Free {
     padding-left: 10px; /* Réduire le padding pour les petits écrans */
-    justify-content: center; /* Centrer le contenu */
+    justify-content: flex-start; /* Garder l'alignement à gauche */
     height: auto; /* Ajuster la hauteur du conteneur */
   }
 
@@ -120,7 +150,7 @@ body {
 
   .Free {
     padding-left: 10px;
-    justify-content: center;
+    justify-content: flex-start; /* Garder l'alignement à gauche */
     height: auto;
   }
 
@@ -130,11 +160,11 @@ body {
   }
 
   .Free-content h1 {
-    font-size: 1.5em; /* Maintenir la même taille pour les petits écrans */
+    font-size: 1.5em; /* Garder la taille de police optimale pour les petits écrans */
   }
 
   .Free-content p {
-    font-size: 1.1em; /* Même taille pour les petits écrans */
+    font-size: 1.1em; /* Garder une taille lisible sur petits écrans */
   }
 
   .connect-button {

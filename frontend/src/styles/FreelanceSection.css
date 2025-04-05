@@ -7,18 +7,18 @@ body {
 .outlined-text {
   font-size: 2.5em; /* Taille par défaut pour la version web */
   font-weight: bold;
-  color: #dab887; /* Couleur personnalisée pour le texte */
+  color: #c4c4d0; /* Couleur personnalisée pour le texte */
   background-color: #fff;
   padding: 10px 20px; /* Espace à l'intérieur du cadre */
-  border: 2px solid #e4aea8; /* Bordure avec la même couleur que le texte */
-  border-radius: 15px; /* Coins arrondis */
+  border: 2px solid #911092; /* Bordure avec la même couleur que le texte */
+  border-radius: 20px; /* Coins arrondis */
   margin-bottom: 20px; /* Espace entre le texte encadré et le titre */
   display: inline-block; /* Pour que le texte ne prenne que l'espace nécessaire */
 }
 
 /* Section freelance */
 .freelance-section {
-  background-image: url('/public/images/FreelanceSection.png'); /* Image par défaut pour la version bureau */
+  background-image: url('/public/images/FreelanceSection1.png'); /* Image par défaut pour la version bureau */
   background-size: cover;
   background-position: center center;
   height: 100vh; /* Hauteur de la section sur la version bureau */
@@ -57,7 +57,7 @@ body {
 /* Pour les tablettes (max-width: 768px) */
 @media (max-width: 768px) {
   .freelance-section {
-    background-image: url('/public/images/freelance1.png'); /* Image pour les tablettes */
+    background-image: url('/public/images/FreelanceSection1.png'); /* Image pour les tablettes */
     background-attachment: scroll; /* Désactiver l'effet de fond fixe */
     background-size: cover; /* S'adapte à la taille de l'écran */
     background-position: center center;
@@ -88,7 +88,7 @@ body {
 /* Pour les smartphones (max-width: 600px) */
 @media (max-width: 600px) {
   .freelance-section {
-    background-image: url('/public/images/freelance1.png'); /* Image pour les smartphones */
+    background-image: url('/public/images/FreelanceSection1.png'); /* Image pour les smartphones */
     background-attachment: scroll; /* L'effet de fond fixe */
     background-size: cover; /* L'image couvre toute la zone */
     background-position: center center; /* Centrer l'image */

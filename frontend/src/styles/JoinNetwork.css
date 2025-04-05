@@ -18,18 +18,18 @@
   color: #555;
 }
 
-.join-button {
+.buttons .connect-button {
   padding: 10px 20px;
   font-size: 1.1em;
-  background-color: #e5d3ce;
+  background-color: #701092;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.join-button:hover {
-  background-color: #e4aea8;
+.buttons .connect-button:hover {
+  background-color: #8738a3;
 }
 
 .image-content img {
@@ -55,7 +55,7 @@
     font-size: 1.2em; /* Réduire la taille de la police sur tablette */
   }
 
-  .join-button {
+  .buttons .connect-button {
     font-size: 1em; /* Réduire la taille du bouton sur tablette */
     padding: 8px 16px;
   }
@@ -77,7 +77,7 @@
     font-size: 1em; /* Réduire encore la taille de la police sur mobile */
   }
 
-  .join-button {
+  .buttons .connect-button {
     font-size: 0.9em; /* Réduire la taille du bouton sur mobile */
     padding: 8px 15px;
   }
@@ -87,7 +87,7 @@
     height: 200px;
   }
 
-  .buttons .join-button a {
+  .buttons .connect-button a {
     text-decoration: none; /* Enlever le soulignement */
     color: inherit; /* Hérite de la couleur du bouton, ce qui évite le bleu par défaut */
 }

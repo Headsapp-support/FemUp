@@ -48,9 +48,9 @@ body {
   
   .job-footer .see-more {
     padding: 10px 20px;
-    background-color: #dab887;
+    background-color: #c4c4d0;
     border: none;
-    color: white;
+    color: #8f1092;
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
@@ -58,15 +58,15 @@ body {
   }
   
   .job-footer .see-more:hover {
-    background-color: #e4aea8;
+    background-color: #d1cece;
   }
 
   .explore-more {
     padding: 15px 20px;
     font-size: 1em;
     border: none;
-    background-color: #dab887; /* Couleur de fond du bouton */
-    color: white;
+    background-color: #c4c4d0; /* Couleur de fond du bouton */
+    color: #8f1092;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
@@ -75,7 +75,7 @@ body {
   }
   
   .explore-more:hover {
-    background-color: #e4aea8; /* Couleur de fond au survol */
+    background-color: #e2e2e4; /* Couleur de fond au survol */
     transform: scale(1.05); /* Légère augmentation de la taille du bouton au survol */
   }
   

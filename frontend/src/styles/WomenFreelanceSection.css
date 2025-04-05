@@ -5,7 +5,7 @@ body {
 }
 
 .women-freelance-section {
-  background-image: url('/public/images/WomenFreelanceSection.png'); /* Image de fond par défaut */
+  background-image: url('/public/images/Femme.png'); /* Image de fond par défaut */
   background-size: cover; /* L'image couvre toute la section */
   background-position: center; /* Centrer l'image */
   background-repeat: no-repeat; /* Empêcher la répétition de l'image */
@@ -17,22 +17,23 @@ body {
 }
 
 .women-freelance-content {
-  max-width: 50%; /* Limiter la largeur du contenu à 50% pour la version bureau */
+  max-width: 100%; /* Limiter la largeur du contenu à 50% pour la version bureau */
   padding: 20px;
-  text-align: left; /* Aligner le texte à gauche */
-  margin-top: -190px;
+  text-align: center; /* Aligner le texte à gauche */
+  margin-top: 200px;
+
 }
 
 .women-freelance-content h2 {
   font-size: 2.5em; /* Taille de police plus grande pour la version bureau */
-  color: #ffffff;
+  color: #c4c4d0;
   margin-bottom: 20px;
   font-family: 'Playfair Display', serif;
 }
 
 .women-freelance-content p {
   font-size: 1.2em;
-  color: #666;
+  color: #ffffff;;
   line-height: 1.6;
 }
 
@@ -40,7 +41,7 @@ body {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 45px;
-  background-color: #e4aea8; /* Couleur personnalisée pour le bouton */
+  background-color: #c4c4d0; /* Couleur personnalisée pour le bouton */
   color: white;
   font-weight: bold;
   border-radius: 5px;
@@ -49,13 +50,13 @@ body {
 }
 
 .more-link:hover {
-  background-color: #dab887; /* Couleur plus claire au survol */
+  background-color: #d3d3d7; /* Couleur plus claire au survol */
 }
 
 /* Styles pour les tablettes (max-width: 768px) */
 @media (max-width: 768px) {
   .women-freelance-section {
-    background-image: url('/public/images/WomenFreelance.png'); /* Image pour les smartphones */
+    background-image: url('/public/images/Femme1.png'); /* Image pour les smartphones */
     background-color: white;
     background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile */
     background-size: contain; /* Ajuster l'image pour qu'elle s'adapte à la largeur */
@@ -88,7 +89,7 @@ body {
 /* Styles pour les smartphones (max-width: 600px) */
 @media (max-width: 600px) {
   .women-freelance-section {
-    background-image: url('/public/images/WomenFreelance.png'); /* Image pour les smartphones */
+    background-image: url('/public/images/Femme1.png'); /* Image pour les smartphones */
     background-color: white;
     background-attachment: scroll; /* Désactiver l'effet de fond fixe sur mobile */
     background-size: contain; /* Ajuster l'image pour qu'elle s'adapte à la largeur */

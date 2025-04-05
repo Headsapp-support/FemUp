@@ -1,6 +1,6 @@
 .footer {
-  background-color: #e5d3ce;
-  color: #725b58;
+  background-color: #e2e2e4;
+  color: #701092;
   padding: 20px 0;
   text-align: center;
   margin-top: 70px; /* Cela permet de pousser le footer en bas */
@@ -62,7 +62,7 @@
 .join-button1 {
   padding: 10px 20px;
   font-size: 1.1em;
-  background-color: #e4aea8;
+  background-color: #701092;
   color: white;
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@
 }
 
 .join-button1:hover {
-  background-color: #e4aea8;
+  background-color: #983aba;
 }
 
 /* Media Queries pour rendre le footer responsive */

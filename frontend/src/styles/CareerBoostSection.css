@@ -4,7 +4,7 @@ body {
 }
 
 .career-boost-section {
-  background-image: url('/public/images/CareerBoostSection.png'); /* Image de fond par défaut pour le bureau */
+  background-image: url('/public/images/Free1.jpg'); /* Image de fond par défaut pour le bureau */
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -24,7 +24,7 @@ body {
 
 .career-boost-content p {
   text-align: center;
-  color: #293a4d;
+  color: white;
   font-size: 1.3em;
 }
 
@@ -48,6 +48,10 @@ body {
   height: auto;
   border-radius: 10px; /* Arrondi les coins des images */
   margin-bottom: 15px;
+}
+
+.career-boost-content h1 {
+  color: white;
 }
 
 .feature h3 {
