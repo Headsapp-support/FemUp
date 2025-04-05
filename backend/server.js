@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: ['https://fem-up.vercel.app/', 'http://localhost:3000'],  // Liste des origines autorisées
+  origin: ['https://fem-up.vercel.app', 'http://localhost:3000'],  // Liste des origines autorisées
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],  // Méthodes autorisées
   allowedHeaders: ['Content-Type', 'Authorization', 'credentials'],  // Ajoutez 'credentials'
   credentials: true,  // Permet d'envoyer des cookies ou autres informations d'identification
