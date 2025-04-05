@@ -9,6 +9,9 @@ const adminRoutes = require('./routes/adminRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
 const entrepriseRoutes = require('./routes/entrepriseRoutes');
+const articleRoutes = require('./routes/articleRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 const bcrypt = require('bcryptjs');
 const authRoutes = require('./routes/authRoutes'); 
 const multer = require('./config/multer');
@@ -46,6 +49,9 @@ app.use('/api/admin', adminRoutes);
 app.use('/api', entrepriseRoutes);
 app.use('/api/messages', contactRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/articles', articleRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/images', imageRoutes);
 
 // Démarrer le serveur
 app.listen(PORT, () => {

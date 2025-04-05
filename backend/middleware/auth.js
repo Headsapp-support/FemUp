@@ -11,11 +11,17 @@ const auth = (req, res, next) => {
   try {
     // Vérification du token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;  // Ajouter les informations du token à la requête
+
+    // Ajouter les informations du token à la requête
+    req.user = decoded;  
     req.recruteurId = decoded.id;
 
-    console.log('Utilisateur décodé :', decoded);  // Log pour déboguer
-    next();  // Passer à la prochaine étape (route ou autre middleware)
+    // Afficher le token dans le terminal pour déboguer
+    console.log('Token JWT utilisé :', token);  // Affiche le token brut dans le terminal
+    console.log('Utilisateur décodé :', decoded);  // Affiche les informations décodées du token dans le terminal
+
+    // Passer à la prochaine étape (route ou autre middleware)
+    next();  
   } catch (error) {
     console.error('Erreur de vérification du token:', error);
 
