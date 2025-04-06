@@ -60,34 +60,56 @@ const ArticleAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const token = localStorage.getItem('token');
     if (!token) {
       alert('Token manquant, veuillez vous reconnecter.');
       return;
     }
-
+  
     const data = new FormData();
     let apiUrl = '';
-
+  
     // Ajouter les données au FormData
     if (formType === 'article') {
       data.append('title', formData.title);
       data.append('content', formData.content);
       data.append('date', formData.date);
+  
+      // Vérifier si une image est présente pour l'article
+      if (formData.image) {
+        data.append('image', formData.image);
+      } else {
+        setErrorMessage('Veuillez télécharger une image pour l\'article.');
+        return;
+      }
+  
     } else if (formType === 'event') {
       data.append('name', formData.name);
       data.append('date', formData.date);
+  
+      // Vérifier si une image est présente pour l'événement
+      if (formData.image) {
+        data.append('image', formData.image);
+      } else {
+        setErrorMessage('Veuillez télécharger une image pour l\'événement.');
+        return;
+      }
+  
     } else if (formType === 'image') {
       data.append('title', formData.title);
       data.append('description', formData.description);
+  
+      // Vérifier si une image est présente pour l'image
+      if (formData.image) {
+        data.append('image', formData.image);
+      } else {
+        setErrorMessage('Veuillez télécharger une image.');
+        return;
+      }
     }
-    
-    // Ajouter l'image au FormData
-    if (formData.image) {
-      data.append('image', formData.image);
-    }
-
+  
+    // Sélectionner l'API en fonction du type de formulaire
     if (formType === 'article') {
       apiUrl = 'https://femup-1.onrender.com/api/articles/createArticle';
     } else if (formType === 'event') {
@@ -95,19 +117,14 @@ const ArticleAdmin = () => {
     } else if (formType === 'image') {
       apiUrl = 'https://femup-1.onrender.com/api/images/createImage';
     }
-
-    // Log des données avant l'envoi
-    for (let [key, value] of data.entries()) {
-      console.log(key, value);
-    }
-
+  
     try {
       const response = await axios.post(apiUrl, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-
+  
       if (response.status === 200) {
         setSuccessMessage(`${formType === 'article' ? 'Article' : formType === 'event' ? 'Événement' : 'Image'} ajouté avec succès!`);
         closeModal();
@@ -118,7 +135,7 @@ const ArticleAdmin = () => {
       setErrorMessage(`Erreur lors de l'ajout du ${formType === 'article' ? 'article' : formType === 'event' ? 'événement' : 'image'}: ${error.response ? error.response.data.message : error.message}`);
       console.error("Erreur dans la requête :", error);
     }
-  };
+  };  
 
   return (
     <div className="admin-dashboard">
