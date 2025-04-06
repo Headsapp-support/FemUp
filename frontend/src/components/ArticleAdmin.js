@@ -20,6 +20,7 @@ const ArticleAdmin = () => {
   const [isFeatured, setIsFeatured] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // Variable pour les erreurs
+  const [showConfirmation, setShowConfirmation] = useState(false); // Nouveau state pour afficher le popup de confirmation
 
   const openModal = (type) => {
     setFormType(type);
@@ -44,63 +45,55 @@ const ArticleAdmin = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Vérifier que le fichier est une image
       if (!file.type.startsWith('image/')) {
         setErrorMessage('Veuillez sélectionner une image valide (JPEG, PNG, JPG).');
         return;
       }
-
       setFormData({
         ...formData,
-        image: file, // Stocker le fichier image
+        image: file,
       });
-      setErrorMessage(''); // Réinitialiser les messages d'erreur
+      setErrorMessage('');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const token = localStorage.getItem('token');
     if (!token) {
       alert('Token manquant, veuillez vous reconnecter.');
       return;
     }
-  
+
     const data = new FormData();
     let apiUrl = '';
-  
-    // Ajouter les données au FormData
+
     if (formType === 'article') {
       data.append('title', formData.title);
       data.append('content', formData.content);
       data.append('date', formData.date);
-  
-      // Vérifier si une image est présente pour l'article
+
       if (formData.image) {
         data.append('image', formData.image);
       } else {
         setErrorMessage('Veuillez télécharger une image pour l\'article.');
         return;
       }
-  
     } else if (formType === 'event') {
       data.append('name', formData.name);
       data.append('date', formData.date);
-  
-      // Vérifier si une image est présente pour l'événement
+
       if (formData.image) {
         data.append('image', formData.image);
       } else {
         setErrorMessage('Veuillez télécharger une image pour l\'événement.');
         return;
       }
-  
     } else if (formType === 'image') {
       data.append('title', formData.title);
       data.append('description', formData.description);
-  
-      // Vérifier si une image est présente pour l'image
+
       if (formData.image) {
         data.append('image', formData.image);
       } else {
@@ -108,8 +101,7 @@ const ArticleAdmin = () => {
         return;
       }
     }
-  
-    // Sélectionner l'API en fonction du type de formulaire
+
     if (formType === 'article') {
       apiUrl = 'https://femup-1.onrender.com/api/articles/createArticle';
     } else if (formType === 'event') {
@@ -117,17 +109,19 @@ const ArticleAdmin = () => {
     } else if (formType === 'image') {
       apiUrl = 'https://femup-1.onrender.com/api/images/createImage';
     }
-  
+
     try {
       const response = await axios.post(apiUrl, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
+
       if (response.status === 200) {
+        // Afficher le message de confirmation
         setSuccessMessage(`${formType === 'article' ? 'Article' : formType === 'event' ? 'Événement' : 'Image'} ajouté avec succès!`);
-        closeModal();
+        setShowConfirmation(true); // Afficher le popup de confirmation
+        closeModal(); // Fermer le modal
       } else {
         throw new Error('Erreur lors de l\'ajout');
       }
@@ -135,7 +129,7 @@ const ArticleAdmin = () => {
       setErrorMessage(`Erreur lors de l'ajout du ${formType === 'article' ? 'article' : formType === 'event' ? 'événement' : 'image'}: ${error.response ? error.response.data.message : error.message}`);
       console.error("Erreur dans la requête :", error);
     }
-  };  
+  };
 
   return (
     <div className="admin-dashboard">
@@ -289,6 +283,16 @@ const ArticleAdmin = () => {
 
               <button type="submit">Soumettre</button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Popup de confirmation */}
+      {showConfirmation && (
+        <div className="confirmation-popup">
+          <div className="popup-content">
+            <p>Votre {formType === 'article' ? 'article' : formType === 'event' ? 'événement' : 'publication de retour en image'} a bien été partagé !</p>
+            <button onClick={() => setShowConfirmation(false)}>Fermer</button>
           </div>
         </div>
       )}
