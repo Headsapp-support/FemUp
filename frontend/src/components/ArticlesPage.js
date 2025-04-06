@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid, Card, CardContent, Typography, CardMedia, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
-import '../styles/ArticlesPage.css'; 
+import 'swiper/swiper-bundle.css';  // Assurez-vous d'importer le style Swiper
+import '../styles/ArticlesPage.css';
 import axios from 'axios';
 
 const ArticlesPage = () => {
@@ -11,20 +11,19 @@ const ArticlesPage = () => {
   const [events, setEvents] = useState([]);
   const [images, setImages] = useState([]);
   const [showAllArticles, setShowAllArticles] = useState(false);
-  const [loading, setLoading] = useState(true); // Ajouté pour gérer l'état de chargement
-  const [error, setError] = useState(null); // Gestion des erreurs
+  const [showAllEvents, setShowAllEvents] = useState(false); // Ajouté pour gérer l'affichage des événements
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const token = localStorage.getItem('token');
-        // Utilisation de l'URL complète pour récupérer les articles
         const response = await axios.get('https://femup-1.onrender.com/api/articles/Tous', {
           headers: {
-            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+            Authorization: `Bearer ${token}`,
           },
         });
-
         setArticles(response.data);
       } catch (error) {
         setError('Erreur lors de la récupération des articles');
@@ -35,10 +34,9 @@ const ArticlesPage = () => {
     const fetchEvents = async () => {
       try {
         const token = localStorage.getItem('token');
-        // Utilisation de l'URL complète pour récupérer les événements
         const response = await axios.get('https://femup-1.onrender.com/api/events/Tous', {
           headers: {
-            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+            Authorization: `Bearer ${token}`,
           },
         });
         setEvents(response.data);
@@ -50,11 +48,10 @@ const ArticlesPage = () => {
 
     const fetchImages = async () => {
       try {
-          const token = localStorage.getItem('token');
-        // Utilisation de l'URL complète pour récupérer les images
+        const token = localStorage.getItem('token');
         const response = await axios.get('https://femup-1.onrender.com/api/images/Tous', {
           headers: {
-            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+            Authorization: `Bearer ${token}`,
           },
         });
         setImages(response.data);
@@ -64,26 +61,26 @@ const ArticlesPage = () => {
       }
     };
 
-    // Appels des fonctions pour récupérer les données
     fetchArticles();
     fetchEvents();
     fetchImages();
-
-    // Fin du chargement
     setLoading(false);
-
   }, []);
 
   const toggleArticles = () => {
     setShowAllArticles(!showAllArticles);
   };
 
+  const toggleEvents = () => {
+    setShowAllEvents(!showAllEvents); // Bascule entre afficher tous les événements ou juste 3
+  };
+
   if (loading) {
-    return <Typography variant="h6">Chargement en cours...</Typography>; // Message de chargement
+    return <Typography variant="h6">Chargement en cours...</Typography>;
   }
 
   if (error) {
-    return <Typography variant="h6" color="error">{error}</Typography>; // Message d'erreur
+    return <Typography variant="h6" color="error">{error}</Typography>;
   }
 
   return (
@@ -107,7 +104,7 @@ const ArticlesPage = () => {
                 <CardMedia
                   component="img"
                   height="250"
-                  image={article.image}  // Assurez-vous que c'est bien l'URL de l'image
+                  image={article.image}
                   alt={article.title}
                 />
                 <CardContent>
@@ -141,7 +138,7 @@ const ArticlesPage = () => {
                 <CardMedia
                   component="img"
                   height="250"
-                  image={article.image}  // Vérifie que c'est bien l'URL de l'image
+                  image={article.image}
                   alt={article.title}
                 />
                 <CardContent>
@@ -156,45 +153,47 @@ const ArticlesPage = () => {
       </Box>
 
       {/* Retour en Image */}
-      <Box className="images-section">
-        <Typography variant="h4" className="section-title">Retour en Image</Typography>
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{ delay: 3000 }}
-          effect="fade"
-          className="images-carousel"
-        >
-          {images.map((image) => (
-            <SwiperSlide key={image._id}>
-              <Card className="image-card">
-                <CardMedia
-                  component="img"
-                  height="300"
-                  image={image.image}  // Vérifie que c'est bien l'URL de l'image
-                  alt={image.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" className="image-title">{image.title}</Typography>
-                </CardContent>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
+<Box className="images-section">
+  <Typography variant="h4" className="section-title">Retour en Image</Typography>
+  <Swiper
+    spaceBetween={30}
+    slidesPerView={1}          // Affiche une image à la fois
+    loop={true}                // Active la boucle
+    autoplay={{ delay: 3000 }}  // Défilement automatique toutes les 3 secondes
+    effect="fade"              // Effet de fondu entre les images
+    loopAdditionalSlides={1}   // Charge une image supplémentaire pour garantir que la boucle fonctionne
+    className="images-carousel"
+  >
+    {images.map((image) => (
+      <SwiperSlide key={image._id}>
+        <Card className="image-card">
+          <CardMedia
+            component="img"
+            height="300"
+            image={image.image}  // Assurez-vous que c'est bien l'URL de l'image
+            alt={image.title}
+          />
+          <CardContent>
+            <Typography variant="h6" className="image-title">{image.title}</Typography>
+          </CardContent>
+        </Card>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</Box>
+
 
       {/* Tous les événements */}
       <Box className="events-section">
         <Typography variant="h4" className="section-title">Tous les Événements</Typography>
         <Grid container spacing={4} justifyContent="center" className="events-grid">
-          {events.map((event) => (
+          {(showAllEvents ? events : events.slice(0, 3)).map((event) => (
             <Grid item xs={12} sm={6} md={4} key={event._id}>
               <Card className="event-card">
                 <CardMedia
                   component="img"
                   height="250"
-                  image={event.image}  // Vérifie que c'est bien l'URL de l'image
+                  image={event.image}
                   alt={event.name}
                 />
                 <CardContent>
@@ -206,6 +205,9 @@ const ArticlesPage = () => {
             </Grid>
           ))}
         </Grid>
+        <Button onClick={toggleEvents} className="see-more-button">
+          {showAllEvents ? 'Voir Moins' : 'Voir Plus'}
+        </Button>
       </Box>
     </Box>
   );
