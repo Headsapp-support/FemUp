@@ -5,6 +5,6 @@ const { createEvent, getAllEvents } = require('../controllers/eventController');
 const upload = require('../config/multer');
 
 router.post('/createEvent', auth, upload.single('image'), createEvent);
-router.get('/', getAllEvents);
+router.get('/Tous', getAllEvents);
 
 module.exports = router;
