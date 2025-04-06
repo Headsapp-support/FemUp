@@ -40,5 +40,24 @@ const createImage = async (req, res) => {
     }
   };
   
-
-module.exports = { createImage };
+  const getAllImages = async (req, res) => {
+    try {
+      console.log('Requête reçue pour récupérer toutes les images');
+  
+      // Récupère toutes les images de la base de données
+      const images = await Image.find();
+  
+      // Vérifier si des images existent
+      if (images.length === 0) {
+        return res.status(404).json({ message: "Aucune image trouvée." });
+      }
+  
+      console.log('Images récupérées:', images);
+      return res.status(200).json(images);
+    } catch (err) {
+      console.error('Erreur lors de la récupération des images:', err);
+      res.status(500).json({ message: "Erreur lors de la récupération des images", error: err.message });
+    }
+  };
+  
+module.exports = { createImage, getAllImages };
