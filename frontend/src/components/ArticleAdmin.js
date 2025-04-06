@@ -4,151 +4,119 @@ import { Link } from 'react-router-dom';
 import { faFileAlt, faCalendar, faImage } from '@fortawesome/free-solid-svg-icons';
 import { faUsers, faBriefcase, faChartBar, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../styles/AdminDashboard.css';
+import axios from 'axios';
 
 const ArticleAdmin = () => {
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    date: '',
+    name: '', // pour les événements
+    description: '', // pour les images
+    image: null,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formType, setFormType] = useState(""); // Formulaire actuel (article, événement, image)
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [date, setDate] = useState('');
-  const [image, setImage] = useState('');
-  const [file, setFile] = useState(null); // Pour stocker le fichier téléchargé
   const [isFeatured, setIsFeatured] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // Variable pour les erreurs
 
-  // Ouvrir la modale avec le formulaire spécifique
   const openModal = (type) => {
     setFormType(type);
     setIsModalOpen(true);
   };
 
-  // Fermer la modale et réinitialiser les champs
   const closeModal = () => {
     setIsModalOpen(false);
-    setTitle('');
-    setContent('');
-    setDate('');
-    setImage('');
-    setFile(null); // Réinitialiser le fichier
+    setFormData({
+      title: '',
+      content: '',
+      date: '',
+      name: '',
+      description: '',
+      image: null,
+    });
     setIsFeatured(false);
     setSuccessMessage('');
     setErrorMessage('');
   };
 
-  // Fonction pour capturer les fichiers téléchargés
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]); // Capture le fichier téléchargé
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Vérifier que le fichier est une image
+      if (!file.type.startsWith('image/')) {
+        setErrorMessage('Veuillez sélectionner une image valide (JPEG, PNG, JPG).');
+        return;
+      }
+
+      setFormData({
+        ...formData,
+        image: file, // Stocker le fichier image
+      });
+      setErrorMessage(''); // Réinitialiser les messages d'erreur
+    }
   };
 
-  // Fonction pour envoyer les données au backend
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token'); // Récupérer le token depuis le localStorage
+    const token = localStorage.getItem('token');
     if (!token) {
-      setErrorMessage('Veuillez vous connecter pour ajouter un article.');
-      return; // Si le token n'est pas présent, arrêter l'exécution
+      alert('Token manquant, veuillez vous reconnecter.');
+      return;
     }
 
-    const formData = new FormData();
+    const data = new FormData();
+    let apiUrl = '';
 
-    // Préparer les données à envoyer en fonction du formulaire
+    // Ajouter les données au FormData
     if (formType === 'article') {
-      formData.append('title', title);
-      formData.append('content', content);
-      formData.append('date', date);
-      formData.append('image', image);
-      formData.append('isFeatured', isFeatured);
-
-      fetch('https://femup-1.onrender.com/api/articles/createArticle', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      })
-        .then(response => {
-          if (!response.ok) {
-            return response.text(); // Récupère la réponse en texte brut pour le débogage
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (typeof data === 'string') {
-            setErrorMessage(data); // Si la réponse est en texte brut, afficher comme erreur
-          } else {
-            setSuccessMessage('Article ajouté avec succès!');
-            closeModal();
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setErrorMessage('Erreur lors de l\'ajout de l\'article');
-        });
+      data.append('title', formData.title);
+      data.append('content', formData.content);
+      data.append('date', formData.date);
     } else if (formType === 'event') {
-      formData.append('name', title);
-      formData.append('date', date);
-      formData.append('file', file);
+      data.append('name', formData.name);
+      data.append('date', formData.date);
+    } else if (formType === 'image') {
+      data.append('title', formData.title);
+      data.append('description', formData.description);
+    }
+    
+    // Ajouter l'image au FormData
+    if (formData.image) {
+      data.append('image', formData.image);
+    }
 
-      fetch('https://femup-1.onrender.com/api/events/createEvent', {
-        method: 'POST',
+    if (formType === 'article') {
+      apiUrl = 'https://femup-1.onrender.com/api/articles/createArticle';
+    } else if (formType === 'event') {
+      apiUrl = 'https://femup-1.onrender.com/api/events/createEvent';
+    } else if (formType === 'image') {
+      apiUrl = 'https://femup-1.onrender.com/api/images/createImage';
+    }
+
+    // Log des données avant l'envoi
+    for (let [key, value] of data.entries()) {
+      console.log(key, value);
+    }
+
+    try {
+      const response = await axios.post(apiUrl, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-        body: formData,
-      })
-        .then(response => {
-          if (!response.ok) {
-            return response.text(); // Récupère la réponse en texte brut pour le débogage
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (typeof data === 'string') {
-            setErrorMessage(data);
-          } else {
-            setSuccessMessage('Événement ajouté avec succès!');
-            closeModal();
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setErrorMessage('Erreur lors de l\'ajout de l\'événement');
-        });
-    } else if (formType === 'image') {
-      const images = file ? [file] : [];
-      formData.append('title', title);
-      formData.append('description', content);
-      images.forEach((img) => {
-        formData.append('images', img);
       });
 
-      fetch('https://femup-1.onrender.com/api/images/createImage', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      })
-        .then(response => {
-          if (!response.ok) {
-            return response.text(); // Récupère la réponse en texte brut pour le débogage
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (typeof data === 'string') {
-            setErrorMessage(data);
-          } else {
-            setSuccessMessage('Images ajoutées avec succès!');
-            closeModal();
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setErrorMessage('Erreur lors de l\'ajout des images');
-        });
+      if (response.status === 200) {
+        setSuccessMessage(`${formType === 'article' ? 'Article' : formType === 'event' ? 'Événement' : 'Image'} ajouté avec succès!`);
+        closeModal();
+      } else {
+        throw new Error('Erreur lors de l\'ajout');
+      }
+    } catch (error) {
+      setErrorMessage(`Erreur lors de l'ajout du ${formType === 'article' ? 'article' : formType === 'event' ? 'événement' : 'image'}: ${error.response ? error.response.data.message : error.message}`);
+      console.error("Erreur dans la requête :", error);
     }
   };
 
@@ -165,7 +133,7 @@ const ArticleAdmin = () => {
             <li><Link to="/admin/controle"><FontAwesomeIcon icon={faBriefcase} /> Contrôle d'Offres</Link></li>
             <li><Link to="/admin/articles"><FontAwesomeIcon icon={faFileAlt} /> Articles</Link></li>
             <li><Link to="/admin/entreprise"><FontAwesomeIcon icon={faPlus} /> Ajouter une entreprise</Link></li>
-            <li><Link to="/admin/Contact">Formulaire de Contact </Link></li>
+            <li><Link to="/admin/Contact">Formulaire de Contact</Link></li>
           </ul>
         </nav>
       </div>
@@ -194,7 +162,7 @@ const ArticleAdmin = () => {
             <h2>{formType === "article" ? "Ajouter un article" : formType === "event" ? "Ajouter un événement" : "Retour en image"}</h2>
 
             {successMessage && <p className="success-message">{successMessage}</p>}
-            {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Affichage des erreurs */}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
             <form onSubmit={handleSubmit}>
               {/* Formulaire pour les articles */}
@@ -204,8 +172,8 @@ const ArticleAdmin = () => {
                     <label>Titre de l'article</label>
                     <input
                       type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      value={formData.title}
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       placeholder="Titre de l'article"
                       required
                     />
@@ -213,8 +181,8 @@ const ArticleAdmin = () => {
                   <div className="form-group">
                     <label>Contenu de l'article</label>
                     <textarea
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
+                      value={formData.content}
+                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                       placeholder="Contenu de l'article"
                       required
                     />
@@ -223,21 +191,16 @@ const ArticleAdmin = () => {
                     <label>Date de publication</label>
                     <input
                       type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                       required
                     />
                   </div>
                   <div className="form-group">
-                    <label>Image de l'article</label>
-                    <input
-                      type="text"
-                      value={image}
-                      onChange={(e) => setImage(e.target.value)}
-                      placeholder="URL de l'image"
-                      required
-                    />
+                    <label>Ajouter une image</label>
+                    <input type="file" name="image" accept="image/*" onChange={handleImageChange} required />
                   </div>
+
                   <div className="checkbox-container">
                     <input
                       type="checkbox"
@@ -256,8 +219,8 @@ const ArticleAdmin = () => {
                     <label>Nom de l'événement</label>
                     <input
                       type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Nom de l'événement"
                       required
                     />
@@ -266,14 +229,14 @@ const ArticleAdmin = () => {
                     <label>Date de l'événement</label>
                     <input
                       type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                       required
                     />
                   </div>
                   <div className="form-group">
-                    <label>Fichier de l'événement</label>
-                    <input type="file" onChange={handleFileChange} required />
+                    <label>Affiche de l'événement</label>
+                    <input type="file" name="image" accept="image/*" onChange={handleImageChange} required />
                   </div>
                 </>
               )}
@@ -285,8 +248,8 @@ const ArticleAdmin = () => {
                     <label>Titre de l'image</label>
                     <input
                       type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      value={formData.title}
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       placeholder="Titre de l'image"
                       required
                     />
@@ -294,15 +257,15 @@ const ArticleAdmin = () => {
                   <div className="form-group">
                     <label>Description</label>
                     <textarea
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                       placeholder="Description de l'image"
                       required
                     />
                   </div>
                   <div className="form-group">
                     <label>Ajouter une image</label>
-                    <input type="file" onChange={handleFileChange} required />
+                    <input type="file" name="image" accept="image/*" onChange={handleImageChange} required />
                   </div>
                 </>
               )}

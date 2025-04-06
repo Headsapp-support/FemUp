@@ -16,6 +16,7 @@
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
+    "cors": "^2.8.5",
     "cra-template": "1.2.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
@@ -37,6 +38,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://femup-1.onrender.com",
   "eslintConfig": {
     "extends": [
       "react-app",
