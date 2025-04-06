@@ -1,100 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Card, CardContent, Typography, CardMedia, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css'; // Importation du CSS mis à jour
-import '../styles/ArticlesPage.css'; // Importation du CSS spécifique
-
-const articles = [
-  {
-    id: 1,
-    title: 'Le Futur de la Technologie : Quoi de Neuf ?',
-    date: '2025-04-04',
-    image: 'https://via.placeholder.com/600x400',
-    excerpt: 'Découvrez les tendances qui façonnent le monde de demain...',
-    link: '/article/1',
-  },
-  {
-    id: 2,
-    title: 'Les Secrets de l’Environnement et des Énergies Renouvelables',
-    date: '2025-04-03',
-    image: 'https://via.placeholder.com/600x400',
-    excerpt: 'L’énergie verte : Une révolution durable qui change tout...',
-    link: '/article/2',
-  },
-  {
-    id: 3,
-    title: 'Santé de Demain : Innovations et Tendances',
-    date: '2025-04-02',
-    image: 'https://via.placeholder.com/600x400',
-    excerpt: 'Comment la technologie transforme le secteur de la santé...',
-    link: '/article/3',
-  },
-  {
-    id: 4,
-    title: 'La Révolution de l’Énergie Solaire',
-    date: '2025-04-01',
-    image: 'https://via.placeholder.com/600x400',
-    excerpt: 'L’énergie solaire : Un changement dans notre manière de vivre...',
-    link: '/article/4',
-  },
-  {
-    id: 5,
-    title: 'Les Nouveaux Horizons de l’Intelligence Artificielle',
-    date: '2025-03-31',
-    image: 'https://via.placeholder.com/600x400',
-    excerpt: 'Comment l’intelligence artificielle redéfinit notre quotidien...',
-    link: '/article/5',
-  },
-];
-
-const pastEvents = [
-  {
-    id: 1,
-    title: 'Expo Innovation 2024',
-    image: 'https://via.placeholder.com/600x400',
-  },
-  {
-    id: 2,
-    title: 'Forum Santé 2024',
-    image: 'https://via.placeholder.com/600x400',
-  },
-  {
-    id: 3,
-    title: 'Forum Tech 2024',
-    image: 'https://via.placeholder.com/600x400',
-  },
-  {
-    id: 4,
-    title: 'Événement International 2024',
-    image: 'https://via.placeholder.com/600x400',
-  },
-];
-
-const upcomingEvents = [
-  {
-    id: 1,
-    title: 'Conférence Sur l’IA 2025',
-    image: 'https://via.placeholder.com/600x400',
-  },
-  {
-    id: 2,
-    title: 'Webinaire Énergie Durable',
-    image: 'https://via.placeholder.com/600x400',
-  },
-  {
-    id: 3,
-    title: 'Hackathon Développeurs 2025',
-    image: 'https://via.placeholder.com/600x400',
-  },
-];
+import 'swiper/swiper-bundle.css';
+import '../styles/ArticlesPage.css'; 
+import axios from 'axios';
 
 const ArticlesPage = () => {
+  const [articles, setArticles] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [images, setImages] = useState([]);
   const [showAllArticles, setShowAllArticles] = useState(false);
+  const [loading, setLoading] = useState(true); // Ajouté pour gérer l'état de chargement
+  const [error, setError] = useState(null); // Gestion des erreurs
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        // Utilisation de l'URL complète pour récupérer les articles
+        const response = await axios.get('https://femup-1.onrender.com/api/articles/Tous', {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+          },
+        });
+
+        setArticles(response.data);
+      } catch (error) {
+        setError('Erreur lors de la récupération des articles');
+        console.error("Erreur lors de la récupération des articles", error);
+      }
+    };
+
+    const fetchEvents = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        // Utilisation de l'URL complète pour récupérer les événements
+        const response = await axios.get('https://femup-1.onrender.com/api/events/Tous', {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+          },
+        });
+        setEvents(response.data);
+      } catch (error) {
+        setError('Erreur lors de la récupération des événements');
+        console.error("Erreur lors de la récupération des événements", error);
+      }
+    };
+
+    const fetchImages = async () => {
+      try {
+          const token = localStorage.getItem('token');
+        // Utilisation de l'URL complète pour récupérer les images
+        const response = await axios.get('https://femup-1.onrender.com/api/images/Tous', {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token dans l'en-tête
+          },
+        });
+        setImages(response.data);
+      } catch (error) {
+        setError('Erreur lors de la récupération des images');
+        console.error("Erreur lors de la récupération des images", error);
+      }
+    };
+
+    // Appels des fonctions pour récupérer les données
+    fetchArticles();
+    fetchEvents();
+    fetchImages();
+
+    // Fin du chargement
+    setLoading(false);
+
+  }, []);
 
   const toggleArticles = () => {
     setShowAllArticles(!showAllArticles);
   };
+
+  if (loading) {
+    return <Typography variant="h6">Chargement en cours...</Typography>; // Message de chargement
+  }
+
+  if (error) {
+    return <Typography variant="h6" color="error">{error}</Typography>; // Message d'erreur
+  }
 
   return (
     <Box className="articles-page-container">
@@ -112,19 +102,19 @@ const ArticlesPage = () => {
         <Typography variant="h4" className="section-title">Actualités</Typography>
         <Grid container spacing={4} justifyContent="center" className="articles-grid">
           {(showAllArticles ? articles : articles.slice(0, 3)).map((article) => (
-            <Grid item xs={12} sm={6} md={4} key={article.id}>
+            <Grid item xs={12} sm={6} md={4} key={article._id}>
               <Card className="article-card">
                 <CardMedia
                   component="img"
                   height="250"
-                  image={article.image}
+                  image={article.image}  // Assurez-vous que c'est bien l'URL de l'image
                   alt={article.title}
                 />
                 <CardContent>
                   <Typography variant="h6" className="article-title">{article.title}</Typography>
-                  <Typography variant="body2" className="article-excerpt">{article.excerpt}</Typography>
-                  <Typography variant="body2" className="article-date">{article.date}</Typography>
-                  <Button component={Link} to={`/article/${article.id}`} className="article-button">Lire l'article</Button>
+                  <Typography variant="body2" className="article-excerpt">{article.content.substring(0, 100)}...</Typography>
+                  <Typography variant="body2" className="article-date">{new Date(article.date).toLocaleDateString()}</Typography>
+                  <Button component={Link} to={`/article/${article._id}`} className="article-button">Lire l'article</Button>
                 </CardContent>
               </Card>
             </Grid>
@@ -146,18 +136,18 @@ const ArticlesPage = () => {
           className="articles-carousel"
         >
           {articles.map((article) => (
-            <SwiperSlide key={article.id}>
+            <SwiperSlide key={article._id}>
               <Card className="article-card">
                 <CardMedia
                   component="img"
                   height="250"
-                  image={article.image}
+                  image={article.image}  // Vérifie que c'est bien l'URL de l'image
                   alt={article.title}
                 />
                 <CardContent>
                   <Typography variant="h6" className="article-title">{article.title}</Typography>
-                  <Typography variant="body2" className="article-excerpt">{article.excerpt}</Typography>
-                  <Button component={Link} to={`/article/${article.id}`} className="article-button">Lire l'article</Button>
+                  <Typography variant="body2" className="article-excerpt">{article.content.substring(0, 100)}...</Typography>
+                  <Button component={Link} to={`/article/${article._id}`} className="article-button">Lire l'article</Button>
                 </CardContent>
               </Card>
             </SwiperSlide>
@@ -166,7 +156,7 @@ const ArticlesPage = () => {
       </Box>
 
       {/* Retour en Image */}
-      <Box className="events-section">
+      <Box className="images-section">
         <Typography variant="h4" className="section-title">Retour en Image</Typography>
         <Swiper
           spaceBetween={30}
@@ -174,19 +164,19 @@ const ArticlesPage = () => {
           loop={true}
           autoplay={{ delay: 3000 }}
           effect="fade"
-          className="events-carousel"
+          className="images-carousel"
         >
-          {pastEvents.map((event) => (
-            <SwiperSlide key={event.id}>
-              <Card className="event-card">
+          {images.map((image) => (
+            <SwiperSlide key={image._id}>
+              <Card className="image-card">
                 <CardMedia
                   component="img"
                   height="300"
-                  image={event.image}
-                  alt={event.title}
+                  image={image.image}  // Vérifie que c'est bien l'URL de l'image
+                  alt={image.title}
                 />
                 <CardContent>
-                  <Typography variant="h6" className="event-title">{event.title}</Typography>
+                  <Typography variant="h6" className="image-title">{image.title}</Typography>
                 </CardContent>
               </Card>
             </SwiperSlide>
@@ -194,32 +184,28 @@ const ArticlesPage = () => {
         </Swiper>
       </Box>
 
-      {/* Événements à Venir */}
-      <Box className="upcoming-events-section">
-        <Typography variant="h4" className="section-title">Événements à Venir</Typography>
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{ delay: 3000 }}
-          className="upcoming-events-carousel"
-        >
-          {upcomingEvents.map((event) => (
-            <SwiperSlide key={event.id}>
-              <Card className="upcoming-event-card">
+      {/* Tous les événements */}
+      <Box className="events-section">
+        <Typography variant="h4" className="section-title">Tous les Événements</Typography>
+        <Grid container spacing={4} justifyContent="center" className="events-grid">
+          {events.map((event) => (
+            <Grid item xs={12} sm={6} md={4} key={event._id}>
+              <Card className="event-card">
                 <CardMedia
                   component="img"
-                  height="300"
-                  image={event.image}
-                  alt={event.title}
+                  height="250"
+                  image={event.image}  // Vérifie que c'est bien l'URL de l'image
+                  alt={event.name}
                 />
                 <CardContent>
-                  <Typography variant="h6" className="upcoming-event-title">{event.title}</Typography>
+                  <Typography variant="h6" className="event-title">{event.name}</Typography>
+                  <Typography variant="body2" className="event-date">{new Date(event.date).toLocaleDateString()}</Typography>
+                  <Button component={Link} to={`/event/${event._id}`} className="event-button">Voir l'événement</Button>
                 </CardContent>
               </Card>
-            </SwiperSlide>
+            </Grid>
           ))}
-        </Swiper>
+        </Grid>
       </Box>
     </Box>
   );
