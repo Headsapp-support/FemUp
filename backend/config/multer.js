@@ -8,9 +8,6 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);  // Crée le dossier s'il n'existe pas
 }
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
 // Configuration du stockage pour multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,6 +29,6 @@ const fileFilter = (req, file, cb) => {
 };
 
 // Initialisation de multer avec la configuration
-const upload = multer({ storage: storage, fileFilter });
+const upload = multer({ storage: storage, fileFilter, limits: { fileSize: 10 * 1024 * 1024 } });
 
 module.exports = upload;

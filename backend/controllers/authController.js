@@ -14,7 +14,7 @@ const login = async (req, res) => {
       const token = jwt.sign(
         { role: 'admin' },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '24h' }
       );
 
       return res.json({
@@ -36,7 +36,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
           { id: condidat._id, role: 'condidat' }, // Payload
           process.env.JWT_SECRET, // Clé secrète
-          { expiresIn: '1h' } // Durée de validité
+          { expiresIn: '24h' } // Durée de validité
         );
 
         console.log('Token généré pour le candidat :', token);
@@ -66,7 +66,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
           { id: recruteur._id, role: 'recruteur' }, // Payload
           process.env.JWT_SECRET, // Clé secrète
-          { expiresIn: '1h' } // Durée de validité
+          { expiresIn: '24h' } // Durée de validité
         );
 
         console.log('Token généré pour le recruteur :', token);
