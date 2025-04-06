@@ -153,35 +153,38 @@ const ArticlesPage = () => {
       </Box>
 
       {/* Retour en Image */}
-<Box className="images-section">
-  <Typography variant="h4" className="section-title">Retour en Image</Typography>
-  <Swiper
-    spaceBetween={30}
-    slidesPerView={1}          // Affiche une image à la fois
-    loop={true}                // Active la boucle
-    autoplay={{ delay: 3000 }}  // Défilement automatique toutes les 3 secondes
-    effect="fade"              // Effet de fondu entre les images
-    loopAdditionalSlides={1}   // Charge une image supplémentaire pour garantir que la boucle fonctionne
-    className="images-carousel"
-  >
-    {images.map((image) => (
-      <SwiperSlide key={image._id}>
-        <Card className="image-card">
-          <CardMedia
-            component="img"
-            height="300"
-            image={image.image}  // Assurez-vous que c'est bien l'URL de l'image
-            alt={image.title}
-          />
-          <CardContent>
-            <Typography variant="h6" className="image-title">{image.title}</Typography>
-          </CardContent>
-        </Card>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</Box>
-
+      <Box className="images-section">
+        <Typography variant="h4" className="section-title">Retour en Image</Typography>
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={1}          // Affiche une image à la fois
+          loop={true}                // Active la boucle
+          autoplay={{ delay: 3000 }}  // Défilement automatique toutes les 3 secondes
+          effect="fade"              // Effet de fondu entre les images
+          loopAdditionalSlides={2}   // Charge deux images supplémentaires pour garantir que la boucle fonctionne
+          className="images-carousel"
+        >
+          {images.length > 0 ? (
+            images.map((image) => (
+              <SwiperSlide key={image._id}>
+                <Card className="image-card">
+                  <CardMedia
+                    component="img"
+                    height="300"
+                    image={image.image}  // Assurez-vous que c'est bien l'URL de l'image
+                    alt={image.title}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" className="image-title">{image.title}</Typography>
+                  </CardContent>
+                </Card>
+              </SwiperSlide>
+            ))
+          ) : (
+            <Typography variant="h6" color="error">Aucune image disponible.</Typography>
+          )}
+        </Swiper>
+      </Box>
 
       {/* Tous les événements */}
       <Box className="events-section">
