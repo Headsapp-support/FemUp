@@ -6,7 +6,7 @@ const upload = require('../config/multer');
 
 router.post('/createArticle', auth, upload.single('image'), createArticle);
 router.get('/Tous', getAllArticles);
-router.get('/articles/:id', getArticleById);
+router.get('/:id', getArticleById);
 router.get('/articles/similaires',getRelatedArticles);
 
 module.exports = router;
