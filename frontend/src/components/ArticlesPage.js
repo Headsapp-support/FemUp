@@ -11,69 +11,44 @@ const ArticlesPage = () => {
   const [events, setEvents] = useState([]);
   const [images, setImages] = useState([]);
   const [showAllArticles, setShowAllArticles] = useState(false);
-  const [showAllEvents, setShowAllEvents] = useState(false); // Ajouté pour gérer l'affichage des événements
+  const [showAllEvents, setShowAllEvents] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchData = async (url, setState, errorMessage) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setState(response.data);
+    } catch (error) {
+      setError(errorMessage);
+      console.error(errorMessage, error);
+    }
+  };
+
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('https://femup-1.onrender.com/api/articles/Tous', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setArticles(response.data);
-      } catch (error) {
-        setError('Erreur lors de la récupération des articles');
-        console.error("Erreur lors de la récupération des articles", error);
-      }
+    const fetchArticlesData = async () => {
+      await fetchData('https://femup-1.onrender.com/api/articles/Tous', setArticles, 'Erreur lors de la récupération des articles');
+    };
+    const fetchEventsData = async () => {
+      await fetchData('https://femup-1.onrender.com/api/events/Tous', setEvents, 'Erreur lors de la récupération des événements');
+    };
+    const fetchImagesData = async () => {
+      await fetchData('https://femup-1.onrender.com/api/images/Tous', setImages, 'Erreur lors de la récupération des images');
     };
 
-    const fetchEvents = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('https://femup-1.onrender.com/api/events/Tous', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setEvents(response.data);
-      } catch (error) {
-        setError('Erreur lors de la récupération des événements');
-        console.error("Erreur lors de la récupération des événements", error);
-      }
-    };
-
-    const fetchImages = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('https://femup-1.onrender.com/api/images/Tous', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setImages(response.data);
-      } catch (error) {
-        setError('Erreur lors de la récupération des images');
-        console.error("Erreur lors de la récupération des images", error);
-      }
-    };
-
-    fetchArticles();
-    fetchEvents();
-    fetchImages();
+    fetchArticlesData();
+    fetchEventsData();
+    fetchImagesData();
     setLoading(false);
   }, []);
 
-  const toggleArticles = () => {
-    setShowAllArticles(!showAllArticles);
-  };
-
-  const toggleEvents = () => {
-    setShowAllEvents(!showAllEvents); // Bascule entre afficher tous les événements ou juste 3
-  };
+  const toggleArticles = () => setShowAllArticles(!showAllArticles);
+  const toggleEvents = () => setShowAllEvents(!showAllEvents);
 
   if (loading) {
     return <Typography variant="h6">Chargement en cours...</Typography>;
@@ -157,11 +132,11 @@ const ArticlesPage = () => {
         <Typography variant="h4" className="section-title">Retour en Image</Typography>
         <Swiper
           spaceBetween={30}
-          slidesPerView={1}          // Affiche une image à la fois
-          loop={true}                // Active la boucle
-          autoplay={{ delay: 3000 }}  // Défilement automatique toutes les 3 secondes
-          effect="fade"              // Effet de fondu entre les images
-          loopAdditionalSlides={2}   // Charge deux images supplémentaires pour garantir que la boucle fonctionne
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 3000 }}
+          effect="fade"
+          loopAdditionalSlides={2}
           className="images-carousel"
         >
           {images.length > 0 ? (
@@ -171,7 +146,7 @@ const ArticlesPage = () => {
                   <CardMedia
                     component="img"
                     height="300"
-                    image={image.image}  // Assurez-vous que c'est bien l'URL de l'image
+                    image={image.image}
                     alt={image.title}
                   />
                   <CardContent>
