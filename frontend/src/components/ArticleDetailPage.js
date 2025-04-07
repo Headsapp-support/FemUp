@@ -99,7 +99,7 @@ const ArticleDetailPage = () => {
                   />
                   <CardContent>
                     <Typography variant="h6" className="related-title">{related.title}</Typography>
-                    <Button component={Link} to={`/article/${related._id}`} className="read-more-button">Lire l'article</Button>
+                    <Button component={Link} to={`/${related._id}`} className="read-more-button">Lire l'article</Button>
                   </CardContent>
                 </Card>
               </Grid>
