@@ -7,6 +7,7 @@
   /* Hero Section */
   .hero-section {
     background: linear-gradient(135deg, #6a11cb 0%, #701092 100%);
+    background-image: url('/public/images/network1.jpg');
     color: white;
     padding: 100px 20px;
     text-align: center;

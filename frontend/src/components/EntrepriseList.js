@@ -89,7 +89,7 @@ const EntrepriseList = () => {
           <Button
   onClick={handleSearch}
   sx={{
-    background: 'linear-gradient(135deg, #6a11cb 0%, #701092 100%)', // Utiliser des guillemets autour de la valeur du gradient
+    background: 'linear-gradient(135deg, #dd38d5 0%, #600d7e 100%)', // Utiliser des guillemets autour de la valeur du gradient
     color: 'white',
     fontWeight: 'bold',
     padding: '12px 18px',

@@ -83,11 +83,11 @@ const LoginForm2 = () => {
   };
 
   return (
-    <div className="employer-signup">
+    <div className="signup">
       <div className="form-container">
-        <h2>Créer votre espace employeur</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>} {/* Afficher le message d'erreur */}
         <form onSubmit={handleSubmit}>
+        <h2>Créer votre espace employeur</h2>
           <div className="form-group">
             <label>Email*</label>
             <input
@@ -199,10 +199,6 @@ const LoginForm2 = () => {
           </div>
           <button type="submit" className="submit-button">Enregistrer</button>
         </form>
-      </div>
-
-      <div className="side-image">
-        <img src={process.env.PUBLIC_URL + '/images/emploiyeur.png'} alt="Side" />
       </div>
     </div>
   );

@@ -10,7 +10,23 @@
   min-height: 100vh;
   color: #293a4d;
   flex-direction: column; /* Pour s'assurer que le contenu est bien centré */
+
 }
+
+.employer-signup {
+    background-color: #f4f4f9;
+    background-image: url('/public/images/background-forms.jpg'); /* Remplacez par votre propre image */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .signup {
+    background-color: #f4f4f9;
+    background-image: url('/public/images/Forms.jpg'); /* Remplacez par votre propre image */
+    background-size: cover;
+    background-position: center;
+  }
+
 
 /* Image visible uniquement sur la version Web (écrans larges) */
 .side-image {

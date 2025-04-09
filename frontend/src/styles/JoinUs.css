@@ -1,22 +1,23 @@
 /* Container de JoinUs */
 .join-us {
-    background-image: url('/public/images/inscription.png');
+    background-color: #f4f4f9;
+    background-image: url('/public/images/signup1.jpg'); /* Remplacez par votre propre image */
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 100vh;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrer verticalement */
-    align-items: flex-start; /* Aligner à gauche */
-    padding: 20px;
+    align-items: center; /* Centre le contenu horizontalement */
+    padding: 0 20px; /* Retirer le padding de 200px pour un centrage plus précis */
+    text-align: center; /* Centre le texte à l'intérieur des éléments */
 }
 
-/* Conteneur pour centrer les éléments à gauche */
+/* Conteneur pour centrer les éléments */
 .join-us .content {
     max-width: 600px; /* Limiter la largeur du contenu */
-    margin-left: 20px; /* Ajouter une marge à gauche */
-    text-align: left; /* Aligner le texte à gauche */
+    width: 100%; /* S'assurer que le contenu prend toute la largeur possible */
 }
 
 /* Titre */
@@ -26,31 +27,32 @@
     color: #293a4d; /* Couleur du texte */
     font-weight: bold;
     line-height: 1.8;
-    margin-left: 200px; /* Positionnement à gauche pour version web */
-    position: center;
+    margin: 0; /* Retirer tout margin pour éviter les décalages */
 }
 
 /* Boutons */
 .buttons {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aligner les boutons à gauche */
+    align-items: center; /* Centrer les boutons */
     gap: 20px;
-    margin: 30px 40;
-    margin-left: 200px; /* Positionnement à gauche pour version web */
-    max-width: 80%; 
-    font-size: 20px;
+    margin-top: 15px;
+    width: 100%; /* Utiliser toute la largeur disponible */
+    max-width: 600px; /* Limiter la largeur des boutons */
 }
 
 .candidate-button, .employer-button {
     padding: 15px 30px;
-    font-size: 12px;
+    font-size: 20 px; /* Ajustez la taille de police */
     color: #fff;
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: auto; /* Ne pas forcer la largeur à 100% */
+    width: 100%; /* Faire en sorte que les boutons remplissent la largeur du conteneur */
+    text-align: center; /* Centrer le texte à l'intérieur des boutons */
 }
+
 .buttons .connect-button a {
     text-decoration: none; /* Enlever le soulignement */
     color: inherit; /* Hérite de la couleur du bouton, ce qui évite le bleu par défaut */
@@ -61,18 +63,21 @@
     text-decoration: none; /* Pas de soulignement au survol */
 }
 
+
 /* Texte */
 .join-us p {
     font-size: 1em;
     color: #666;
     margin-top: 20px;
     margin-left: 200px; /* Positionnement à gauche pour version web */
+    text-align: center;
 }
 
 /* Liens */
 .join-us a {
     color: #007bff;
     text-decoration: none;
+    text-align: center;
 }
 
 .join-us a:hover {

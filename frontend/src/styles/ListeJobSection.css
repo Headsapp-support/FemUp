@@ -64,7 +64,7 @@ h1 {
 
 /* Style du bouton de recherche */
 .job-filter-container button {
-    background: linear-gradient(135deg, #6a11cb 0%, #701092 100%);
+    background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
     color: white;
     cursor: pointer;
     border: none;

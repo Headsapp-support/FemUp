@@ -6,26 +6,30 @@ body {
   padding: 0;
   height: 100vh;
 }
+.form-container{
+  background-image: url('/public/images/Contact.jpg'); /* Remplacez par votre propre image */
+  background-size: cover;
+  background-position: center;
+}
 
 /* Conteneur du formulaire avec une superposition sombre pour améliorer la lisibilité */
 .contact-form-container {
-  width: 90%;
-  max-width: 600px;  /* Augmenter la largeur maximale pour la version web */
+  width: 100%;
   margin: 50px auto;
-  padding: 30px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
   border-radius: 12px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: all 0.3s ease;
-  position: relative; /* Pour s'assurer que l'overlay se place correctement */
   z-index: 1;
+
 }
 
 /* Titre du formulaire */
 .contact-form-container h4 {
   font-size: 2rem;  /* Agrandir la taille du titre pour les écrans larges */
-  color: #293a4d;
+  color: #701092;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -49,7 +53,7 @@ body {
 
 /* Bouton de soumission */
 .contact-form-container .MuiButton-contained {
-  background-color: #e4aea8;
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   width: 100%; /* Faire en sorte que le bouton de soumission prenne toute la largeur */
 }
 

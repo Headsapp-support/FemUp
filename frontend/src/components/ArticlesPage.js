@@ -65,7 +65,7 @@ const ArticlesPage = () => {
         <div className="hero-content">
           <Typography variant="h2" className="hero-title">Explorez l'Avenir de la Technologie</Typography>
           <Typography variant="body1" className="hero-subtitle">Découvrez les dernières tendances en technologie, santé et innovation, qui façonnent notre futur.</Typography>
-          <Button className="hero-button" component={Link} to="/Articles">Voir Tous les Articles</Button>
+          {/* <Button className="hero-button" component={Link} to="/Articles">Voir Tous les Articles</Button> */}
         </div>
       </Box>
 

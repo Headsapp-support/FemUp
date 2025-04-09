@@ -78,8 +78,9 @@ const LoginForm = () => {
   return (
     <div className="employer-signup">
       <div className="form-container">
-        <h2>Créer votre profil candidat</h2>
+        
         <form className="form" onSubmit={Submit}>
+        <h2>Créer votre profil candidat</h2>
           <div className="form-group">
             <label>Prénom :</label>
             <input
@@ -199,10 +200,6 @@ const LoginForm = () => {
 
           <button type="submit" className="submit-button">Enregistrer</button>
         </form>
-      </div>
-
-      <div className="side-image">
-        <img src={process.env.PUBLIC_URL + '/images/condidat.png'} alt="Side" />
       </div>
     </div>
   );

@@ -54,7 +54,8 @@ const ContactForm = () => {
   };
 
   return (
-    <Box className="contact-form-container" maxWidth="500px" mx="auto" p={3}>
+    <div className="form-container">
+    <Box className="contact-form-container" maxWidth="700px" mx="auto" p={3}>
       <Typography variant="h4" gutterBottom>
         Contactez-nous
       </Typography>
@@ -125,6 +126,7 @@ const ContactForm = () => {
         </>
       )}
     </Box>
+    </div>
   );
 };
 
