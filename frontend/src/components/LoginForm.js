@@ -78,7 +78,6 @@ const LoginForm = () => {
   return (
     <div className="employer-signup">
       <div className="form-container">
-        
         <form className="form" onSubmit={Submit}>
         <h2>Créer votre profil candidat</h2>
           <div className="form-group">
@@ -125,7 +124,6 @@ const LoginForm = () => {
               <option value="">Choisir</option>
               <option value="M">Monsieur</option>
               <option value="Mme">Madame</option>
-              <option value="Autre">Autre</option>
             </select>
           </div>
 

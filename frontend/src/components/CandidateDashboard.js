@@ -130,9 +130,12 @@ const CandidateDashboard = () => {
         <h2>Bienvenue, {profileData.name || 'Utilisateur'}!</h2>
         <p>Email : {profileData.email || 'Non disponible'}</p>
         <div className="profile-actions">
-          <button className="btn-edit-profile" onClick={handleEditProfile}>
+          <button className="btn-follow-responses" onClick={handleEditProfile}>
             Modifier mon profil
           </button>
+          <button className="btn-Avis" onClick={handleToggleFeedbackForm}>
+          {isFormVisible ? 'Annuler' : 'Partager votre avis'}
+        </button>
           
           <input
             type="file"
@@ -159,7 +162,7 @@ const CandidateDashboard = () => {
         )}
       </div>
 
-      <div className="actions-section">
+     {/* <div className="actions-section">
         <button className="btn-Avis" onClick={handleToggleFeedbackForm}>
           {isFormVisible ? 'Annuler' : 'Partager votre avis'}
         </button>
@@ -169,7 +172,7 @@ const CandidateDashboard = () => {
         <button className="btn-follow-responses">
           <Link to="">Suivi des réponses</Link>
         </button>
-      </div>
+      </div> */}
 
       {isFormVisible && (
         <div className="feedback-form">

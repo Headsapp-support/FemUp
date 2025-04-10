@@ -103,7 +103,7 @@
   }
   
   .candidate-btn-save {
-    background-color: #e4aea8;
+    background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -113,7 +113,7 @@
   }
   
   .candidate-btn-save:hover {
-    background-color: #e7bbb7;
+    background: linear-gradient(135deg, #b832b1 0%, #5f0f7c 100%);
   }
   
   button:focus {

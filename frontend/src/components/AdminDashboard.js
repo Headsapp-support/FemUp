@@ -211,7 +211,7 @@ const AdminDashboard = () => {
           <div className="action-cards">
             <div className="action-card">
               <h3>Créer un article</h3>
-              <Link to="/admin/create-article" className="btn-action">
+              <Link to="/admin/articles" className="btn-action">
                 <FontAwesomeIcon icon={faFileAlt} /> Ajouter un article
               </Link>
             </div>

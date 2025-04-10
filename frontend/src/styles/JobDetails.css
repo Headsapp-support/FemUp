@@ -31,7 +31,7 @@ body {
 .job-title {
   font-size: 36px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #600d7e;
   margin-bottom: 15px;
 }
 
@@ -51,7 +51,7 @@ body {
 .job-description, .job-requirements, .job-budget, .job-communication, .job-availability, .contact-details {
   margin-bottom: 40px;
   padding: 20px;
-  border-left: 6px solid #e4aea8;
+  border-left: 6px solid #2c3e50;
   background-color: #fff;
   border-radius: 6px;
 }
@@ -81,13 +81,13 @@ body {
   position: absolute;
   left: 0;
   font-size: 18px;
-  color: #e4aea8;
+  color: #2c3e50;
 }
 
 .budget-value {
   font-size: 20px;
   font-weight: 600;
-  color: #e4aea8;
+  color: #2c3e50;
   margin-bottom: 10px;
 }
 
@@ -97,7 +97,7 @@ body {
 }
 
 .apply-btn {
-  background-color: #e4aea8;
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   color: white;
   padding: 16px 40px;
   font-size: 20px;
@@ -109,7 +109,7 @@ body {
 }
 
 .apply-btn:hover {
-  background-color: #f0c0bb;
+  background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%);
   transform: translateY(-3px);
 }
 

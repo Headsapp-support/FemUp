@@ -425,7 +425,7 @@
 
 .modal-footer button {
   padding: 12px 25px;
-  background-color: #e4aea8;
+  background-color: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   color: white;
   border: none;
   border-radius: 5px;
@@ -435,7 +435,7 @@
 }
 
 .modal-footer button:hover {
-  background-color: #f0c0ba; /* Changement de couleur au survol */
+  background-color: linear-gradient(135deg, #ed4ce5 0%, #711593 100%); /* Changement de couleur au survol */
 }
 
 

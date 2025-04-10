@@ -16,7 +16,7 @@
 }
 
 h2, h3 {
-  color: #333;
+  color: #2c3e50;
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -35,7 +35,7 @@ h2, h3 {
 }
 
 .btn-Avis {
-  background-color: #a8e4d4;
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -47,7 +47,7 @@ h2, h3 {
 }
 
 .btn-Avis:hover {
-  background-color: #f2f8f7;
+  background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%);
   transform: translateY(-2px);
 }
 
@@ -81,7 +81,7 @@ h2, h3 {
 }
 
 .btn-follow-responses {
-  background-color: #e4a8dc;
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -93,7 +93,7 @@ h2, h3 {
 }
 
 .btn-follow-responses:hover {
-  background-color: #f9d1f5;
+  background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%);
   transform: translateY(-2px);
 }
 
@@ -103,7 +103,7 @@ h2, h3 {
 }
 
 .btn-edit-profile {
-  background-color: #e4aea8;
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -114,7 +114,7 @@ h2, h3 {
 }
 
 .btn-edit-profile:hover {
-  background-color: #f6bfb9;
+  background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%);
   transform: translateY(-2px);
 }
 
@@ -194,7 +194,7 @@ h2, h3 {
 }
 
 .actions-section button {
-  background-color: #e4aea8; /* Bleu principal */
+  background: linear-gradient(135deg, #dd38d5 0%, #600d7e 100%); /* Bleu principal */
   color: white;
   border: none;
   padding: 12px 25px;
@@ -209,7 +209,7 @@ h2, h3 {
 }
 
 .actions-section button:hover {
-  background-color: #f6bfb9; /* Couleur plus foncée au survol */
+  background: linear-gradient(135deg, #ed41e4 0%, #76139a 100%); /* Couleur plus foncée au survol */
   transform: translateY(-3px); /* Légère élévation au survol */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Ombre plus marquée */
 }
@@ -254,7 +254,7 @@ h2, h3 {
 .feedback-form h3 {
   font-size: 24px;
   margin-bottom: 15px;
-  color: #333;
+  color: #76139a;
 }
 
 .feedback-form textarea {
@@ -275,7 +275,7 @@ h2, h3 {
 }
 
 .feedback-form button {
-  background-color: #f6bfb9;
+  background: #293a4d;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -287,7 +287,7 @@ h2, h3 {
 }
 
 .feedback-form button:hover {
-  background-color: #f8cac5;
+  background: #364b63;
 }
 
 .feedback-form p {
