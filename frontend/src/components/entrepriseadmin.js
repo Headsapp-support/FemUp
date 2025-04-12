@@ -57,7 +57,7 @@ const EntrepriseAdmin = () => {
   
     try {
       if (selectedEntreprise) {
-        // Mise à jour
+        // Update entreprise
         await axios.put(
           `https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`,
           formData,
@@ -69,7 +69,7 @@ const EntrepriseAdmin = () => {
         );
         alert('Entreprise mise à jour avec succès');
       } else {
-        // Création
+        // Add entreprise
         await axios.post(
           'https://femup-1.onrender.com/api/add-entreprise',
           formData,
@@ -85,24 +85,10 @@ const EntrepriseAdmin = () => {
       fetchEntreprises();
       handleCloseModal();
     } catch (error) {
-      if (error.response) {
-        // La requête a été effectuée et le serveur a répondu avec un code d'état
-        // qui sort de la plage des 2xx
-        console.error('Détails de l\'erreur :', error.response.data);
-        alert(`Erreur du serveur : ${error.response.status} - ${error.response.data}`);
-      } else if (error.request) {
-        // La requête a été effectuée mais aucune réponse n'a été reçue
-        console.error('Aucune réponse reçue :', error.request);
-        alert('Aucune réponse du serveur.');
-      } else {
-        // Une erreur est survenue lors de la configuration de la requête
-        console.error('Erreur :', error.message);
-        alert(`Erreur : ${error.message}`);
-      }
+      console.error('Erreur:', error.response?.data || error.message);
+      alert(`Une erreur est survenue: ${error.response?.data || error.message}`);
     }
-  };
-  
-    
+  };   
      
   // Fonction pour charger les entreprises existantes
   const fetchEntreprises = async () => {
