@@ -25,7 +25,7 @@ const createEvent = async (req, res) => {
       const newEvent = new Event({
         name,
         date,
-        image: req.file.path, // Récupère le chemin du fichier téléchargé
+        image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`, // Récupère le chemin du fichier téléchargé
       });
   
       // Sauvegarde de l'événement dans la base de données

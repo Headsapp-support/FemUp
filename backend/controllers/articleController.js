@@ -22,7 +22,7 @@ const createArticle = async (req, res) => {
         title,
         content,
         date,
-        image: req.file.path, // Récupère le chemin du fichier téléchargé
+        image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
         isFeatured,
       });
   

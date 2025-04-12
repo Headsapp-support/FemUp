@@ -26,7 +26,8 @@ const createImage = async (req, res) => {
       const newImage = new Image({
         title,
         description,
-        image: req.file.path,
+        image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
+
       });
   
       console.log('Enregistrement de l\'image dans la base de données...');

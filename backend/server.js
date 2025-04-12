@@ -44,7 +44,6 @@ app.use('/api', CondidatRoutes);
 app.use('/api/recruteur', recruteurRoutes);
 app.use('/api/condidat', feedbackRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/admin', adminRoutes);
 app.use('/api', entrepriseRoutes);
 app.use('/api/messages', contactRoutes);
