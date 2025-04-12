@@ -18,8 +18,8 @@ const entrepriseSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String,
-    required: true // Ce champ est requis, donc l'erreur se produit si on ne le fournit pas
+    type: String,  // image est maintenant optionnelle
+    default: ''
   }
 });
 
