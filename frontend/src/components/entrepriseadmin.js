@@ -52,12 +52,12 @@ const EntrepriseAdmin = () => {
     formData.append('description', description);
   
     if (image) {
-      formData.append('image', image); // On envoie une nouvelle image SEULEMENT si l'utilisateur en a choisi une
+      formData.append('image', image);
     }
   
     try {
       if (selectedEntreprise) {
-        // UPDATE
+        // Mise à jour
         await axios.put(
           `https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`,
           formData,
@@ -69,7 +69,7 @@ const EntrepriseAdmin = () => {
         );
         alert('Entreprise mise à jour avec succès');
       } else {
-        // CREATE
+        // Création
         await axios.post(
           'https://femup-1.onrender.com/api/add-entreprise',
           formData,
@@ -85,10 +85,23 @@ const EntrepriseAdmin = () => {
       fetchEntreprises();
       handleCloseModal();
     } catch (error) {
-      console.error('Erreur:', error.response?.data || error.message);
-      alert(`Une erreur est survenue: ${error.response?.data || error.message}`);
+      if (error.response) {
+        // La requête a été effectuée et le serveur a répondu avec un code d'état
+        // qui sort de la plage des 2xx
+        console.error('Détails de l\'erreur :', error.response.data);
+        alert(`Erreur du serveur : ${error.response.status} - ${error.response.data}`);
+      } else if (error.request) {
+        // La requête a été effectuée mais aucune réponse n'a été reçue
+        console.error('Aucune réponse reçue :', error.request);
+        alert('Aucune réponse du serveur.');
+      } else {
+        // Une erreur est survenue lors de la configuration de la requête
+        console.error('Erreur :', error.message);
+        alert(`Erreur : ${error.message}`);
+      }
     }
   };
+  
     
      
   // Fonction pour charger les entreprises existantes
