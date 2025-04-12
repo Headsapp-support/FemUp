@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const Condidat = require('../models/Condidat');
 const Recruteur = require('../models/Recruteur');
 const mongoose = require('mongoose');
+const cloudinary = require('../utils/cloudinary'); // Assure-toi que ce fichier existe
+const streamifier = require('streamifier');
+
 // Inscription
 const registerCondidat = async (req, res) => {
     const {
@@ -180,14 +183,46 @@ const getCondidatProfile = async (req, res) => {
 
 // Mettre à jour le profil du candidat
 const updateCondidatProfile = async (req, res) => {
-    const { firstName, lastName, email, civilite, password, dateNaissance, governorate, specialite, experience } = req.body;
-    const profileImage = req.file ? req.file.path : null;
-  
+  const {
+    firstName,
+    lastName,
+    email,
+    civilite,
+    password,
+    dateNaissance,
+    governorate,
+    specialite,
+    experience
+  } = req.body;
+
+  try {
     const condidat = await Condidat.findById(req.user.id);
     if (!condidat) {
       return res.status(404).json({ message: 'Candidat non trouvé' });
     }
-  
+
+    // Upload de la nouvelle image de profil vers Cloudinary
+    if (req.file) {
+      const uploadFromBuffer = () => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: 'condidats/profiles'
+            },
+            (error, result) => {
+              if (result) resolve(result);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+      };
+
+      const uploadResult = await uploadFromBuffer();
+      condidat.profileImage = uploadResult.secure_url;
+    }
+
+    // Mise à jour des autres champs
     condidat.firstName = firstName || condidat.firstName;
     condidat.lastName = lastName || condidat.lastName;
     condidat.email = email || condidat.email;
@@ -196,55 +231,23 @@ const updateCondidatProfile = async (req, res) => {
     condidat.governorate = governorate || condidat.governorate;
     condidat.specialite = specialite || condidat.specialite;
     condidat.experience = experience || condidat.experience;
-  
-    if (profileImage) {
-      condidat.profileImage = profileImage;
-    }
-  
+
     if (password) {
       const salt = await bcrypt.genSalt(10);
       condidat.password = await bcrypt.hash(password, salt);
     }
-  
+
     await condidat.save();
+
     res.status(200).json({
       success: true,
       message: 'Profil mis à jour avec succès',
       data: condidat
     });
-  };
 
-  const path = require('path'); // Pour gérer les chemins de fichiers
-
-// Télécharger et enregistrer le CV
-const uploadCV = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'Aucun fichier CV téléchargé' });
-    }
-
-    // Générer l'URL du fichier téléchargé
-    const cvUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
-
-    // Mettre à jour le profil du candidat avec le lien du CV
-    const condidat = await Condidat.findByIdAndUpdate(
-      req.user.id,
-      { cv: cvUrl },  // Enregistrer le chemin du CV
-      { new: true }
-    );
-
-    if (!condidat) {
-      return res.status(404).json({ message: 'Candidat non trouvé' });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'CV téléchargé avec succès',
-      cv: cvUrl,  // Retourner le lien du CV
-    });
-  } catch (error) {
-    console.error('Erreur lors du téléchargement du CV:', error);
-    res.status(500).json({ message: 'Erreur serveur' });
+  } catch (err) {
+    console.error('Erreur mise à jour profil:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
 
