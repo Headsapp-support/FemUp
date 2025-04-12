@@ -16,14 +16,17 @@ exports.addEntreprise = async (req, res) => {
       return res.status(400).send("Tous les champs sont requis.");
     }
 
-    // Vérification de l'image envoyée
+    // Vérification du fichier
     if (!req.file) {
-      console.log("Aucun fichier fourni, image non envoyée");
+      console.log("Aucun fichier fourni");
+      return res.status(400).send('Fichier requis');
     }
 
-    // Upload vers Cloudinary
+    // Log pour voir si le fichier est bien récupéré
+    console.log("Fichier reçu:", req.file);
+
     const uploadStream = cloudinary.uploader.upload_stream(
-      { resource_type: 'auto' }, // Auto détecte le type de fichier (image, PDF, etc.)
+      { resource_type: 'auto' }, // Auto pour tous types de fichiers
       async (error, result) => {
         if (error) {
           console.error('Erreur lors de l\'upload vers Cloudinary:', error);
@@ -53,21 +56,7 @@ exports.addEntreprise = async (req, res) => {
     );
 
     // Conversion du fichier en stream et envoi vers Cloudinary
-    if (req.file) {
-      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
-    } else {
-      // Si aucune image n'est envoyée, on procède à la création sans image
-      const newEntreprise = new Entreprise({
-        nom,
-        secteur,
-        localisation,
-        description,
-        image: '' // Pas d'image
-      });
-      
-      await newEntreprise.save();
-      res.status(201).send('Entreprise ajoutée sans image');
-    }
+    streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
 
   } catch (err) {
     console.error('Erreur serveur:', err);
@@ -137,10 +126,16 @@ exports.deleteEntreprise = async (req, res) => {
       return res.status(404).json({ message: 'Entreprise non trouvée' });
     }
 
-    // Supprimer l'image du serveur
-    const imagePath = path.join(__dirname, '..', 'uploads', deletedEntreprise.image.split('/').pop());
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
+    // Si l'image est stockée sur Cloudinary, la supprimer
+    if (deletedEntreprise.image) {
+      const imageName = deletedEntreprise.image.split('/').pop().split('.')[0]; // Récupère le nom de l'image
+      cloudinary.uploader.destroy(imageName, (error, result) => {
+        if (error) {
+          console.error('Erreur lors de la suppression de l\'image Cloudinary:', error);
+        } else {
+          console.log('Image supprimée de Cloudinary:', result);
+        }
+      });
     }
 
     res.status(200).json({ message: 'Entreprise supprimée avec succès' });

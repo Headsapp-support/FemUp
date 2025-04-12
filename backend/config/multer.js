@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-// On utilise le stockage en mémoire pour envoyer le fichier directement à Cloudinary
+// Utilisation du stockage en mémoire pour envoyer le fichier directement à Cloudinary
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
@@ -12,6 +12,7 @@ const fileFilter = (req, file, cb) => {
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   ];
+  
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -22,7 +23,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 } // 10 Mo max
+  limits: { fileSize: 10 * 1024 * 1024 } // Limite de taille à 10 Mo max
 });
 
 module.exports = upload;
