@@ -1,47 +1,58 @@
-const Entreprise = require('../models/Entreprise');
-const path = require('path');
-const fs = require('fs');
-const cloudinary = require('../utils/cloudinary'); // le fichier de config Cloudinary
-const upload = require('../config/multer'); 
 const streamifier = require('streamifier');
+const cloudinary = require('../utils/cloudinary');
+const Entreprise = require('../models/Entreprise');
+const multer = require('multer');
 
-
-// Exemple de "base de données" simulée
-let entreprises = [];
+// Import du middleware multer (si tu l'utilises ici, sinon il est dans un autre fichier)
+const upload = require('../config/multer');
 
 exports.addEntreprise = async (req, res) => {
   try {
+    console.log("Début de la création de l'entreprise");
+
     const { nom, secteur, localisation, description } = req.body;
 
-    // Vérification des champs requis
-    if (!req.file) return res.status(400).send('Fichier requis');
+    // Vérification des champs
+    if (!req.file) {
+      console.log("Aucun fichier fourni");
+      return res.status(400).send('Fichier requis');
+    }
+
     if (!nom || !secteur || !localisation || !description) {
+      console.log("Données manquantes:", { nom, secteur, localisation, description });
       return res.status(400).send("Tous les champs sont requis.");
     }
 
-    // Création du stream d'upload vers Cloudinary
     const uploadStream = cloudinary.uploader.upload_stream(
-      { resource_type: 'auto' }, // Cela permet de gérer les fichiers image, PDF, etc.
+      { resource_type: 'auto' }, // Gère tous les types de fichiers (image, PDF, etc.)
       async (error, result) => {
         if (error) {
-          console.error('Cloudinary error:', error);
+          console.error('Erreur lors de l\'upload vers Cloudinary:', error);
           return res.status(500).send('Erreur Cloudinary');
         }
+
+        console.log('Fichier uploadé avec succès sur Cloudinary:', result);
 
         const newEntreprise = new Entreprise({
           nom,
           secteur,
           localisation,
           description,
-          image: result.secure_url // URL de l'image stockée sur Cloudinary
+          image: result.secure_url // URL de l'image sur Cloudinary
         });
 
-        await newEntreprise.save();
-        res.status(201).send('Entreprise ajoutée avec succès.');
+        try {
+          await newEntreprise.save();
+          console.log('Entreprise ajoutée avec succès:', newEntreprise);
+          res.status(201).send('Entreprise ajoutée avec succès.');
+        } catch (saveError) {
+          console.error('Erreur lors de l\'enregistrement de l\'entreprise:', saveError);
+          res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
+        }
       }
     );
 
-    // Conversion du buffer du fichier en stream et upload vers Cloudinary
+    // Conversion du fichier en stream et envoi vers Cloudinary
     streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
 
   } catch (err) {
@@ -49,6 +60,7 @@ exports.addEntreprise = async (req, res) => {
     res.status(500).send('Erreur serveur');
   }
 };
+
 
 // Récupérer toutes les entreprises
 exports.getEntreprises = async (req, res) => {
