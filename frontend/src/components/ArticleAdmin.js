@@ -73,6 +73,7 @@ const ArticleAdmin = () => {
       data.append('title', formData.title);
       data.append('content', formData.content);
       data.append('date', formData.date);
+      data.append('isFeatured', isFeatured);
 
       if (formData.image) {
         data.append('image', formData.image);
@@ -114,6 +115,7 @@ const ArticleAdmin = () => {
       const response = await axios.post(apiUrl, data, {
         headers: {
           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
 

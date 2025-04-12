@@ -15,8 +15,9 @@ const ArticlesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const BASE_URL = "https://femup-1.onrender.com";
+  const BASE_URL = "https://femup-1.onrender.com"; // L'URL de base de votre API
 
+  // Fonction pour récupérer les données et corriger les URLs des images
   const fetchData = async (url, setState, errorMessage) => {
     try {
       const token = localStorage.getItem('token');
@@ -26,11 +27,11 @@ const ArticlesPage = () => {
         },
       });
   
-      // 🔧 Correction de l'URL image
+      // 🔧 Correction de l'URL des images si nécessaire
       const fixedData = response.data.map(item => ({
         ...item,
-        image: item.image && !item.image.startsWith("http")
-          ? `${BASE_URL}/${item.image.replace(/^\/?/, '')}` // enlève / au début si présent
+        image: item.image && !item.image.startsWith("http") 
+          ? `${BASE_URL}/${item.image.replace(/^\/?/, '')}` // Si l'URL ne commence pas par http, la compléter
           : item.image
       }));
   
@@ -40,9 +41,9 @@ const ArticlesPage = () => {
       setError(errorMessage);
       console.error(errorMessage, error);
     }
-  };  
-  
+  };
 
+  // Récupérer les articles, événements et images lors du montage du composant
   useEffect(() => {
     const fetchArticlesData = async () => {
       await fetchData('https://femup-1.onrender.com/api/articles/Tous', setArticles, 'Erreur lors de la récupération des articles');
@@ -60,9 +61,12 @@ const ArticlesPage = () => {
     setLoading(false);
   }, []);
 
+  // Fonction pour afficher ou cacher plus d'articles
   const toggleArticles = () => setShowAllArticles(!showAllArticles);
+  // Fonction pour afficher ou cacher plus d'événements
   const toggleEvents = () => setShowAllEvents(!showAllEvents);
 
+  // Affichage de chargement ou erreur
   if (loading) {
     return <Typography variant="h6">Chargement en cours...</Typography>;
   }
@@ -78,7 +82,6 @@ const ArticlesPage = () => {
         <div className="hero-content">
           <Typography variant="h2" className="hero-title">Explorez l'Avenir de la Technologie</Typography>
           <Typography variant="body1" className="hero-subtitle">Découvrez les dernières tendances en technologie, santé et innovation, qui façonnent notre futur.</Typography>
-          {/* <Button className="hero-button" component={Link} to="/Articles">Voir Tous les Articles</Button> */}
         </div>
       </Box>
 
@@ -144,15 +147,14 @@ const ArticlesPage = () => {
       <Box className="images-section">
         <Typography variant="h4" className="section-title">Retour en Image</Typography>
         <Swiper
-  spaceBetween={30}
-  slidesPerView={1}
-  loop={images.length > 1} // ✅ Active loop que s’il y a plus d'une image
-  autoplay={{ delay: 3000 }}
-  effect="fade"
-  loopAdditionalSlides={2}
-  className="images-carousel"
->
-
+          spaceBetween={30}
+          slidesPerView={1}
+          loop={images.length > 1} // Si plus d'une image, activez la boucle
+          autoplay={{ delay: 3000 }}
+          effect="fade"
+          loopAdditionalSlides={2}
+          className="images-carousel"
+        >
           {images.length > 0 ? (
             images.map((image) => (
               <SwiperSlide key={image._id}>
