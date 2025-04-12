@@ -183,17 +183,7 @@ const getCondidatProfile = async (req, res) => {
 
 // Mettre à jour le profil du candidat
 const updateCondidatProfile = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    civilite,
-    password,
-    dateNaissance,
-    governorate,
-    specialite,
-    experience
-  } = req.body;
+  const { firstName, lastName, email, civilite, password, dateNaissance, governorate, specialite, experience } = req.body;
 
   try {
     const condidat = await Condidat.findById(req.user.id);
@@ -203,6 +193,8 @@ const updateCondidatProfile = async (req, res) => {
 
     // Upload de la nouvelle image de profil vers Cloudinary
     if (req.file) {
+      console.log('Image reçue:', req.file); // Debug : afficher l'image reçue
+
       const uploadFromBuffer = () => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
@@ -219,7 +211,15 @@ const updateCondidatProfile = async (req, res) => {
       };
 
       const uploadResult = await uploadFromBuffer();
-      condidat.profileImage = uploadResult.secure_url;
+      console.log('Upload Cloudinary réussi:', uploadResult); // Debug : afficher le résultat de l'upload
+
+      // Vérification du lien Cloudinary retourné
+      if (uploadResult && uploadResult.secure_url) {
+        condidat.profileImage = uploadResult.secure_url;
+      } else {
+        console.error('Erreur Cloudinary: URL manquante');
+        return res.status(500).json({ message: 'Erreur lors du téléchargement de l\'image sur Cloudinary' });
+      }
     }
 
     // Mise à jour des autres champs
@@ -248,6 +248,39 @@ const updateCondidatProfile = async (req, res) => {
   } catch (err) {
     console.error('Erreur mise à jour profil:', err);
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+
+// Télécharger et enregistrer le CV
+const uploadCV = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Aucun fichier CV téléchargé' });
+    }
+
+    // Générer l'URL du fichier téléchargé
+    const cvUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+
+    // Mettre à jour le profil du candidat avec le lien du CV
+    const condidat = await Condidat.findByIdAndUpdate(
+      req.user.id,
+      { cv: cvUrl },  // Enregistrer le chemin du CV
+      { new: true }
+    );
+
+    if (!condidat) {
+      return res.status(404).json({ message: 'Candidat non trouvé' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'CV téléchargé avec succès',
+      cv: cvUrl,  // Retourner le lien du CV
+    });
+  } catch (error) {
+    console.error('Erreur lors du téléchargement du CV:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 };
 
