@@ -20,12 +20,14 @@
     background-position: center;
   }
 
-  .signup {
+  
+  .signup1 {
     background-color: #f4f4f9;
     background-image: url('/public/images/Forms.jpg'); /* Remplacez par votre propre image */
     background-size: cover;
     background-position: center;
   }
+
 
 
 /* Image visible uniquement sur la version Web (écrans larges) */

@@ -83,8 +83,8 @@ const LoginForm2 = () => {
   };
 
   return (
-    <div className="signup">
-      <div className="form-container">
+    <div className="signup1">
+      <div className="form-container1">
         {errorMessage && <div className="error-message">{errorMessage}</div>} {/* Afficher le message d'erreur */}
         <form onSubmit={handleSubmit}>
         <h2>Créer votre espace employeur</h2>
