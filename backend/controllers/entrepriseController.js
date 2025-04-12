@@ -90,6 +90,7 @@ exports.getEntrepriseById = async (req, res) => {
 };
 
 // Mettre à jour une entreprise
+// Mettre à jour une entreprise
 exports.updateEntreprise = async (req, res) => {
   try {
     const entreprise = await Entreprise.findById(req.params.id);
@@ -97,25 +98,41 @@ exports.updateEntreprise = async (req, res) => {
       return res.status(404).json({ message: 'Entreprise non trouvée' });
     }
 
-    // Mise à jour des champs
+    // Mise à jour des champs texte
     entreprise.nom = req.body.nom || entreprise.nom;
     entreprise.secteur = req.body.secteur || entreprise.secteur;
     entreprise.localisation = req.body.localisation || entreprise.localisation;
     entreprise.description = req.body.description || entreprise.description;
 
-    // Mise à jour de l'image si une nouvelle est envoyée
+    // Mise à jour de l'image (si un fichier est envoyé)
     if (req.file) {
-      entreprise.image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      console.log('Nouvelle image détectée, upload en cours...');
+
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { resource_type: 'auto' },
+        async (error, result) => {
+          if (error) {
+            console.error("Erreur d'upload vers Cloudinary:", error);
+            return res.status(500).send('Erreur lors de l\'upload de l\'image');
+          }
+
+          entreprise.image = result.secure_url;
+          await entreprise.save();
+          res.status(200).json({ message: 'Entreprise mise à jour avec succès', entreprise });
+        }
+      );
+
+      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+    } else {
+      await entreprise.save();
+      res.status(200).json({ message: 'Entreprise mise à jour avec succès', entreprise });
     }
 
-    await entreprise.save();
-    res.status(200).json({ message: 'Entreprise mise à jour avec succès', entreprise });
   } catch (error) {
-    console.error('Erreur lors de la mise à jour de l\'entreprise:', error);
+    console.error("Erreur lors de la mise à jour de l'entreprise:", error);
     res.status(500).json({ message: 'Erreur serveur' });
   }
 };
-
 
 // Supprimer une entreprise
 exports.deleteEntreprise = async (req, res) => {
