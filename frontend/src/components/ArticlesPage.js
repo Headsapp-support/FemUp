@@ -144,14 +144,15 @@ const ArticlesPage = () => {
       <Box className="images-section">
         <Typography variant="h4" className="section-title">Retour en Image</Typography>
         <Swiper
-          spaceBetween={30}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{ delay: 3000 }}
-          effect="fade"
-          loopAdditionalSlides={2}
-          className="images-carousel"
-        >
+  spaceBetween={30}
+  slidesPerView={1}
+  loop={images.length > 1} // ✅ Active loop que s’il y a plus d'une image
+  autoplay={{ delay: 3000 }}
+  effect="fade"
+  loopAdditionalSlides={2}
+  className="images-carousel"
+>
+
           {images.length > 0 ? (
             images.map((image) => (
               <SwiperSlide key={image._id}>

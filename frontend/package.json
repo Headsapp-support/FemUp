@@ -16,6 +16,7 @@
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
+    "cloudinary-react": "^1.8.1",
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
     "jsonwebtoken": "^9.0.2",
