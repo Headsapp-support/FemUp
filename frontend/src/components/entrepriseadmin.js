@@ -50,45 +50,46 @@ const EntrepriseAdmin = () => {
     formData.append('secteur', secteur);
     formData.append('localisation', localisation);
     formData.append('description', description);
-    
+  
     if (image) {
-      formData.append('image', image);
-    } else if (selectedEntreprise && !image) {
-      // Si c'est une modification et qu'aucune image n'est sélectionnée, ne pas envoyer d'image
-      formData.append('image', selectedEntreprise.image);
-    } else {
-      alert('L\'image est requise.');
-      return;
+      formData.append('image', image); // On envoie une nouvelle image SEULEMENT si l'utilisateur en a choisi une
     }
   
     try {
-      // Si selectedEntreprise existe, cela signifie que c'est une modification
       if (selectedEntreprise) {
-        // Mettre à jour l'entreprise
-        await axios.put(`https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // UPDATE
+        await axios.put(
+          `https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
         alert('Entreprise mise à jour avec succès');
       } else {
-        // Sinon, ajouter une nouvelle entreprise
-        await axios.post('https://femup-1.onrender.com/api/add-entreprise', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // CREATE
+        await axios.post(
+          'https://femup-1.onrender.com/api/add-entreprise',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
         alert('Entreprise ajoutée avec succès');
       }
   
-      // Recharger la liste des entreprises après l'ajout ou la mise à jour
       fetchEntreprises();
-      handleCloseModal(); // Fermer la modale après la soumission
+      handleCloseModal();
     } catch (error) {
-      console.error('Erreur:', error.response ? error.response.data : error.message);
-      alert('Une erreur est survenue.');
+      console.error('Erreur:', error.response?.data || error.message);
+      alert(`Une erreur est survenue: ${error.response?.data || error.message}`);
     }
   };
+    
      
   // Fonction pour charger les entreprises existantes
   const fetchEntreprises = async () => {
