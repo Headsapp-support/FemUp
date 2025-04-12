@@ -338,30 +338,31 @@ const postuler = async (req, res) => {
 
 const getCandidatures = async (req, res) => {
   try {
+    console.log('🔍 ID utilisateur:', req.user?.id);
+
     const condidat = await Condidat.findById(req.user.id)
       .populate({
-        path: 'applications.jobId',  // Peupler le champ 'jobId'
-        select: 'title _id',  // Sélectionner seulement le titre et l'ID de l'offre
+        path: 'applications.jobId',
+        select: 'title _id',
       });
 
+    console.log('✅ Candidat trouvé :', condidat);
+
     if (!condidat) {
+      console.log('❌ Candidat non trouvé');
       return res.status(404).json({ message: 'Condidat non trouvé' });
     }
 
-    // Vérifiez que jobId est bien défini dans chaque candidature
-    condidat.applications.forEach(application => {
-      if (!application.jobId) {
-        console.error('Candidature avec jobId manquant :', application);
-      }
-    });
+    console.log('📦 Applications:', condidat.applications);
 
-    // Retourner les candidatures avec jobId
     res.json({ applications: condidat.applications });
+
   } catch (error) {
-    console.error(error);
+    console.error('🔥 Erreur attrapée dans catch:', error);
     res.status(500).json({ message: 'Erreur serveur lors de la récupération des candidatures' });
   }
 };
+
 
 
 // Fonction pour récupérer tous les candidats
