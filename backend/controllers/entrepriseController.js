@@ -9,33 +9,35 @@ let entreprises = [];
 
 exports.addEntreprise = async (req, res) => {
   try {
-    // Vérification des champs
-    if (!req.body.nom || !req.body.secteur || !req.body.localisation || !req.body.description) {
+    const { nom, secteur, localisation, description } = req.body;
+
+    if (!nom || !secteur || !localisation || !description) {
       return res.status(400).send("Tous les champs sont requis.");
     }
 
-    // Vérification de l'image
     if (!req.file) {
-      return res.status(400).send('L\'image est requise.');
+      return res.status(400).send('Le fichier (image ou PDF) est requis.');
     }
 
-    // Télécharger l'image vers Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path);
-
-    const newEntreprise = new Entreprise({
-      nom: req.body.nom,
-      secteur: req.body.secteur,
-      localisation: req.body.localisation,
-      description: req.body.description,
-      image: result.secure_url, // URL de l'image Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      resource_type: "auto", // important pour autoriser PDF
     });
 
-    // Sauvegarder l'entreprise dans la base de données
+    const newEntreprise = new Entreprise({
+      nom,
+      secteur,
+      localisation,
+      description,
+      image: result.secure_url,
+    });
+
     await newEntreprise.save();
+    fs.unlinkSync(req.file.path); // nettoyer le fichier local après upload
+
     res.status(201).send('Entreprise ajoutée avec succès.');
   } catch (error) {
-    console.error('Erreur lors de l\'ajout de l\'entreprise:', error);
-    res.status(500).send(`Erreur serveur: ${error.message}`);
+    console.error('Erreur lors de l\'ajout:', error);
+    res.status(500).send('Erreur serveur.');
   }
 };
 
