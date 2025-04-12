@@ -85,8 +85,9 @@ const EntrepriseAdmin = () => {
       fetchEntreprises();
       handleCloseModal();
     } catch (error) {
-      console.error('Erreur:', error.response?.data || error.message);
-      alert(`Une erreur est survenue: ${error.response?.data || error.message}`);
+      console.error('Erreur complète:', error);
+      console.error('Détail:', error.response?.data || error.message);
+      alert(`Erreur: ${error.response?.data || error.message}`);   
     }
   };   
      
