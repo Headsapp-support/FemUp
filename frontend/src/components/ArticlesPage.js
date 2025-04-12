@@ -15,6 +15,8 @@ const ArticlesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const BASE_URL = "https://femup-1.onrender.com";
+
   const fetchData = async (url, setState, errorMessage) => {
     try {
       const token = localStorage.getItem('token');
@@ -23,12 +25,23 @@ const ArticlesPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setState(response.data);
+  
+      // 🔧 Correction de l'URL image
+      const fixedData = response.data.map(item => ({
+        ...item,
+        image: item.image && !item.image.startsWith("http")
+          ? `${BASE_URL}/${item.image.replace(/^\/?/, '')}` // enlève / au début si présent
+          : item.image
+      }));
+  
+      console.log("🖼️ Données avec image corrigée :", fixedData);
+      setState(fixedData);
     } catch (error) {
       setError(errorMessage);
       console.error(errorMessage, error);
     }
-  };
+  };  
+  
 
   useEffect(() => {
     const fetchArticlesData = async () => {

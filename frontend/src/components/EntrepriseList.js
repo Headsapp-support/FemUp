@@ -125,7 +125,7 @@ const EntrepriseList = () => {
                   <Card className="entreprise-card">
                     <CardContent>
                       <Box className="entreprise-card-header">
-                        <img src={entreprise.image} alt={entreprise.nom} className="entreprise-card-logo" />
+                      <img src={`http://femup-1.onrender.com/uploads/${entreprise.image}`} alt={entreprise.nom} className="entreprise-card-logo" />
                         <Typography variant="h5" className="entreprise-card-title">
                           {entreprise.nom}
                         </Typography>
