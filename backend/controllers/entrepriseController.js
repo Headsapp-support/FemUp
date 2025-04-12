@@ -1,42 +1,45 @@
 const Entreprise = require('../models/Entreprise');
-
 const path = require('path');
 const fs = require('fs');
 
-// Exemple de "base de données" simulée (vous devriez remplacer cela par une vraie base de données)
+// Exemple de "base de données" simulée
 let entreprises = [];
 
 exports.addEntreprise = async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).send('L\'image est requise.');
-      }
-  
-      // Créer une nouvelle entreprise avec les données du formulaire
-      const newEntreprise = new Entreprise({
-        nom: req.body.nom,
-        secteur: req.body.secteur,
-        localisation: req.body.localisation,
-        description: req.body.description,
-        image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,  // Le nom du fichier téléchargé
-      });
-  
-      // Sauvegarder l'entreprise dans la base de données
-      await newEntreprise.save();
-  
-      res.status(201).send('Entreprise ajoutée avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout de l\'entreprise:', error);
-      res.status(500).send('Erreur serveur.');
+  try {
+    // Vérification des champs requis
+    if (!req.body.nom || !req.body.secteur || !req.body.localisation || !req.body.description) {
+      return res.status(400).send("Tous les champs sont requis.");
     }
-  };
-  
+
+    // Vérification de l'image
+    if (!req.file) {
+      return res.status(400).send('L\'image est requise.');
+    }
+
+    // Créer la nouvelle entreprise
+    const newEntreprise = new Entreprise({
+      nom: req.body.nom,
+      secteur: req.body.secteur,
+      localisation: req.body.localisation,
+      description: req.body.description,
+      image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
+    });
+
+    // Sauvegarder l'entreprise dans la base de données
+    await newEntreprise.save();
+    res.status(201).send('Entreprise ajoutée avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout de l\'entreprise:', error);
+    res.status(500).send('Erreur serveur.');
+  }
+};
 
 // Récupérer toutes les entreprises
 exports.getEntreprises = async (req, res) => {
   try {
     const entreprises = await Entreprise.find();
-    res.status(200).json(entreprises);  // Envoie la liste des entreprises
+    res.status(200).json(entreprises);
   } catch (error) {
     console.error('Erreur lors de la récupération des entreprises:', error);
     res.status(500).json({ message: 'Erreur serveur' });
@@ -65,7 +68,7 @@ exports.updateEntreprise = async (req, res) => {
     const updatedEntreprise = await Entreprise.findByIdAndUpdate(
       req.params.id,
       { nom, secteur, localisation, description, image },
-      { new: true } // Retourner le document mis à jour
+      { new: true }
     );
 
     if (!updatedEntreprise) {
@@ -86,6 +89,12 @@ exports.deleteEntreprise = async (req, res) => {
 
     if (!deletedEntreprise) {
       return res.status(404).json({ message: 'Entreprise non trouvée' });
+    }
+
+    // Supprimer l'image du serveur
+    const imagePath = path.join(__dirname, '..', 'uploads', deletedEntreprise.image.split('/').pop());
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
     }
 
     res.status(200).json({ message: 'Entreprise supprimée avec succès' });
