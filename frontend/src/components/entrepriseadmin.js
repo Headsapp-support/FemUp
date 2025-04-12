@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Grid, Box, Modal, Typography } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Grid,
+  Box,
+  Modal,
+  Typography,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
-import { faUsers, faBriefcase, faChartBar, faFileAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUsers,
+  faBriefcase,
+  faChartBar,
+  faFileAlt,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../styles/AdminDashboard.css';
 import axios from 'axios';
@@ -16,14 +29,13 @@ const EntrepriseAdmin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEntreprise, setSelectedEntreprise] = useState(null);
 
-  // Fonction pour ouvrir la modale et remplir les champs pour modification
   const handleOpenModal = (entreprise = null) => {
     if (entreprise) {
       setNom(entreprise.nom);
       setSecteur(entreprise.secteur);
       setLocalisation(entreprise.localisation);
       setDescription(entreprise.description);
-      setImage(null); // Pas besoin de l'image lors de la modification
+      setImage(null); // On ne modifie pas l'image directement ici
       setSelectedEntreprise(entreprise);
     } else {
       setNom('');
@@ -36,28 +48,25 @@ const EntrepriseAdmin = () => {
     setIsModalOpen(true);
   };
 
-  // Fonction pour fermer la modale
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  // Fonction pour envoyer les données d'ajout ou modification d'entreprise
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     formData.append('nom', nom);
     formData.append('secteur', secteur);
     formData.append('localisation', localisation);
     formData.append('description', description);
-  
+
     if (image) {
       formData.append('image', image);
     }
-  
+
     try {
       if (selectedEntreprise) {
-        // Update entreprise
         await axios.put(
           `https://femup-1.onrender.com/api/entreprises/${selectedEntreprise._id}`,
           formData,
@@ -69,7 +78,6 @@ const EntrepriseAdmin = () => {
         );
         alert('Entreprise mise à jour avec succès');
       } else {
-        // Add entreprise
         await axios.post(
           'https://femup-1.onrender.com/api/add-entreprise',
           formData,
@@ -81,40 +89,38 @@ const EntrepriseAdmin = () => {
         );
         alert('Entreprise ajoutée avec succès');
       }
-  
+
       fetchEntreprises();
       handleCloseModal();
     } catch (error) {
       console.error('Erreur complète:', error);
       console.error('Détail:', error.response?.data || error.message);
-      alert(`Erreur: ${error.response?.data || error.message}`);   
+      alert(`Erreur: ${error.response?.data || error.message}`);
     }
-  };   
-     
-  // Fonction pour charger les entreprises existantes
+  };
+
   const fetchEntreprises = async () => {
     try {
-      const response = await axios.get('https://femup-1.onrender.com/api/entreprises');
-      console.log(response.data); // Vérifiez les données renvoyées par l'API
+      const response = await axios.get(
+        'https://femup-1.onrender.com/api/entreprises'
+      );
       setEntreprises(response.data);
     } catch (error) {
       console.error('Erreur de récupération des entreprises:', error);
     }
   };
 
-  // Fonction pour supprimer une entreprise
   const handleDelete = async (id) => {
     try {
       await axios.delete(`https://femup-1.onrender.com/api/entreprises/${id}`);
       alert('Entreprise supprimée avec succès');
-      fetchEntreprises(); // Recharger les entreprises après la suppression
+      fetchEntreprises();
     } catch (error) {
-      console.error('Erreur de suppression de l\'entreprise:', error);
+      console.error("Erreur de suppression de l'entreprise:", error);
       alert('Une erreur est survenue');
     }
   };
 
-  // Charger les entreprises au chargement du composant
   useEffect(() => {
     fetchEntreprises();
   }, []);
@@ -125,14 +131,44 @@ const EntrepriseAdmin = () => {
         <div className="sidebar">
           <nav>
             <ul>
-              <li><Link to="/Admin_Dashboard"><FontAwesomeIcon icon={faChartBar} /> Tableau de bord</Link></li>
-              <li><Link to="/admin/candidates"><FontAwesomeIcon icon={faUsers} /> Candidats</Link></li>
-              <li><Link to="/admin/recruiters"><FontAwesomeIcon icon={faBriefcase} /> Recruteurs</Link></li>
-              <li><Link to="/admin/offers"><FontAwesomeIcon icon={faBriefcase} /> Offres</Link></li>
-              <li><Link to="/admin/controle"><FontAwesomeIcon icon={faBriefcase} /> Contrôle d'Offres</Link></li>
-              <li><Link to="/admin/articles"><FontAwesomeIcon icon={faFileAlt} /> Articles</Link></li>
-              <li><Link to="/admin/entreprise"><FontAwesomeIcon icon={faPlus} /> Ajouter une entreprise</Link></li>
-              <li><Link to="/admin/Contact">Formulaire de Contact </Link></li>
+              <li>
+                <Link to="/Admin_Dashboard">
+                  <FontAwesomeIcon icon={faChartBar} /> Tableau de bord
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/candidates">
+                  <FontAwesomeIcon icon={faUsers} /> Candidats
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/recruiters">
+                  <FontAwesomeIcon icon={faBriefcase} /> Recruteurs
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/offers">
+                  <FontAwesomeIcon icon={faBriefcase} /> Offres
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/controle">
+                  <FontAwesomeIcon icon={faBriefcase} /> Contrôle d'Offres
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/articles">
+                  <FontAwesomeIcon icon={faFileAlt} /> Articles
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/entreprise">
+                  <FontAwesomeIcon icon={faPlus} /> Ajouter une entreprise
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/Contact">Formulaire de Contact</Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -141,34 +177,71 @@ const EntrepriseAdmin = () => {
           <section className="entreprise-section">
             <h2>Liste des Entreprises</h2>
 
-            {/* Bouton "Ajouter une entreprise" dans l'interface principale */}
-            <Button onClick={() => handleOpenModal()} variant="contained" style={{ marginBottom: '20px',color:'#e4aea8' ,backgroundColor: '#f4f4f4' }}>
+            <Button
+              onClick={() => handleOpenModal()}
+              variant="contained"
+              style={{
+                marginBottom: '20px',
+                color: '#e4aea8',
+                backgroundColor: '#f4f4f4',
+              }}
+            >
               Ajouter une Entreprise
             </Button>
 
-            {/* Tableau des entreprises */}
             <Grid container spacing={3} justifyContent="center">
-  {entreprises.map((entreprise) => (
-    <Grid item xs={12} sm={6} md={4} key={entreprise._id}> {/* Utiliser _id comme clé */}
-      <Box className="entreprise-card">
-        <Typography variant="h6">{entreprise.nom}</Typography>
-        <Typography variant="body2">Secteur: {entreprise.secteur}</Typography>
-        <Typography variant="body2">Localisation: {entreprise.localisation}</Typography>
-        <Typography variant="body2">{entreprise.description}</Typography>
-        <Button onClick={() => handleOpenModal(entreprise)} variant="outlined">Modifier</Button>
-        <Button onClick={() => handleDelete(entreprise._id)} variant="outlined" color="secondary">Supprimer</Button>
-      </Box>
-    </Grid>
-  ))}
-</Grid>
+              {entreprises.map((entreprise) => (
+                <Grid item xs={12} sm={6} md={4} key={entreprise._id}>
+                  <Box className="entreprise-card">
+                    {entreprise.image && (
+                      <img
+                        src={entreprise.image}
+                        alt={entreprise.nom}
+                        style={{
+                          width: '100%',
+                          height: '200px',
+                          objectFit: 'cover',
+                          marginBottom: '10px',
+                          borderRadius: '5px',
+                        }}
+                      />
+                    )}
+                    <Typography variant="h6">{entreprise.nom}</Typography>
+                    <Typography variant="body2">
+                      Secteur: {entreprise.secteur}
+                    </Typography>
+                    <Typography variant="body2">
+                      Localisation: {entreprise.localisation}
+                    </Typography>
+                    <Typography variant="body2">
+                      {entreprise.description}
+                    </Typography>
+                    <Button
+                      onClick={() => handleOpenModal(entreprise)}
+                      variant="outlined"
+                    >
+                      Modifier
+                    </Button>
+                    <Button
+                      onClick={() => handleDelete(entreprise._id)}
+                      variant="outlined"
+                      color="secondary"
+                    >
+                      Supprimer
+                    </Button>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
           </section>
         </div>
       </div>
 
-      {/* Modale pour ajouter ou modifier une entreprise */}
       <Modal open={isModalOpen} onClose={handleCloseModal}>
         <Box className="modal-box">
-          <Typography variant="h6">{selectedEntreprise ? 'Modifier' : 'Ajouter'} une Entreprise</Typography>
+          <Typography variant="h6">
+            {selectedEntreprise ? 'Modifier' : 'Ajouter'} une Entreprise
+          </Typography>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3} justifyContent="center">
               <Grid item xs={12} sm={6}>
@@ -217,7 +290,7 @@ const EntrepriseAdmin = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Button type="submit" variant="contained" color="#f4f4f4">
+                <Button type="submit" variant="contained">
                   {selectedEntreprise ? 'Mettre à jour' : 'Ajouter'} l'entreprise
                 </Button>
               </Grid>
