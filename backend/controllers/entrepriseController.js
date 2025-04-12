@@ -7,57 +7,75 @@ const multer = require('multer');
 const upload = require('../config/multer');
 
 exports.addEntreprise = async (req, res) => {
-  try {
-    console.log("Début de la création de l'entreprise");
+  console.log('🟡 [POST /add-entreprise] Requête reçue');
+  console.log('➡️ Body:', req.body);
+  console.log('📦 Fichier:', req.file ? req.file.originalname : 'Aucun fichier');
 
+  try {
     const { nom, secteur, localisation, description } = req.body;
 
-    // Vérification des champs
-    if (!req.file) {
-      console.log("Aucun fichier fourni");
-      return res.status(400).send('Fichier requis');
-    }
-
+    // Vérification des champs requis
     if (!nom || !secteur || !localisation || !description) {
-      console.log("Données manquantes:", { nom, secteur, localisation, description });
+      console.warn('⚠️ Champs manquants:', { nom, secteur, localisation, description });
       return res.status(400).send("Tous les champs sont requis.");
     }
 
-    const uploadStream = cloudinary.uploader.upload_stream(
-      { resource_type: 'auto' }, // Gère tous les types de fichiers (image, PDF, etc.)
-      async (error, result) => {
-        if (error) {
-          console.error('Erreur lors de l\'upload vers Cloudinary:', error);
-          return res.status(500).send('Erreur Cloudinary');
+    // Si un fichier est présent, on l'upload vers Cloudinary
+    if (req.file) {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { resource_type: 'auto' },
+        async (error, result) => {
+          if (error) {
+            console.error('🟥 Erreur Cloudinary:', error);
+            return res.status(500).send('Erreur lors de l\'upload de l\'image');
+          }
+
+          console.log('✅ Upload Cloudinary réussi:', result.secure_url);
+
+          const newEntreprise = new Entreprise({
+            nom,
+            secteur,
+            localisation,
+            description,
+            image: result.secure_url
+          });
+
+          try {
+            await newEntreprise.save();
+            console.log('✅ Entreprise créée avec image:', newEntreprise);
+            res.status(201).send('Entreprise ajoutée avec succès.');
+          } catch (saveError) {
+            console.error('🟥 Erreur MongoDB (avec image):', saveError);
+            res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
+          }
         }
+      );
 
-        console.log('Fichier uploadé avec succès sur Cloudinary:', result);
+      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+    } 
+    // Si pas d'image
+    else {
+      const newEntreprise = new Entreprise({
+        nom,
+        secteur,
+        localisation,
+        description
+        // image non incluse
+      });
 
-        const newEntreprise = new Entreprise({
-          nom,
-          secteur,
-          localisation,
-          description,
-          image: result.secure_url // URL de l'image sur Cloudinary
-        });
-
-        try {
-          await newEntreprise.save();
-          console.log('Entreprise ajoutée avec succès:', newEntreprise);
-          res.status(201).send('Entreprise ajoutée avec succès.');
-        } catch (saveError) {
-          console.error('Erreur lors de l\'enregistrement de l\'entreprise:', saveError);
-          res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
-        }
+      try {
+        await newEntreprise.save();
+        console.log('✅ Entreprise créée sans image:', newEntreprise);
+        res.status(201).send('Entreprise ajoutée avec succès (sans image).');
+      } catch (saveError) {
+        console.error('🟥 Erreur MongoDB (sans image):', saveError);
+        res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
       }
-    );
-
-    // Conversion du fichier en stream et envoi vers Cloudinary
-    streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+    }
 
   } catch (err) {
-    console.error('Erreur serveur:', err);
-    res.status(500).send('Erreur serveur');
+    console.error('🟥 Erreur générale dans addEntreprise:', err);
+    res.status(500).send(`Erreur serveur: ${err.message}`);
   }
 };
 
