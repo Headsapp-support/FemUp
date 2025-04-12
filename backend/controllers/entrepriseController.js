@@ -18,7 +18,7 @@ exports.addEntreprise = async (req, res) => {
         secteur: req.body.secteur,
         localisation: req.body.localisation,
         description: req.body.description,
-        image: req.file.filename,  // Le nom du fichier téléchargé
+        image: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,  // Le nom du fichier téléchargé
       });
   
       // Sauvegarder l'entreprise dans la base de données
