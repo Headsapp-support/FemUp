@@ -7,75 +7,55 @@ const multer = require('multer');
 const upload = require('../config/multer');
 
 exports.addEntreprise = async (req, res) => {
-  console.log('🟡 [POST /add-entreprise] Requête reçue');
-  console.log('➡️ Body:', req.body);
-  console.log('📦 Fichier:', req.file ? req.file.originalname : 'Aucun fichier');
+  console.log('📥 [POST /add-entreprise] Requête reçue');
+  console.log('📄 Body:', req.body);
+  console.log('🖼 File:', req.file ? req.file.originalname : 'Aucun fichier');
+
+  const { nom, secteur, localisation, description } = req.body;
+
+  // Validation des champs requis
+  if (!nom || !secteur || !localisation || !description) {
+    console.warn('⚠️ Champs manquants:', { nom, secteur, localisation, description });
+    return res.status(400).send("Tous les champs sont requis.");
+  }
 
   try {
-    const { nom, secteur, localisation, description } = req.body;
+    let imageUrl = '';
 
-    // Vérification des champs requis
-    if (!nom || !secteur || !localisation || !description) {
-      console.warn('⚠️ Champs manquants:', { nom, secteur, localisation, description });
-      return res.status(400).send("Tous les champs sont requis.");
-    }
-
-    // Si un fichier est présent, on l'upload vers Cloudinary
+    // Upload vers Cloudinary si image présente
     if (req.file) {
-      const uploadStream = cloudinary.uploader.upload_stream(
-        { resource_type: 'auto' },
-        async (error, result) => {
-          if (error) {
-            console.error('🟥 Erreur Cloudinary:', error);
-            return res.status(500).send('Erreur lors de l\'upload de l\'image');
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { resource_type: 'image' },
+          (error, result) => {
+            if (error) {
+              return reject(error);
+            }
+            resolve(result);
           }
-
-          console.log('✅ Upload Cloudinary réussi:', result.secure_url);
-
-          const newEntreprise = new Entreprise({
-            nom,
-            secteur,
-            localisation,
-            description,
-            image: result.secure_url
-          });
-
-          try {
-            await newEntreprise.save();
-            console.log('✅ Entreprise créée avec image:', newEntreprise);
-            res.status(201).send('Entreprise ajoutée avec succès.');
-          } catch (saveError) {
-            console.error('🟥 Erreur MongoDB (avec image):', saveError);
-            res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
-          }
-        }
-      );
-
-      streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
-    } 
-    // Si pas d'image
-    else {
-      const newEntreprise = new Entreprise({
-        nom,
-        secteur,
-        localisation,
-        description
-        // image non incluse
+        );
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
 
-      try {
-        await newEntreprise.save();
-        console.log('✅ Entreprise créée sans image:', newEntreprise);
-        res.status(201).send('Entreprise ajoutée avec succès (sans image).');
-      } catch (saveError) {
-        console.error('🟥 Erreur MongoDB (sans image):', saveError);
-        res.status(500).send('Erreur serveur lors de l\'enregistrement de l\'entreprise');
-      }
+      imageUrl = result.secure_url;
+      console.log('✅ Image uploadée:', imageUrl);
     }
 
+    // Création de l'entreprise
+    const newEntreprise = new Entreprise({
+      nom,
+      secteur,
+      localisation,
+      description,
+      image: imageUrl // vide si pas d'image
+    });
+
+    await newEntreprise.save();
+    console.log('✅ Entreprise enregistrée :', newEntreprise);
+    res.status(201).send('Entreprise ajoutée avec succès.');
   } catch (err) {
-    console.error('🟥 Erreur générale dans addEntreprise:', err);
-    res.status(500).send(`Erreur serveur: ${err.message}`);
+    console.error('🟥 Erreur interne:', err);
+    res.status(500).send(`Erreur serveur: ${err.message || 'Erreur inconnue'}`);
   }
 };
 
