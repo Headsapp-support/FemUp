@@ -23,19 +23,20 @@ const ArticleDetailPage = () => {
     const fetchArticle = async () => {
       try {
         const token = localStorage.getItem('token');
+  
         if (token) {
           const decoded = jwtDecode(token);
-          setIsAdmin(decoded.role === 'admin');
+          console.log("Decoded token:", decoded); // ⬅️ Pour debug
+          setIsAdmin(decoded.role === 'admin');   // ✅ Définir admin selon le token
         }
-
+  
         const response = await axios.get(`https://femup-1.onrender.com/api/articles/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+  
         setArticle(response.data);
-
-        // Fetch related articles (assuming this feature exists)
         setRelatedArticles([
           {
             _id: "1",
@@ -46,18 +47,20 @@ const ArticleDetailPage = () => {
             _id: "2",
             title: "Article 2",
             image: "https://via.placeholder.com/200",
-          }
+          },
         ]);
+  
       } catch (error) {
-        setError('Erreur lors de la récupération des données de l\'article');
-        console.error('Erreur lors de la récupération de l\'article', error);
+        setError("Erreur lors de la récupération des données de l'article");
+        console.error("Erreur fetch article:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchArticle();
   }, [id]);
+  
 
   const handleDelete = async () => {
     try {
