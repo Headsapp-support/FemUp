@@ -107,46 +107,45 @@ const JobDetailsPage = () => {
   // Fonction pour vérifier et postuler à l'offre
   const postuler = async () => {
     if (!cvUploaded) {
-      alert('Vous devez télécharger votre CV avant de postuler.');
+      alert('Veuillez choisir un CV avant de postuler.');
       return;
     }
   
-    setApplying(true); // Marquer la postulation comme en cours
-  
     const formData = new FormData();
-    formData.append('offerId', offerId);  // L'ID de l'offre
-    formData.append('cv', cvUploaded);    // Le fichier CV
-    
-    // Vérifie si le token d'authentification est bien présent
+    formData.append('offerId', offerId);
+    formData.append('cv', cvUploaded); // 👈 'cv' doit matcher le backend
+  
     const token = localStorage.getItem('token');
-    
-    // Log pour vérifier les données envoyées
-    console.log('Données envoyées:', formData);
+  
+    // 🧪 DEBUG — voir ce qui est envoyé
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
   
     try {
-      const response = await axios.post('https://femup-1.onrender.com/api/condidat/postuler', formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          },
-      });
+      setApplying(true);
+      const response = await axios.post(
+        'https://femup-1.onrender.com/api/condidat/postuler',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // PAS besoin de content-type ici, axios le gère pour multipart/form-data
+          }
+        }
+      );
   
       if (response.data.success) {
-        alert('Candidature envoyée avec succès');
-        setHasApplied(true); // Mise à jour de l'état pour indiquer que l'utilisateur a postulé
+        alert('✅ Candidature envoyée');
+        setHasApplied(true);
       } else {
-        alert('Une erreur s\'est produite lors de l\'envoi de votre candidature.');
+        alert('Une erreur est survenue.');
       }
     } catch (error) {
-      console.error('Erreur lors de la postulation:', error);
-      if (error.response && error.response.data) {
-        alert(`Erreur: ${error.response.data.message}`);
-      } else {
-        alert('Erreur lors de la candidature. Veuillez réessayer.');
-      }
-      // Affiche les détails de l'erreur si possible
-      console.log(error.response);
+      console.error('❌ Erreur de postulation:', error);
+      alert(error.response?.data?.message || 'Erreur serveur.');
     } finally {
-      setApplying(false); // Réinitialiser l'indicateur de postulation
+      setApplying(false);
     }
   };
   
@@ -154,22 +153,26 @@ const JobDetailsPage = () => {
   // Fonction pour gérer le téléchargement du CV
   const handleCvUpload = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      const maxSize = 5 * 1024 * 1024; // Max file size 5MB
+    if (!file) return;
   
-      if (!validTypes.includes(file.type)) {
-        alert('Seuls les fichiers PDF, DOC, ou DOCX sont autorisés');
-        return;
-      }
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    const maxSize = 5 * 1024 * 1024;
   
-      if (file.size > maxSize) {
-        alert('Le fichier est trop grand. La taille maximale autorisée est de 5MB.');
-        return;
-      }
-  
-      setCvUploaded(file);
+    if (!validTypes.includes(file.type)) {
+      alert('Formats acceptés : PDF, DOC, DOCX');
+      return;
     }
+  
+    if (file.size > maxSize) {
+      alert('Fichier trop lourd. Max 5MB.');
+      return;
+    }
+  
+    setCvUploaded(file);
   };
 
   return (
@@ -221,6 +224,7 @@ const JobDetailsPage = () => {
                 type="file" 
                 accept=".pdf,.doc,.docx" 
                 onChange={handleCvUpload} 
+                name="cv"
                 className="cv-upload-input"
               />
               <button 
