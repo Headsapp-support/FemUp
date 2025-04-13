@@ -10,6 +10,7 @@ router.get('/similaires',getRelatedArticles);
 router.get('/:id', getArticleById);
 router.delete('/:id', auth, deleteArticle);
 router.patch('/pin/:id', auth, pinArticle);
+router.put('/:id', auth, upload.single('image'), updateArticle);
 
 
 module.exports = router;

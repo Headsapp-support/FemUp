@@ -133,5 +133,40 @@ const pinArticle = async (req, res) => {
   }
 };
 
+const updateArticle = async (req, res) => {
+  try {
+    const { title, content, date } = req.body;
+    const articleId = req.params.id;
 
-module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById, deleteArticle, pinArticle };
+    const article = await Article.findById(articleId);
+    if (!article) {
+      return res.status(404).json({ message: 'Article non trouvé' });
+    }
+
+    // Mettre à jour les champs texte
+    if (title) article.title = title;
+    if (content) article.content = content;
+    if (date) article.date = date;
+
+    // Gestion de l'image si une nouvelle est envoyée
+    if (req.file) {
+      // Supprimer l'ancienne image (optionnel si tu veux nettoyer)
+      if (article.image) {
+        const oldImagePath = path.join('uploads', path.basename(article.image));
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+
+      article.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedArticle = await article.save();
+    res.status(200).json(updatedArticle);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour de l\'article :', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById, deleteArticle, pinArticle, updateArticle };
