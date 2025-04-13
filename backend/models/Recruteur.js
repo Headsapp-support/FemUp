@@ -17,7 +17,10 @@ const recruteurSchema = new mongoose.Schema({
     category: String,
     description: String,
     client: String,
-    requirements: String,
+    requirements: {
+      type: [String],
+      default: [],
+    },
     budget: String,
     contact: String,
     status: { type: String, default: 'pending' },
