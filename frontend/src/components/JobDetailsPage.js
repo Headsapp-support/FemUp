@@ -127,8 +127,7 @@ const JobDetailsPage = () => {
       const response = await axios.post('https://femup-1.onrender.com/api/condidat/postuler', formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
+          },
       });
   
       if (response.data.success) {
