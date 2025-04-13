@@ -13,7 +13,7 @@ const condidatSchema = new mongoose.Schema({
   profileImage: String,
   cv: String,
   applications: [{
-    jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Offer', required: true },
+    jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Recruteur', required: true },
     offerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Recruteur.postedOffers' }, // Correction ici pour faire référence à l'offre
     date: { type: Date, default: Date.now },
     status: { type: String, enum: ['En attente', 'Accepté', 'Refusé', 'Préselectionné'], default: 'En attente' },
