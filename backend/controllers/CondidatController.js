@@ -314,6 +314,7 @@ const postuler = async (req, res) => {
       return res.status(400).json({ message: 'Vous avez déjà postulé à cette offre.' });
     }
 
+    // Vérifie si l'offerId est valide
     if (!mongoose.Types.ObjectId.isValid(offerId)) {
       return res.status(400).json({ message: 'ID d\'offre invalide' });
     }
@@ -341,29 +342,35 @@ const postuler = async (req, res) => {
 
     console.log("✅ Upload Cloudinary :", cloudinaryResult);
 
-    // Construire la candidature
+    // Vérifie si le résultat de Cloudinary contient bien une URL
+    if (!cloudinaryResult || !cloudinaryResult.secure_url) {
+      return res.status(500).json({ message: 'Le téléchargement du CV a échoué sur Cloudinary.' });
+    }
+
+    // Construire la candidature avec l'URL du CV
     const candidature = {
       jobId: offer._id,
-      offerId: offer._id,
       status: 'En attente',
       date: new Date(),
       cvUploaded: cloudinaryResult.secure_url
     };
 
     // Ajout au candidat
+    console.log("Candidature avant enregistrement : ", candidature);
     condidat.applications.push(candidature);
     await condidat.save();
+    console.log("✅ Candidature enregistrée pour", condidat.email);
 
-    // Ajout dans l'offre du recruteur
+    // Ajout du candidat dans l'offre du recruteur
     offer.candidats.push({
       candidatId: condidat._id,
       status: 'En attente'
     });
-
     offer.cvReceived += 1;
-    await recruteur.save();
 
-    console.log("🎉 Candidature enregistrée pour", condidat.email);
+    // Enregistrer les modifications du recruteur
+    await recruteur.save();
+    console.log("✅ Offre mise à jour avec le candidat");
 
     return res.status(200).json({ success: true, message: 'Candidature envoyée avec succès' });
   } catch (error) {

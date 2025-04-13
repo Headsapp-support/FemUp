@@ -38,14 +38,20 @@ const uploadCvToCloudinary = (fileBuffer, filename) => {
         resource_type: 'raw' // Pour PDF, DOC, etc.
       },
       (error, result) => {
-        if (error) reject(error);
-        else resolve(result);
+        if (error) {
+          reject(error);
+        } else if (result && result.secure_url) {
+          resolve(result); // Vérifie si le résultat contient bien une URL sécurisée
+        } else {
+          reject(new Error('Aucune URL renvoyée par Cloudinary.'));
+        }
       }
     );
 
     streamifier.createReadStream(fileBuffer).pipe(stream);
   });
 };
+
 
 module.exports = {
   upload,
