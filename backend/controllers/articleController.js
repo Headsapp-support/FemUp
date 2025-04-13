@@ -169,4 +169,19 @@ const updateArticle = async (req, res) => {
   }
 };
 
-module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById, deleteArticle, pinArticle, updateArticle };
+const getPinnedArticles = async (req, res) => {
+  try {
+    const pinnedArticles = await Article.find({ isPinned: true });
+
+    if (pinnedArticles.length === 0) {
+      return res.status(404).json({ message: "Aucun article épinglé trouvé." });
+    }
+
+    res.status(200).json(pinnedArticles);
+  } catch (err) {
+    console.error('Erreur lors de la récupération des articles épinglés:', err);
+    res.status(500).json({ message: "Erreur serveur", error: err.message });
+  }
+};
+
+module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById, deleteArticle, pinArticle, updateArticle, getPinnedArticles };
