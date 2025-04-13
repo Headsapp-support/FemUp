@@ -2,8 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Recruteur = require('../models/Recruteur');
 const Condidat = require('../models/Condidat');
-const cloudinary = require('cloudinary').v2; 
-const streamifier = require('streamifier'); 
 
 
 const registerRecruteur = async (req, res) => {
@@ -11,7 +9,7 @@ const registerRecruteur = async (req, res) => {
   console.log('Fichier reçu (req.file):', req.file);
 
   const { email, fullName, password, confirmPassword, companyName, phone, address, description, uniqueId, sector } = req.body;
-  const logo = req.file ? req.file : null;  // Utilisation de req.file pour récupérer le logo
+  const logo = req.file ? req.file.path : null;
 
   try {
     // Validation des champs obligatoires
@@ -28,25 +26,8 @@ const registerRecruteur = async (req, res) => {
       return res.status(400).json({ message: 'L\'email existe déjà' });
     }
 
-    // Hashage du mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Si un logo est téléchargé, on l'envoie sur Cloudinary
-    let logoUrl = null;
-    if (logo) {
-      const uploadResult = await cloudinary.uploader.upload(logo.path, {
-        folder: 'recruteurs/logos', // Spécifier un dossier sur Cloudinary
-        public_id: `logo_${Date.now()}`, // Utiliser un ID unique basé sur la date et l'heure
-      });
-
-      if (uploadResult && uploadResult.secure_url) {
-        logoUrl = uploadResult.secure_url;  // URL du logo sur Cloudinary
-      } else {
-        return res.status(500).json({ message: 'Erreur lors de l\'upload du logo sur Cloudinary' });
-      }
-    }
-
-    // Création du nouveau recruteur
     const newRecruteur = new Recruteur({
       email,
       fullName,
@@ -54,14 +35,13 @@ const registerRecruteur = async (req, res) => {
       companyName,
       phone,
       address,
-      logo: logoUrl,  // Enregistrer l'URL du logo
+      logo,
       description,
       uniqueId,
       sector
     });
 
-    await newRecruteur.save();  // Sauvegarde du recruteur dans la base de données
-
+    await newRecruteur.save();
     res.status(201).json({ message: 'Recruteur enregistré avec succès' });
 
   } catch (error) {
@@ -109,104 +89,76 @@ const loginrecruteur = async (req, res) => {
     }
   };
   
-  const getRecruteurProfile = async (req, res) => {
-    try {
-      const recruteurId = req.recruteurId;  // L'ID du recruteur vient du middleware 'auth'
-      const recruteur = await Recruteur.findById(recruteurId);
-  
-      if (!recruteur) {
-        return res.status(404).json({ message: 'Recruteur non trouvé' });
-      }
-  
-      // Vérifier si le logo est bien présent dans la base de données
-      const logoUrl = recruteur.logo ? recruteur.logo : null;
-  
-      // Renvoie les informations du recruteur, y compris le logo (URL Cloudinary)
-      res.json({
-        name: recruteur.fullName,
-        email: recruteur.email,
-        companyName: recruteur.companyName,
-        phone: recruteur.phone,
-        address: recruteur.address,
-        description: recruteur.description,
-        logo: logoUrl,  // Renvoie l'URL du logo
-        sector: recruteur.sector,
-        postedOffers: recruteur.postedOffers,  // Liste des offres publiées
-        discussions: recruteur.discussions,    // Discussions avec les candidats
-      });
-    } catch (error) {
-      console.error('Erreur lors de la récupération du profil du recruteur:', error);
-      res.status(500).json({ message: 'Erreur serveur', error: error.message });
-    }
-  };  
-
-// Mettre à jour le profil du recruteur
-const updaterecruteurProfile = async (req, res) => {
-  const { email, fullName, password, confirmPassword, companyName, address, description, uniqueId, sector } = req.body;
-  const logo = req.file ? req.file : null;  // Utilisation de req.file pour récupérer le logo
-
+const getRecruteurProfile = async (req, res) => {
   try {
-    const recruteur = await Recruteur.findById(req.user.id); // Recherche du recruteur avec son ID
+    const recruteurId = req.recruteurId;  // L'ID du recruteur vient du middleware 'auth'
+    const recruteur = await Recruteur.findById(recruteurId);
+
     if (!recruteur) {
       return res.status(404).json({ message: 'Recruteur non trouvé' });
     }
 
-    // Upload du logo sur Cloudinary (si le logo est présent)
-    if (logo) {
-      const uploadFromBuffer = () => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            {
-              folder: 'recruteurs/logos'  // Spécifier un dossier sur Cloudinary
-            },
-            (error, result) => {
-              if (result) resolve(result);
-              else reject(error);
-            }
-          );
-          // Utilisation de streamifier pour uploader l'image depuis un buffer
-          streamifier.createReadStream(logo.buffer).pipe(stream);
-        });
-      };
+    // Renvoie les informations du recruteur
+    res.json({
+      name: recruteur.fullName,
+      email: recruteur.email,
+      companyName: recruteur.companyName,
+      phone: recruteur.phone,
+      address: recruteur.address,
+      description: recruteur.description,
+      logo: recruteur.logo,
+      sector: recruteur.sector,
+      postedOffers: recruteur.postedOffers,  // Liste des offres publiées
+      discussions: recruteur.discussions,    // Discussions avec les candidats
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération du profil du recruteur:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
 
-      const uploadResult = await uploadFromBuffer(); // Attente du résultat de l'upload
-      if (uploadResult && uploadResult.secure_url) {
-        recruteur.logo = uploadResult.secure_url; // Enregistrement de l'URL du logo sur Cloudinary
-      } else {
-        return res.status(500).json({ message: 'Erreur lors de l\'upload du logo sur Cloudinary' });
-      }
-    }
+// Mettre à jour le profil du recruteur
+const updaterecruteurProfile = async (req, res) => {
+  const { email, fullName, password, confirmPassword, companyName, address, logo, description, uniqueId, sector } = req.body;
+  const profileImage = req.file ? req.file.path : null;
 
-    // Mise à jour des autres informations du recruteur
-    recruteur.email = email || recruteur.email;
-    recruteur.fullName = fullName || recruteur.fullName;
-    recruteur.companyName = companyName || recruteur.companyName;
-    recruteur.address = address || recruteur.address;
-    recruteur.description = description || recruteur.description;
-    recruteur.uniqueId = uniqueId || recruteur.uniqueId;
-    recruteur.sector = sector || recruteur.sector;
+  // Assurez-vous que vous utilisez le bon modèle (Recruteur ici)
+  const recruteur = await Recruteur.findById(req.user.id); // Renommé de 'recruteur' à 'Recruteur'
+  if (!recruteur) {
+      return res.status(404).json({ message: 'Recruteur non trouvé' });
+  }
 
-    // Mise à jour du mot de passe si fourni
-    if (password && password !== recruteur.password) {
-      if (password !== confirmPassword) {
-        return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
-      }
+  // Mise à jour des champs
+  recruteur.email = email || recruteur.email;
+  recruteur.fullName = fullName || recruteur.fullName;
+  recruteur.password = password || recruteur.password;
+  recruteur.confirmPassword = confirmPassword || recruteur.confirmPassword;
+  recruteur.companyName = companyName || recruteur.companyName;
+  recruteur.address = address || recruteur.address;
+  recruteur.logo = logo || recruteur.logo;
+  recruteur.description = description || recruteur.description;
+  recruteur.uniqueId = uniqueId || recruteur.uniqueId;
+  recruteur.sector = sector || recruteur.sector;
+
+  // Mise à jour de l'image de profil
+  if (profileImage) {
+      recruteur.profileImage = profileImage;
+  }
+
+  // Si un mot de passe est défini, le hacher
+  if (password) {
       const salt = await bcrypt.genSalt(10);
       recruteur.password = await bcrypt.hash(password, salt);
-    }
+  }
 
-    // Sauvegarde des modifications du recruteur
-    await recruteur.save();
+  // Sauvegarder les données mises à jour
+  await recruteur.save();
 
-    res.status(200).json({
+  return res.status(200).json({
       success: true,
       message: 'Profil mis à jour avec succès',
-      data: recruteur // Retourne les données mises à jour du recruteur
-    });
-  } catch (err) {
-    console.error('Erreur lors de la mise à jour du profil recruteur:', err);
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
-  }
+      data: recruteur // Retourner l'objet 'recruteur' mis à jour
+  });
 };
 
 const createOffer = async (req, res) => {
