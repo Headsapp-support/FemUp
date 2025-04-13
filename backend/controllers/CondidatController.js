@@ -5,6 +5,7 @@ const Recruteur = require('../models/Recruteur');
 const mongoose = require('mongoose');
 const cloudinary = require('../utils/cloudinary'); // Assure-toi que ce fichier existe
 const streamifier = require('streamifier');
+const { uploadCvToCloudinary } = require('../middlewares/upload');
 
 // Inscription
 const registerCondidat = async (req, res) => {
@@ -306,7 +307,7 @@ const postuler = async (req, res) => {
     console.log("Candidat trouvé : ", condidat);
 
     // Vérifier si le candidat a déjà postulé à cette offre
-    const alreadyApplied = condidat.applications.some(application => 
+    const alreadyApplied = condidat.applications.some(application =>
       application.jobId && application.jobId.toString() === offerId
     );
     if (alreadyApplied) {
@@ -320,13 +321,12 @@ const postuler = async (req, res) => {
 
     const offerObjectId = mongoose.Types.ObjectId(offerId);
 
-    // Recherche de l'offre par l'ID de l'offre
+    // Recherche de l'offre par l'ID
     const recruteur = await Recruteur.findOne({ 'postedOffers._id': offerObjectId });
     if (!recruteur) {
       return res.status(404).json({ message: 'Recruteur ou offre non trouvée' });
     }
 
-    // Trouver l'offre spécifique parmi les offres du recruteur
     const offer = recruteur.postedOffers.find(offer => offer._id.toString() === offerObjectId.toString());
     if (!offer) {
       return res.status(404).json({ message: 'Offre non trouvée dans les offres du recruteur' });
@@ -334,31 +334,35 @@ const postuler = async (req, res) => {
 
     console.log("Offre trouvée : ", offer);
 
-    // Vérification de l'ID de l'offre avant d'ajouter la candidature
-    if (!offer._id || !mongoose.Types.ObjectId.isValid(offer._id)) {
-      return res.status(400).json({ message: 'L\'ID de l\'offre est invalide' });
-    }
+    // ➕ Upload vers Cloudinary
+    const result = await uploadCvToCloudinary(
+      cvUploaded.buffer,
+      `cv-${condidatId}-${Date.now()}`
+    );
+    const cvUrl = result.secure_url;
 
-    // Ajouter la candidature à la liste des candidatures du candidat
+    // Création de la candidature
     const candidature = {
-      jobId: offer._id,  // Utiliser directement l'ID de l'offre
+      jobId: offer._id,
+      offerId: offer._id,
       status: 'En attente',
       date: new Date(),
-      cvUploaded: cvUploaded.path // Chemin du fichier téléchargé
+      cvUploaded: cvUrl
     };
 
     console.log("Candidature à enregistrer : ", candidature);
 
-    // Ajouter la candidature à la liste des candidatures du candidat
+    // Ajouter au candidat
     condidat.applications.push(candidature);
-
-    // Sauvegarder les modifications du candidat
     await condidat.save();
 
-    // Incrémenter le nombre de CV reçus pour cette offre
-    offer.cvReceived += 1;
+    // Ajouter au recruteur (dans offer.candidats)
+    offer.candidats.push({
+      candidatId: condidat._id,
+      status: 'En attente'
+    });
 
-    // Sauvegarder les modifications dans le recruteur
+    offer.cvReceived += 1;
     await recruteur.save();
 
     console.log("Candidature enregistrée pour le candidat : ", condidat);
@@ -370,7 +374,6 @@ const postuler = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: error.message });
   }
 };
-
 
 const getCandidatures = async (req, res) => {
   try {
