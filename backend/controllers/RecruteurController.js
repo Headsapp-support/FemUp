@@ -450,31 +450,51 @@ const getCandidatureCount = async (req, res) => {
 };
 
 const getCandidatsForOffer = async (req, res) => {
-  const { offerId } = req.params;  // L'ID de l'offre vient des paramètres de l'URL
+  const { offerId } = req.params;
 
   try {
-    // Récupérer le recruteur via son ID (assurez-vous que le middleware 'auth' ajoute 'recruteurId')
+    // Vérifie si le recruteur existe
     const recruteur = await Recruteur.findById(req.recruteurId);
     if (!recruteur) {
       return res.status(404).json({ message: 'Recruteur non trouvé' });
     }
 
-    // Chercher l'offre dans les offres publiées par le recruteur
+    // Vérifie si l'offre existe dans les offres du recruteur
     const offer = recruteur.postedOffers.id(offerId);
     if (!offer) {
       return res.status(404).json({ message: 'Offre non trouvée' });
     }
 
-    // Récupérer les candidats qui ont postulé à cette offre
+    // Trouve tous les candidats ayant postulé à cette offre
     const candidats = await Condidat.find({ 'applications.jobId': offerId });
 
-    // Si aucun candidat n'a postulé à l'offre
     if (!candidats || candidats.length === 0) {
       return res.status(404).json({ message: 'Aucun candidat pour cette offre' });
     }
 
-    // Retourner la liste des candidats
-    res.json({ candidats });
+    // Formater la réponse pour inclure seulement les données nécessaires + l'application spécifique
+    const filteredCandidats = candidats.map(candidat => {
+      const application = candidat.applications.find(app => 
+        app.jobId.toString() === offerId
+      );
+
+      return {
+        _id: candidat._id,
+        firstName: candidat.firstName,
+        lastName: candidat.lastName,
+        email: candidat.email,
+        civilite: candidat.civilite,
+        profileImage: candidat.profileImage,
+        specialite: candidat.specialite,
+        experience: candidat.experience,
+        gouvernorat: candidat.gouvernorat,
+        dateNaissance: candidat.dateNaissance,
+        status: application?.status || 'En attente',
+        cvUploaded: application?.cvUploaded || null // 🔥 lien Cloudinary ici
+      };
+    });
+
+    res.status(200).json({ candidats: filteredCandidats });
   } catch (error) {
     console.error('Erreur lors de la récupération des candidats:', error);
     res.status(500).json({ message: 'Erreur serveur' });
