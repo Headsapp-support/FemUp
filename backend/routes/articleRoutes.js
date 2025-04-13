@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { createArticle, getAllArticles, getArticleById, getRelatedArticles, deleteArticle, pinArticle } = require('../controllers/articleController');
+const { createArticle, getAllArticles, getArticleById, getRelatedArticles, deleteArticle, pinArticle, updateArticle } = require('../controllers/articleController');
 const upload = require('../config/multer');
 
 router.post('/createArticle', auth, upload.single('image'), createArticle);
