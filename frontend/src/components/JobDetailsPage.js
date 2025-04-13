@@ -178,7 +178,7 @@ const JobDetailsPage = () => {
       <header className="job-header">
         <h1 className="job-title">{jobDetails.title}</h1>
         <div className="job-meta">
-          <span className="company-name">Client : <strong>{jobDetails.client}</strong></span>
+          <span className="company-name">Secteur : <strong>{jobDetails.client}</strong></span>
           <span className="job-location">Lieu : <strong>{jobDetails.location}</strong></span>
         </div>
       </header>
