@@ -5,7 +5,7 @@ const Recruteur = require('../models/Recruteur');
 const mongoose = require('mongoose');
 const cloudinary = require('../utils/cloudinary'); // Assure-toi que ce fichier existe
 const streamifier = require('streamifier');
-const { uploadCvToCloudinary } = require('..../config/multer');
+const { uploadCvToCloudinary } = require('../config/multer');
 
 // Inscription
 const registerCondidat = async (req, res) => {
@@ -339,7 +339,7 @@ const postuler = async (req, res) => {
       `cv-${condidatId}-${Date.now()}`
     );
 
-    console.log("✅ Upload Cloudinary :", cloudinaryResult.secure_url);
+    console.log("✅ Upload Cloudinary :", cloudinaryResult);
 
     // Construire la candidature
     const candidature = {
