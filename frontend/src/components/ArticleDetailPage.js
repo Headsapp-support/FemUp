@@ -159,6 +159,11 @@ const ArticleDetailPage = () => {
         <Typography variant="body1" className="article-date">{new Date(article.date).toLocaleDateString()}</Typography>
       </Box>
 
+      {/* Section Image */}
+      <Box className="image-section">
+        <img src={article.image} alt={article.title} className="article-image" />
+      </Box>
+
       {/* Section Gestion de l'Article (si Admin) */}
       {isAdmin && (
         <Box className="admin-actions" sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
@@ -173,12 +178,6 @@ const ArticleDetailPage = () => {
           </IconButton>
         </Box>
       )}
-
-      {/* Section Image */}
-      <Box className="image-section">
-        <img src={article.image} alt={article.title} className="article-image" />
-      </Box>
-
       {/* Article Content */}
       <Box className="article-content">
         <Typography variant="body1" className="article-text">
