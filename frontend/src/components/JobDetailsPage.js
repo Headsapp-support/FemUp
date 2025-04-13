@@ -137,6 +137,7 @@ const JobDetailsPage = () => {
   
       if (response.data.success) {
         alert('✅ Candidature envoyée');
+        console.log("✅ Lien du CV Cloudinary :", response.data.cvUrl);
         setHasApplied(true);
       } else {
         alert('Une erreur est survenue.');
