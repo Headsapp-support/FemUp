@@ -93,4 +93,45 @@ const getRelatedArticles = async (req, res) => {
   }
 };
 
-module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById };
+const deleteArticle = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedArticle = await Article.findByIdAndDelete(id);
+
+    if (!deletedArticle) {
+      return res.status(404).json({ message: "Article non trouvé" });
+    }
+
+    res.status(200).json({ message: "Article supprimé avec succès" });
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'article:", error);
+    res.status(500).json({ message: "Erreur serveur", error: error.message });
+  }
+};
+
+const pinArticle = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const article = await Article.findById(id);
+    if (!article) {
+      return res.status(404).json({ message: "Article non trouvé" });
+    }
+
+    // 🔁 Toggle l'état d’épinglage
+    article.isPinned = !article.isPinned;
+    await article.save();
+
+    res.status(200).json({ 
+      message: `Article ${article.isPinned ? 'épinglé' : 'désépinglé'} avec succès`, 
+      isPinned: article.isPinned 
+    });
+  } catch (error) {
+    console.error("Erreur lors de l'épinglage:", error);
+    res.status(500).json({ message: "Erreur serveur", error: error.message });
+  }
+};
+
+
+module.exports = { createArticle, getAllArticles, getRelatedArticles, getArticleById, deleteArticle, pinArticle };

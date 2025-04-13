@@ -5,7 +5,11 @@ const articleSchema = new mongoose.Schema({
   content: { type: String, required: true },
   date: { type: Date, required: true },
   image: { type: String, required: true },
-  isFeatured: { type: Boolean, default: false }
+  isFeatured: { type: Boolean, default: false },
+  isPinned: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model('Article', articleSchema);
