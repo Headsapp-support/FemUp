@@ -287,93 +287,66 @@ const uploadCV = async (req, res) => {
 
 const postuler = async (req, res) => {
   try {
-    console.log("🔹 Données reçues :", req.body);
-    console.log("📄 Fichier reçu :", req.file);
-
     const { offerId } = req.body;
-    const cvUploaded = req.file;
+    const cvUploaded = req.file; // vient de multer
     const condidatId = req.user.id;
 
-    // Vérification de l'existence du fichier
     if (!cvUploaded || !cvUploaded.buffer) {
-      return res.status(400).json({ message: 'Veuillez télécharger votre CV avant de postuler.' });
+      return res.status(400).json({ message: 'Veuillez télécharger votre CV.' });
     }
 
-    // Vérifie si le candidat existe
     const condidat = await Condidat.findById(condidatId);
     if (!condidat) {
       return res.status(404).json({ message: 'Candidat non trouvé.' });
     }
 
-    // Vérifie si le candidat a déjà postulé à cette offre
     const alreadyApplied = condidat.applications.some(application =>
       application.jobId && application.jobId.toString() === offerId
     );
     if (alreadyApplied) {
-      return res.status(400).json({ message: 'Vous avez déjà postulé à cette offre.' });
-    }
-
-    // Vérification de la validité de l'offerId
-    if (!mongoose.Types.ObjectId.isValid(offerId)) {
-      return res.status(400).json({ message: 'ID d\'offre invalide' });
+      return res.status(400).json({ message: 'Vous avez déjà postulé.' });
     }
 
     const offerObjectId = new mongoose.Types.ObjectId(offerId);
-
-    // Trouve le recruteur et l'offre
     const recruteur = await Recruteur.findOne({ 'postedOffers._id': offerObjectId });
     if (!recruteur) {
-      return res.status(404).json({ message: 'Offre ou recruteur non trouvée.' });
+      return res.status(404).json({ message: 'Offre non trouvée.' });
     }
 
-    const offer = recruteur.postedOffers.find(offer => offer._id.toString() === offerObjectId.toString());
+    const offer = recruteur.postedOffers.find(offer => offer._id.toString() === offerId);
     if (!offer) {
-      return res.status(404).json({ message: 'Offre introuvable dans la liste du recruteur.' });
+      return res.status(404).json({ message: 'Offre introuvable.' });
     }
 
-    // ➕ Upload du CV vers Cloudinary
-    const cloudinaryResult = await uploadCvToCloudinary(
-      cvUploaded.buffer,
-      `cv-${condidatId}-${Date.now()}`
-    );
-
-    // Vérifie si l'upload a réussi et si l'URL est valide
-    if (!cloudinaryResult || !cloudinaryResult.secure_url) {
-      return res.status(500).json({ message: 'Le téléchargement du CV a échoué sur Cloudinary.' });
-    }
-
-    console.log("✅ Upload Cloudinary :", cloudinaryResult);
-
-    // Crée la candidature
+    // Upload du CV vers Cloudinary
+    const result = await uploadCvToCloudinary(cvUploaded.buffer, `cv-${condidat._id}-${Date.now()}`);
+    
+    // Enregistrer la candidature
     const candidature = {
       jobId: offer._id,
       offerId: offer._id,
-      status: 'En attente',
       date: new Date(),
-      cvUploaded: cloudinaryResult.secure_url // URL Cloudinary
+      status: 'En attente',
+      cvUploaded: result.secure_url // Lien vers le CV sur Cloudinary
     };
 
-    // Ajoute la candidature au candidat
     condidat.applications.push(candidature);
     await condidat.save();
-    console.log("✅ Candidature enregistrée pour", condidat.email);
 
-    // Ajoute le candidat à l'offre du recruteur
-    offer.candidats.push({
-      candidatId: condidat._id,
-      status: 'En attente'
-    });
-
+    offer.candidats.push({ candidatId: condidat._id, status: 'En attente' });
     offer.cvReceived += 1;
     await recruteur.save();
 
-    return res.status(200).json({ success: true, message: 'Candidature envoyée avec succès' });
+    return res.status(200).json({
+      success: true,
+      message: 'Candidature envoyée avec succès.',
+      cvUrl: result.secure_url // Renvoi du lien vers le CV
+    });
   } catch (error) {
-    console.error('❌ Erreur postulation :', error);
-    return res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    console.error("❌ Erreur dans postuler:", error);
+    return res.status(500).json({ message: 'Erreur serveur.', error: error.message });
   }
 };
-
 
 const getCandidatures = async (req, res) => {
   try {
