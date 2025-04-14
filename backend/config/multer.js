@@ -47,7 +47,7 @@ const uploadCvToCloudinary = (fileBuffer, filename) => {
           reject(new Error(`Erreur Cloudinary: ${error.message}`));
         } else if (result && result.secure_url) {
           console.log("Upload Cloudinary - Résultat:", result); // Débogage
-          resolve(result.secure_url); // Renvoi de l'URL sécurisée
+          resolve(result); // Renvoi de l'URL sécurisée
         } else {
           reject(new Error('Aucune URL sécurisée renvoyée par Cloudinary.'));
         }
