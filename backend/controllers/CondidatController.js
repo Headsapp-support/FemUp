@@ -319,34 +319,34 @@ const postuler = async (req, res) => {
     }
 
     // Upload du CV vers Cloudinary
-    const result = await uploadCvToCloudinary(cvUploaded.buffer, `cv-${condidat._id}-${Date.now()}`);
-    console.log("Résultat de Cloudinary:", result); // Debugging
+    const cvUrl = await uploadCvToCloudinary(cvUploaded.buffer, `cv-${condidat._id}-${Date.now()}`);
 
-    if (result && result.secure_url) {
-      // Enregistrer la candidature avec l'URL Cloudinary
+    if (cvUrl) {
       const candidature = {
         jobId: offer._id,
         offerId: offer._id,
         date: new Date(),
         status: 'En attente',
-        cvUploaded: result.secure_url // Lien vers le CV sur Cloudinary
+        cvUploaded: cvUrl // ✅ ici
       };
-
+    
       condidat.applications.push(candidature);
       await condidat.save();
-
+    
       offer.candidats.push({ candidatId: condidat._id, status: 'En attente' });
       offer.cvReceived += 1;
       await recruteur.save();
 
+      console.log("📤 cvUrl à renvoyer au frontend :", cvUrl);
+    
       return res.status(200).json({
         success: true,
         message: 'Candidature envoyée avec succès.',
-        cvUrl: result.secure_url // Retourner le lien Cloudinary
+        cvUrl // ✅ ici
       });
     } else {
       return res.status(500).json({ message: 'Erreur lors de l\'upload du CV.' });
-    }
+    }    
 
   } catch (error) {
     console.error("❌ Erreur dans postuler:", error);
