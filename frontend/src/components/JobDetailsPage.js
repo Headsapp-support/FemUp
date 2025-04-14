@@ -103,25 +103,50 @@ const JobDetailsPage = () => {
   if (!jobDetails) {
     return <p>Offre introuvable.</p>;
   }
+  
 
-  // Fonction pour vérifier et postuler à l'offre
+  // Fonction pour gérer le téléchargement du CV
+  const handleCvUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    const maxSize = 5 * 1024 * 1024; // Limite de 5 Mo
+
+    if (!validTypes.includes(file.type)) {
+      alert('Formats acceptés : PDF, DOC, DOCX');
+      return;
+    }
+
+    if (file.size > maxSize) {
+      alert('Fichier trop lourd. Max 5MB.');
+      return;
+    }
+
+    setCvUploaded(file);
+  };
+
   const postuler = async () => {
     if (!cvUploaded) {
       alert('Veuillez choisir un CV avant de postuler.');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('offerId', offerId);
-    formData.append('cv', cvUploaded); // 👈 'cv' doit matcher le backend
-  
+    formData.append('cv', cvUploaded); // 👈 'cv' doit correspondre à la clé backend
+
     const token = localStorage.getItem('token');
-  
+
     // 🧪 DEBUG — voir ce qui est envoyé
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
-  
+
     try {
       setApplying(true);
       const response = await axios.post(
@@ -134,10 +159,11 @@ const JobDetailsPage = () => {
           }
         }
       );
-  
+
+      console.log("Réponse du backend:", response.data); // Débogage
       if (response.data.success) {
         alert('✅ Candidature envoyée');
-        console.log("✅ Lien du CV Cloudinary :", response.data.cvUrl);
+        console.log("✅ Lien du CV Cloudinary :", response.data.cvUrl); // Débogage
         setHasApplied(true);
       } else {
         alert('Une erreur est survenue.');
@@ -148,32 +174,6 @@ const JobDetailsPage = () => {
     } finally {
       setApplying(false);
     }
-  };
-  
-
-  // Fonction pour gérer le téléchargement du CV
-  const handleCvUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-  
-    const validTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    const maxSize = 5 * 1024 * 1024;
-  
-    if (!validTypes.includes(file.type)) {
-      alert('Formats acceptés : PDF, DOC, DOCX');
-      return;
-    }
-  
-    if (file.size > maxSize) {
-      alert('Fichier trop lourd. Max 5MB.');
-      return;
-    }
-  
-    setCvUploaded(file);
   };
 
   return (
